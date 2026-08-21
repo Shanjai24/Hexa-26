@@ -1,0 +1,89 @@
+{
+  "category": {
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1_score": 1.0,
+    "classes": [
+      "Electricity Board",
+      "Fire & Rescue",
+      "Healthcare",
+      "Municipal Corporation",
+      "Police",
+      "Public Works",
+      "Sanitation",
+      "Transport",
+      "Water Board"
+    ]
+  },
+  "problemType": {
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1_score": 1.0,
+    "classes": [
+      "Billing Issue",
+      "Bridge Defect",
+      "Building Fire",
+      "Bus Delay",
+      "Certificate Delay",
+      "Civic Amenities",
+      "Cylinder Explosion",
+      "Dangling Wire",
+      "Doctor Absence",
+      "Electrical Fire",
+      "Encroachment",
+      "Food Safety",
+      "Garbage Fire",
+      "Garbage Pile",
+      "Hospital Supplies",
+      "Low Pressure",
+      "Meter Defect",
+      "Mosquito Hazard",
+      "No Supply",
+      "Noise Complaint",
+      "Open Manhole",
+      "Pipe Damage",
+      "Potholes",
+      "Power Outage",
+      "Property Tax",
+      "Public Safety",
+      "Sanitation",
+      "Sewage Overflow",
+      "Stray Animals",
+      "Theft",
+      "Traffic Signal",
+      "Traffic Violation",
+      "Transformer Fire",
+      "Transit Grievance",
+      "Vehicle Fire",
+      "Voltage Fluctuation",
+      "Water Quality",
+      "Wildfire Hazard"
+    ]
+  },
+  "urgency": {
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1_score": 1.0,
+    "classes": [
+      "Emergency",
+      "High",
+      "Low",
+      "Medium"
+    ]
+  },
+  "sentiment": {
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1_score": 1.0,
+    "classes": [
+      "Frustrated",
+      "Negative",
+      "Neutral",
+      "Positive"
+    ]
+  }
+}

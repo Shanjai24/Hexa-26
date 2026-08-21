@@ -1,0 +1,801 @@
+text,category,problemType,urgency,sentiment
+Complaint registered from Ward 14: Fallen tree blocking colony inner road after gusty winds. Expecting quick response from authorities.,Municipal Corporation,Civic Amenities,High,Frustrated
+Kindly note Bus shelter collapsed and broken glass scattered around waiting area. We need urgent intervention.,Transport,Transit Grievance,Medium,Negative
+Property tax portal showing wrong calculation and pending dues.,Municipal Corporation,Property Tax,Low,Negative
+Help needed: City bus route 45 consistently delayed by 1 hour daily during peak morning. Kindly look into this immediately.,Transport,Bus Delay,Medium,Negative
+Fallen tree blocking colony inner road after gusty winds.,Municipal Corporation,Civic Amenities,High,Frustrated
+Issue reported: Bio-medical waste discarded openly behind clinic in residential zone. We need urgent intervention.,Healthcare,Mosquito Hazard,Emergency,Frustrated
+"Sir/Madam, Forest and bush fire spreading near highway residential colony, need firefighters and water tenders. Over 100 families affected in our locality.",Fire & Rescue,Wildfire Hazard,Emergency,Frustrated
+Filing grievance for Pedestrian sidewalk paving stones dug up and left unfinished. We need urgent intervention.,Public Works,Potholes,Medium,Negative
+"Help needed: Cylinder blast in residential apartment, fire spreading fast, call fire station rescue team. Over 100 families affected in our locality.",Fire & Rescue,Cylinder Explosion,Emergency,Frustrated
+"Kindly note Water tank billing issue, I was overcharged for this month. Kindly look into this immediately.",Water Board,Billing Issue,Low,Negative
+Trade license renewal delayed despite submitting all documents.,Municipal Corporation,Certificate Delay,Low,Neutral
+Urgent complaint: Food poisoning outbreak reported from unhygienic street vendor stall. Kindly look into this immediately.,Healthcare,Food Safety,Emergency,Frustrated
+"Sir/Madam, Food poisoning outbreak reported from unhygienic street vendor stall. Expecting quick response from authorities.",Healthcare,Food Safety,Emergency,Frustrated
+"Stray dog menace in colony, pack of dogs chasing children and two-wheelers.",Municipal Corporation,Stray Animals,High,Frustrated
+Urgent complaint: Mosquito breeding in stagnant water spreading Dengue and Malaria outbreak. We need urgent intervention.,Healthcare,Mosquito Hazard,High,Frustrated
+Urgent complaint: Stormwater drain slab broken and collapsed into drain on 2nd Avenue. Over 100 families affected in our locality.,Public Works,Open Manhole,High,Frustrated
+"Filing grievance for Cylinder blast in residential apartment, fire spreading fast, call fire station rescue team. Expecting quick response from authorities.",Fire & Rescue,Cylinder Explosion,Emergency,Frustrated
+"Urgent complaint: Forest and bush fire spreading near highway residential colony, need firefighters and water tenders. Kindly look into this immediately.",Fire & Rescue,Wildfire Hazard,Emergency,Frustrated
+Kindly note Trade license renewal delayed despite submitting all documents. We need urgent intervention.,Municipal Corporation,Certificate Delay,Low,Neutral
+Citizen alert: Traffic signal violation causing near accidents daily at cross junction. Please resolve ASAP.,Police,Traffic Violation,Medium,Negative
+Filing grievance for Bridge expansion joint damaged and vibrating dangerously under traffic. Expecting quick response from authorities.,Public Works,Bridge Defect,Emergency,Frustrated
+Grievance report: Open garbage dump overflowing on pedestrian walkway outside school. Expecting quick response from authorities.,Sanitation,Garbage Pile,High,Frustrated
+Citizen alert: City bus route 45 consistently delayed by 1 hour daily during peak morning. Expecting quick response from authorities.,Transport,Bus Delay,Medium,Negative
+Calling regarding Stormwater drain slab broken and collapsed into drain on 2nd Avenue. Expecting quick response from authorities.,Public Works,Open Manhole,High,Frustrated
+Attention ward officer: Illegal construction and encroachment on public park land. We need urgent intervention.,Municipal Corporation,Encroachment,High,Frustrated
+Garbage collection vehicle not coming for last 4 days in Block D.,Sanitation,Garbage Pile,High,Frustrated
+"Urgent complaint: Road damaged and cracked after heavy rainfall, need urgent resurfacing. Kindly look into this immediately.",Public Works,Potholes,Medium,Negative
+"Urgent complaint: Heavy smoke and flames coming from chemical warehouse, send fire engine immediately. Expecting quick response from authorities.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Calling regarding Open manhole on main street dangerous for pedestrians and children! Please resolve ASAP.,Public Works,Open Manhole,Emergency,Frustrated
+"Sir/Madam, Power outage in Phase 2 for past 6 hours. Transformer sparked and caught fire! We need urgent intervention.",Electricity Board,Transformer Fire,Emergency,Frustrated
+Kindly note Fallen tree blocking colony inner road after gusty winds. Over 100 families affected in our locality.,Municipal Corporation,Civic Amenities,High,Frustrated
+Grievance report: Open manhole on main street dangerous for pedestrians and children! Please resolve ASAP.,Public Works,Open Manhole,Emergency,Frustrated
+Attention ward officer: Volt-ampere drop is causing refrigerator to trip continuously. Kindly look into this immediately.,Electricity Board,Voltage Fluctuation,Medium,Neutral
+"Urgent complaint: Pani nahi aa raha 2 din se, please jaldi saaf pani ki supply shuru karein. Please resolve ASAP.",Water Board,No Supply,High,Frustrated
+"Road damaged and cracked after heavy rainfall, need urgent resurfacing.",Public Works,Potholes,Medium,Negative
+"Incorrect electricity bill generated, showing 10x normal consumption.",Electricity Board,Meter Defect,Medium,Negative
+"Grievance report: Incorrect electricity bill generated, showing 10x normal consumption. Kindly look into this immediately.",Electricity Board,Meter Defect,Medium,Negative
+Urgent complaint: Streetlight pole sparking continuously with loose wiring. Kindly look into this immediately.,Electricity Board,Dangling Wire,High,Frustrated
+Calling regarding Auto rickshaw drivers refusing by-meter fare and demanding double charges. Kindly look into this immediately.,Transport,Transit Grievance,Low,Negative
+"Citizen alert: Underpass flooded with 3 feet of water, road completely impassable. Please resolve ASAP.",Public Works,Potholes,High,Frustrated
+Urgent complaint: City bus route 45 consistently delayed by 1 hour daily during peak morning. Expecting quick response from authorities.,Transport,Bus Delay,Medium,Negative
+Help needed: Garbage collection vehicle not coming for last 4 days in Block D. Expecting quick response from authorities.,Sanitation,Garbage Pile,High,Frustrated
+"Complaint registered from Ward 14: Thee pidithullathu, urgent fire station rescue and fire engine required. Expecting quick response from authorities.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Attention ward officer: There is no water supply in our colony since yesterday morning. Pipeline issue. Expecting quick response from authorities.,Water Board,No Supply,High,Frustrated
+Calling regarding Contaminated yellow muddy water coming out of taps in Shastri Nagar. Kindly look into this immediately.,Water Board,Water Quality,High,Negative
+Attention ward officer: Volt-ampere drop is causing refrigerator to trip continuously. Please resolve ASAP.,Electricity Board,Voltage Fluctuation,Medium,Neutral
+Urgent complaint: Frequent voltage fluctuations damaging home electronics in Ward 9. Over 100 families affected in our locality.,Electricity Board,Voltage Fluctuation,High,Negative
+"Kindly note Cylinder blast in residential apartment, fire spreading fast, call fire station rescue team. We need urgent intervention.",Fire & Rescue,Cylinder Explosion,Emergency,Frustrated
+Attention ward officer: Primary Health Centre doctor absent during official duty hours. Kindly look into this immediately.,Healthcare,Doctor Absence,High,Frustrated
+Issue reported: Water tanker driver is asking for extra money illegally in Ward 5. We need urgent intervention.,Water Board,Billing Issue,High,Frustrated
+Help needed: Ambulance 108 helpline not answering call during medical emergency. Kindly look into this immediately.,Healthcare,Hospital Supplies,Emergency,Frustrated
+"Sir/Madam, Food poisoning outbreak reported from unhygienic street vendor stall. Over 100 families affected in our locality.",Healthcare,Food Safety,Emergency,Frustrated
+Grievance report: Auto rickshaw drivers refusing by-meter fare and demanding double charges. We need urgent intervention.,Transport,Transit Grievance,Low,Negative
+Urgent complaint: Drainage line choked and blocked with plastic waste causing backflow. Please resolve ASAP.,Sanitation,Sewage Overflow,High,Frustrated
+Citizen alert: Property tax portal showing wrong calculation and pending dues. Over 100 families affected in our locality.,Municipal Corporation,Property Tax,Low,Negative
+Issue reported: Public toilet in market complex completely uncleaned and unusable. Please resolve ASAP.,Sanitation,Sanitation,Medium,Negative
+Kindly note Contaminated yellow muddy water coming out of taps in Shastri Nagar. Please resolve ASAP.,Water Board,Water Quality,High,Negative
+"Grievance report: Incorrect electricity bill generated, showing 10x normal consumption. We need urgent intervention.",Electricity Board,Meter Defect,Medium,Negative
+Filing grievance for Food poisoning outbreak reported from unhygienic street vendor stall. Expecting quick response from authorities.,Healthcare,Food Safety,Emergency,Frustrated
+"Calling regarding Water tank billing issue, I was overcharged for this month. We need urgent intervention.",Water Board,Billing Issue,Low,Negative
+Kindly note Low water pressure in Sector 4 Ward 12. Kindly inspect the pump house. Kindly look into this immediately.,Water Board,Low Pressure,Medium,Neutral
+Citizen alert: Mosquito breeding in stagnant water spreading Dengue and Malaria outbreak. Please resolve ASAP.,Healthcare,Mosquito Hazard,High,Frustrated
+"Sir/Madam, Drainage line choked and blocked with plastic waste causing backflow. Expecting quick response from authorities.",Sanitation,Sewage Overflow,High,Frustrated
+Grievance report: Frequent voltage fluctuations damaging home electronics in Ward 9. Over 100 families affected in our locality.,Electricity Board,Voltage Fluctuation,High,Negative
+Urgent complaint: Frequent voltage fluctuations damaging home electronics in Ward 9. Expecting quick response from authorities.,Electricity Board,Voltage Fluctuation,High,Negative
+"Issue reported: Electrical short circuit fire in basement parking, smoke alarm ringing and people trapped. Over 100 families affected in our locality.",Fire & Rescue,Electrical Fire,Emergency,Frustrated
+Vehicle stolen from apartment parking lot last night.,Police,Theft,High,Frustrated
+"Sir/Madam, Volt-ampere drop is causing refrigerator to trip continuously. Please resolve ASAP.",Electricity Board,Voltage Fluctuation,Medium,Neutral
+Grievance report: Food poisoning outbreak reported from unhygienic street vendor stall. Kindly look into this immediately.,Healthcare,Food Safety,Emergency,Frustrated
+"Complaint registered from Ward 14: Aag lag gayi hai factory me, jaldi fire brigade aur rescue team bhejo. Kindly look into this immediately.",Fire & Rescue,Building Fire,Emergency,Frustrated
+"Complaint registered from Ward 14: Attempted burglary at locked house in B-Block, door lock tampered. We need urgent intervention.",Police,Theft,Emergency,Frustrated
+"Kindly note Incorrect electricity bill generated, showing 10x normal consumption. Over 100 families affected in our locality.",Electricity Board,Meter Defect,Medium,Negative
+"Sir/Madam, Bijli chali gayi hai 4 ghante se, transformer se dhuwa nikla hai. We need urgent intervention.",Electricity Board,Power Outage,Emergency,Frustrated
+"Kachra nahi uthaya gaya 3 din se, severe smell in entire lane.",Sanitation,Garbage Pile,High,Frustrated
+Sewage water mixing with rainwater and overflowing on main street.,Sanitation,Sewage Overflow,Emergency,Frustrated
+Help needed: Contaminated yellow muddy water coming out of taps in Shastri Nagar. Kindly look into this immediately.,Water Board,Water Quality,High,Negative
+Filing grievance for Birth certificate application pending for 45 days with no response from ward. Over 100 families affected in our locality.,Municipal Corporation,Certificate Delay,Medium,Negative
+"Issue reported: Pani nahi aa raha 2 din se, please jaldi saaf pani ki supply shuru karein. Kindly look into this immediately.",Water Board,No Supply,High,Frustrated
+Help needed: Smart meter showing faulty readings after heavy rainfall. Expecting quick response from authorities.,Electricity Board,Meter Defect,Medium,Negative
+"Sir/Madam, Pani nahi aa raha 2 din se, please jaldi saaf pani ki supply shuru karein. Over 100 families affected in our locality.",Water Board,No Supply,High,Frustrated
+Filing grievance for Bio-medical waste discarded openly behind clinic in residential zone. Expecting quick response from authorities.,Healthcare,Mosquito Hazard,Emergency,Frustrated
+Attention ward officer: Low water pressure in Sector 4 Ward 12. Kindly inspect the pump house. Kindly look into this immediately.,Water Board,Low Pressure,Medium,Neutral
+"Sir/Madam, Traffic signal violation causing near accidents daily at cross junction. We need urgent intervention.",Police,Traffic Violation,Medium,Negative
+"Citizen alert: Paani ki pipe leak ho rahi hai main road par, bahut paani waste ho raha hai. We need urgent intervention.",Water Board,Pipe Damage,Medium,Negative
+"Urgent complaint: Cylinder blast in residential apartment, fire spreading fast, call fire station rescue team. Over 100 families affected in our locality.",Fire & Rescue,Cylinder Explosion,Emergency,Frustrated
+Calling regarding Open manhole on main street dangerous for pedestrians and children! We need urgent intervention.,Public Works,Open Manhole,Emergency,Frustrated
+"Help needed: Attempted burglary at locked house in B-Block, door lock tampered. We need urgent intervention.",Police,Theft,Emergency,Frustrated
+Citizen alert: Streetlight pole sparking continuously with loose wiring. Kindly look into this immediately.,Electricity Board,Dangling Wire,High,Frustrated
+"Calling regarding Heavy smoke and flames coming from chemical warehouse, send fire engine immediately. Kindly look into this immediately.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Grievance report: Public toilet in market complex completely uncleaned and unusable. Expecting quick response from authorities.,Sanitation,Sanitation,Medium,Negative
+"Grievance report: Road damaged and cracked after heavy rainfall, need urgent resurfacing. We need urgent intervention.",Public Works,Potholes,Medium,Negative
+Complaint registered from Ward 14: Government hospital emergency room out of basic lifesaving medicines. Please resolve ASAP.,Healthcare,Hospital Supplies,Emergency,Frustrated
+Calling regarding Drainage line choked and blocked with plastic waste causing backflow. Over 100 families affected in our locality.,Sanitation,Sewage Overflow,High,Frustrated
+Calling regarding Chain snatching incident reported near central park 30 mins ago. Suspect ran away. Over 100 families affected in our locality.,Police,Theft,Emergency,Frustrated
+Calling regarding Dead animal lying on public road needs immediate sanitary removal. Expecting quick response from authorities.,Sanitation,Sanitation,High,Frustrated
+Citizen alert: Volt-ampere drop is causing refrigerator to trip continuously. Over 100 families affected in our locality.,Electricity Board,Voltage Fluctuation,Medium,Neutral
+Complaint registered from Ward 14: Ambulance 108 helpline not answering call during medical emergency. Over 100 families affected in our locality.,Healthcare,Hospital Supplies,Emergency,Frustrated
+Help needed: Electric wire hanging dangerous and low near primary school entrance. Expecting quick response from authorities.,Electricity Board,Dangling Wire,Emergency,Frustrated
+Bio-medical waste discarded openly behind clinic in residential zone.,Healthcare,Mosquito Hazard,Emergency,Frustrated
+Complaint registered from Ward 14: Traffic light malfunction at Busy Cross junction creating chaotic congestion. Over 100 families affected in our locality.,Transport,Traffic Signal,High,Negative
+"Grievance report: Thee pidithullathu, urgent fire station rescue and fire engine required. Kindly look into this immediately.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Help needed: Volt-ampere drop is causing refrigerator to trip continuously. Please resolve ASAP.,Electricity Board,Voltage Fluctuation,Medium,Neutral
+Grievance report: Mosquito breeding in stagnant water spreading Dengue and Malaria outbreak. Over 100 families affected in our locality.,Healthcare,Mosquito Hazard,High,Frustrated
+Filing grievance for Primary Health Centre doctor absent during official duty hours. Over 100 families affected in our locality.,Healthcare,Doctor Absence,High,Frustrated
+Calling regarding Trade license renewal delayed despite submitting all documents. Over 100 families affected in our locality.,Municipal Corporation,Certificate Delay,Low,Neutral
+"Help needed: Thee pidithullathu, urgent fire station rescue and fire engine required. We need urgent intervention.",Fire & Rescue,Building Fire,Emergency,Frustrated
+"Urgent complaint: Stray dog menace in colony, pack of dogs chasing children and two-wheelers. Expecting quick response from authorities.",Municipal Corporation,Stray Animals,High,Frustrated
+Kindly note Low water pressure in Sector 4 Ward 12. Kindly inspect the pump house. Please resolve ASAP.,Water Board,Low Pressure,Medium,Neutral
+Grievance report: Vehicle stolen from apartment parking lot last night. Please resolve ASAP.,Police,Theft,High,Frustrated
+Kindly note Open manhole on main street dangerous for pedestrians and children! Please resolve ASAP.,Public Works,Open Manhole,Emergency,Frustrated
+"Sir/Madam, Frequent voltage fluctuations damaging home electronics in Ward 9. Expecting quick response from authorities.",Electricity Board,Voltage Fluctuation,High,Negative
+"Help needed: Paani ki pipe leak ho rahi hai main road par, bahut paani waste ho raha hai. Over 100 families affected in our locality.",Water Board,Pipe Damage,Medium,Negative
+Urgent complaint: Chain snatching incident reported near central park 30 mins ago. Suspect ran away. Over 100 families affected in our locality.,Police,Theft,Emergency,Frustrated
+"Smoke coming out of closed shop, smell of burning wire and gas leak.",Fire & Rescue,Electrical Fire,High,Frustrated
+"Grievance report: Vehicle caught fire on main flyover, road blocked, fire brigade and rescue needed immediately. We need urgent intervention.",Fire & Rescue,Vehicle Fire,Emergency,Frustrated
+Calling regarding Auto rickshaw drivers refusing by-meter fare and demanding double charges. Kindly look into this immediately.,Transport,Transit Grievance,Low,Negative
+Attention ward officer: Illegal construction and encroachment on public park land. Over 100 families affected in our locality.,Municipal Corporation,Encroachment,High,Frustrated
+"Citizen alert: Paani ki pipe leak ho rahi hai main road par, bahut paani waste ho raha hai. Expecting quick response from authorities.",Water Board,Pipe Damage,Medium,Negative
+Help needed: Public toilet in market complex completely uncleaned and unusable. We need urgent intervention.,Sanitation,Sanitation,Medium,Negative
+Attention ward officer: Traffic signal violation causing near accidents daily at cross junction. We need urgent intervention.,Police,Traffic Violation,Medium,Negative
+"Attention ward officer: Electrical short circuit fire in basement parking, smoke alarm ringing and people trapped. We need urgent intervention.",Fire & Rescue,Electrical Fire,Emergency,Frustrated
+Issue reported: Illegal parking blocking emergency ambulance entry route to building. Please resolve ASAP.,Police,Traffic Violation,High,Frustrated
+Filing grievance for Bio-medical waste discarded openly behind clinic in residential zone. Please resolve ASAP.,Healthcare,Mosquito Hazard,Emergency,Frustrated
+"Grievance report: Paani ki pipe leak ho rahi hai main road par, bahut paani waste ho raha hai. We need urgent intervention.",Water Board,Pipe Damage,Medium,Negative
+Calling regarding Massive potholes on main road causing severe traffic jams and bike accidents. Please resolve ASAP.,Public Works,Potholes,High,Frustrated
+Filing grievance for Massive potholes on main road causing severe traffic jams and bike accidents. Over 100 families affected in our locality.,Public Works,Potholes,High,Frustrated
+"Sir/Madam, Fallen tree blocking colony inner road after gusty winds. Please resolve ASAP.",Municipal Corporation,Civic Amenities,High,Frustrated
+Streetlight pole sparking continuously with loose wiring.,Electricity Board,Dangling Wire,High,Frustrated
+"Attention ward officer: Vehicle caught fire on main flyover, road blocked, fire brigade and rescue needed immediately. Kindly look into this immediately.",Fire & Rescue,Vehicle Fire,Emergency,Frustrated
+"Help needed: Pani nahi aa raha 2 din se, please jaldi saaf pani ki supply shuru karein. Kindly look into this immediately.",Water Board,No Supply,High,Frustrated
+Kindly note Drunk persons creating public nuisance and harassing pedestrians at bus stop. Expecting quick response from authorities.,Police,Public Safety,High,Frustrated
+"Sir/Madam, Fire broke out in commercial building near main market, urgent fire rescue needed! Kindly look into this immediately.",Fire & Rescue,Building Fire,Emergency,Frustrated
+"Help needed: Road damaged and cracked after heavy rainfall, need urgent resurfacing. Kindly look into this immediately.",Public Works,Potholes,Medium,Negative
+Attention ward officer: Bridge expansion joint damaged and vibrating dangerously under traffic. Kindly look into this immediately.,Public Works,Bridge Defect,Emergency,Frustrated
+"Citizen alert: Underpass flooded with 3 feet of water, road completely impassable. Expecting quick response from authorities.",Public Works,Potholes,High,Frustrated
+Citizen alert: City bus route 45 consistently delayed by 1 hour daily during peak morning. Over 100 families affected in our locality.,Transport,Bus Delay,Medium,Negative
+Help needed: Stormwater drain slab broken and collapsed into drain on 2nd Avenue. Kindly look into this immediately.,Public Works,Open Manhole,High,Frustrated
+Urgent complaint: Drainage line choked and blocked with plastic waste causing backflow. Over 100 families affected in our locality.,Sanitation,Sewage Overflow,High,Frustrated
+"Complaint registered from Ward 14: Bijli chali gayi hai 4 ghante se, transformer se dhuwa nikla hai. Over 100 families affected in our locality.",Electricity Board,Power Outage,Emergency,Frustrated
+Issue reported: Bridge expansion joint damaged and vibrating dangerously under traffic. Expecting quick response from authorities.,Public Works,Bridge Defect,Emergency,Frustrated
+"Filing grievance for Drinking water line damaged during digging, water supply completely cut off. Please resolve ASAP.",Water Board,No Supply,High,Frustrated
+Help needed: Auto rickshaw drivers refusing by-meter fare and demanding double charges. Over 100 families affected in our locality.,Transport,Transit Grievance,Low,Negative
+Complaint registered from Ward 14: Illegal parking blocking emergency ambulance entry route to building. Kindly look into this immediately.,Police,Traffic Violation,High,Frustrated
+"Filing grievance for Incorrect electricity bill generated, showing 10x normal consumption. Kindly look into this immediately.",Electricity Board,Meter Defect,Medium,Negative
+"Fire emergency at local textile godown, blaze spreading rapidly to adjoining houses.",Fire & Rescue,Building Fire,Emergency,Frustrated
+"Grievance report: Paani ki pipe leak ho rahi hai main road par, bahut paani waste ho raha hai. We need urgent intervention.",Water Board,Pipe Damage,Medium,Negative
+Filing grievance for Traffic light malfunction at Busy Cross junction creating chaotic congestion. Expecting quick response from authorities.,Transport,Traffic Signal,High,Negative
+Help needed: Chain snatching incident reported near central park 30 mins ago. Suspect ran away. Kindly look into this immediately.,Police,Theft,Emergency,Frustrated
+Citizen alert: Dead animal lying on public road needs immediate sanitary removal. Please resolve ASAP.,Sanitation,Sanitation,High,Frustrated
+"Urgent complaint: Underpass flooded with 3 feet of water, road completely impassable. Kindly look into this immediately.",Public Works,Potholes,High,Frustrated
+"Attention ward officer: Paani ki pipe leak ho rahi hai main road par, bahut paani waste ho raha hai. Please resolve ASAP.",Water Board,Pipe Damage,Medium,Negative
+"Cylinder blast in residential apartment, fire spreading fast, call fire station rescue team.",Fire & Rescue,Cylinder Explosion,Emergency,Frustrated
+"Attention ward officer: Road damaged and cracked after heavy rainfall, need urgent resurfacing. Expecting quick response from authorities.",Public Works,Potholes,Medium,Negative
+"Sir/Madam, Massive potholes on main road causing severe traffic jams and bike accidents. Expecting quick response from authorities.",Public Works,Potholes,High,Frustrated
+"Calling regarding Aag lag gayi hai factory me, jaldi fire brigade aur rescue team bhejo. Over 100 families affected in our locality.",Fire & Rescue,Building Fire,Emergency,Frustrated
+"Filing grievance for Aag lag gayi hai factory me, jaldi fire brigade aur rescue team bhejo. We need urgent intervention.",Fire & Rescue,Building Fire,Emergency,Frustrated
+"Help needed: Fire broke out in commercial building near main market, urgent fire rescue needed! Over 100 families affected in our locality.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Calling regarding Streetlight pole sparking continuously with loose wiring. Over 100 families affected in our locality.,Electricity Board,Dangling Wire,High,Frustrated
+Grievance report: Government hospital emergency room out of basic lifesaving medicines. We need urgent intervention.,Healthcare,Hospital Supplies,Emergency,Frustrated
+"Sir/Madam, Dead animal lying on public road needs immediate sanitary removal. Kindly look into this immediately.",Sanitation,Sanitation,High,Frustrated
+Urgent complaint: Bus driver driving rashly and skipped scheduled stops on Route 23. Expecting quick response from authorities.,Transport,Bus Delay,Medium,Negative
+Grievance report: Chain snatching incident reported near central park 30 mins ago. Suspect ran away. Over 100 families affected in our locality.,Police,Theft,Emergency,Frustrated
+Filing grievance for Loud speakers playing beyond midnight illegally near residential area. Kindly look into this immediately.,Police,Noise Complaint,Medium,Frustrated
+Issue reported: Bio-medical waste discarded openly behind clinic in residential zone. Over 100 families affected in our locality.,Healthcare,Mosquito Hazard,Emergency,Frustrated
+"Help needed: Bijli chali gayi hai 4 ghante se, transformer se dhuwa nikla hai. Please resolve ASAP.",Electricity Board,Power Outage,Emergency,Frustrated
+"Sir/Madam, Trade license renewal delayed despite submitting all documents. Over 100 families affected in our locality.",Municipal Corporation,Certificate Delay,Low,Neutral
+"Urgent complaint: Fire broke out in commercial building near main market, urgent fire rescue needed! Please resolve ASAP.",Fire & Rescue,Building Fire,Emergency,Frustrated
+"Complaint registered from Ward 14: Kachra nahi uthaya gaya 3 din se, severe smell in entire lane. Expecting quick response from authorities.",Sanitation,Garbage Pile,High,Frustrated
+Grievance report: Sewage water mixing with rainwater and overflowing on main street. Expecting quick response from authorities.,Sanitation,Sewage Overflow,Emergency,Frustrated
+"Kindly note Stray dog menace in colony, pack of dogs chasing children and two-wheelers. We need urgent intervention.",Municipal Corporation,Stray Animals,High,Frustrated
+Help needed: Traffic light malfunction at Busy Cross junction creating chaotic congestion. Please resolve ASAP.,Transport,Traffic Signal,High,Negative
+"Help needed: Thee pidithullathu, urgent fire station rescue and fire engine required. We need urgent intervention.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Calling regarding Fire in garbage dump yard emitting toxic black smoke and spreading to nearby shops. Please resolve ASAP.,Fire & Rescue,Garbage Fire,High,Frustrated
+Grievance report: Fallen tree blocking colony inner road after gusty winds. Expecting quick response from authorities.,Municipal Corporation,Civic Amenities,High,Frustrated
+"Kindly note Fire broke out in commercial building near main market, urgent fire rescue needed! Expecting quick response from authorities.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Filing grievance for Public toilet in market complex completely uncleaned and unusable. Over 100 families affected in our locality.,Sanitation,Sanitation,Medium,Negative
+Food poisoning outbreak reported from unhygienic street vendor stall.,Healthcare,Food Safety,Emergency,Frustrated
+"Citizen alert: Smoke coming out of closed shop, smell of burning wire and gas leak. Kindly look into this immediately.",Fire & Rescue,Electrical Fire,High,Frustrated
+"Issue reported: Kachra nahi uthaya gaya 3 din se, severe smell in entire lane. We need urgent intervention.",Sanitation,Garbage Pile,High,Frustrated
+"Issue reported: Road damaged and cracked after heavy rainfall, need urgent resurfacing. Over 100 families affected in our locality.",Public Works,Potholes,Medium,Negative
+Calling regarding Thank you water department for repairing the broken pipe quickly today. Please resolve ASAP.,Water Board,Pipe Damage,Low,Positive
+"Complaint registered from Ward 14: Cylinder blast in residential apartment, fire spreading fast, call fire station rescue team. Over 100 families affected in our locality.",Fire & Rescue,Cylinder Explosion,Emergency,Frustrated
+Citizen alert: Frequent voltage fluctuations damaging home electronics in Ward 9. Expecting quick response from authorities.,Electricity Board,Voltage Fluctuation,High,Negative
+"Grievance report: Stray dog menace in colony, pack of dogs chasing children and two-wheelers. Over 100 families affected in our locality.",Municipal Corporation,Stray Animals,High,Frustrated
+Filing grievance for Open manhole on main street dangerous for pedestrians and children! Over 100 families affected in our locality.,Public Works,Open Manhole,Emergency,Frustrated
+Auto rickshaw drivers refusing by-meter fare and demanding double charges.,Transport,Transit Grievance,Low,Negative
+Attention ward officer: Trade license renewal delayed despite submitting all documents. Kindly look into this immediately.,Municipal Corporation,Certificate Delay,Low,Neutral
+Calling regarding Property tax portal showing wrong calculation and pending dues. We need urgent intervention.,Municipal Corporation,Property Tax,Low,Negative
+Help needed: Low water pressure in Sector 4 Ward 12. Kindly inspect the pump house. Expecting quick response from authorities.,Water Board,Low Pressure,Medium,Neutral
+"Sir/Madam, Sewage water mixing with rainwater and overflowing on main street. Please resolve ASAP.",Sanitation,Sewage Overflow,Emergency,Frustrated
+Help needed: Fallen tree blocking colony inner road after gusty winds. Expecting quick response from authorities.,Municipal Corporation,Civic Amenities,High,Frustrated
+Attention ward officer: Drainage line choked and blocked with plastic waste causing backflow. Expecting quick response from authorities.,Sanitation,Sewage Overflow,High,Frustrated
+Filing grievance for Vehicle stolen from apartment parking lot last night. Please resolve ASAP.,Police,Theft,High,Frustrated
+Issue reported: Garbage collection vehicle not coming for last 4 days in Block D. Over 100 families affected in our locality.,Sanitation,Garbage Pile,High,Frustrated
+Urgent complaint: Illegal parking blocking emergency ambulance entry route to building. Kindly look into this immediately.,Police,Traffic Violation,High,Frustrated
+"Filing grievance for Stray dog menace in colony, pack of dogs chasing children and two-wheelers. Over 100 families affected in our locality.",Municipal Corporation,Stray Animals,High,Frustrated
+Urgent complaint: Water tanker driver is asking for extra money illegally in Ward 5. We need urgent intervention.,Water Board,Billing Issue,High,Frustrated
+"Help needed: Water tank billing issue, I was overcharged for this month. Kindly look into this immediately.",Water Board,Billing Issue,Low,Negative
+"Calling regarding Thee pidithullathu, urgent fire station rescue and fire engine required. We need urgent intervention.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Attention ward officer: Traffic light malfunction at Busy Cross junction creating chaotic congestion. Expecting quick response from authorities.,Transport,Traffic Signal,High,Negative
+Grievance report: Open manhole on main street dangerous for pedestrians and children! Expecting quick response from authorities.,Public Works,Open Manhole,Emergency,Frustrated
+Urgent complaint: Drunk persons creating public nuisance and harassing pedestrians at bus stop. Expecting quick response from authorities.,Police,Public Safety,High,Frustrated
+Calling regarding Contaminated yellow muddy water coming out of taps in Shastri Nagar. Kindly look into this immediately.,Water Board,Water Quality,High,Negative
+Kindly note Traffic light malfunction at Busy Cross junction creating chaotic congestion. Over 100 families affected in our locality.,Transport,Traffic Signal,High,Negative
+"Calling regarding Vehicle caught fire on main flyover, road blocked, fire brigade and rescue needed immediately. Please resolve ASAP.",Fire & Rescue,Vehicle Fire,Emergency,Frustrated
+Chain snatching incident reported near central park 30 mins ago. Suspect ran away.,Police,Theft,Emergency,Frustrated
+Citizen alert: Trade license renewal delayed despite submitting all documents. Expecting quick response from authorities.,Municipal Corporation,Certificate Delay,Low,Neutral
+Grievance report: Property tax portal showing wrong calculation and pending dues. Expecting quick response from authorities.,Municipal Corporation,Property Tax,Low,Negative
+Calling regarding Low water pressure in Sector 4 Ward 12. Kindly inspect the pump house. We need urgent intervention.,Water Board,Low Pressure,Medium,Neutral
+Citizen alert: Fallen tree blocking colony inner road after gusty winds. Please resolve ASAP.,Municipal Corporation,Civic Amenities,High,Frustrated
+Citizen alert: Bus shelter collapsed and broken glass scattered around waiting area. Over 100 families affected in our locality.,Transport,Transit Grievance,Medium,Negative
+"Filing grievance for Aag lag gayi hai factory me, jaldi fire brigade aur rescue team bhejo. Please resolve ASAP.",Fire & Rescue,Building Fire,Emergency,Frustrated
+"Calling regarding Underpass flooded with 3 feet of water, road completely impassable. Over 100 families affected in our locality.",Public Works,Potholes,High,Frustrated
+"Citizen alert: Electrical short circuit fire in basement parking, smoke alarm ringing and people trapped. Please resolve ASAP.",Fire & Rescue,Electrical Fire,Emergency,Frustrated
+Attention ward officer: Water tanker driver is asking for extra money illegally in Ward 5. Expecting quick response from authorities.,Water Board,Billing Issue,High,Frustrated
+Smart meter showing faulty readings after heavy rainfall.,Electricity Board,Meter Defect,Medium,Negative
+Citizen alert: Drainage line choked and blocked with plastic waste causing backflow. We need urgent intervention.,Sanitation,Sewage Overflow,High,Frustrated
+"Citizen alert: Kachra nahi uthaya gaya 3 din se, severe smell in entire lane. Please resolve ASAP.",Sanitation,Garbage Pile,High,Frustrated
+Kindly note Smart meter showing faulty readings after heavy rainfall. Please resolve ASAP.,Electricity Board,Meter Defect,Medium,Negative
+Citizen alert: Mosquito breeding in stagnant water spreading Dengue and Malaria outbreak. Please resolve ASAP.,Healthcare,Mosquito Hazard,High,Frustrated
+Help needed: Dead animal lying on public road needs immediate sanitary removal. Kindly look into this immediately.,Sanitation,Sanitation,High,Frustrated
+Urgent complaint: Drainage line choked and blocked with plastic waste causing backflow. We need urgent intervention.,Sanitation,Sewage Overflow,High,Frustrated
+"Citizen alert: Pani nahi aa raha 2 din se, please jaldi saaf pani ki supply shuru karein. Please resolve ASAP.",Water Board,No Supply,High,Frustrated
+Kindly note Open manhole on main street dangerous for pedestrians and children! We need urgent intervention.,Public Works,Open Manhole,Emergency,Frustrated
+Attention ward officer: Bridge expansion joint damaged and vibrating dangerously under traffic. Kindly look into this immediately.,Public Works,Bridge Defect,Emergency,Frustrated
+"Sir/Madam, Trade license renewal delayed despite submitting all documents. Please resolve ASAP.",Municipal Corporation,Certificate Delay,Low,Neutral
+"Vehicle caught fire on main flyover, road blocked, fire brigade and rescue needed immediately.",Fire & Rescue,Vehicle Fire,Emergency,Frustrated
+"Attention ward officer: Pani nahi aa raha 2 din se, please jaldi saaf pani ki supply shuru karein. Kindly look into this immediately.",Water Board,No Supply,High,Frustrated
+"Grievance report: Vehicle caught fire on main flyover, road blocked, fire brigade and rescue needed immediately. Please resolve ASAP.",Fire & Rescue,Vehicle Fire,Emergency,Frustrated
+"Kindly note Fire emergency at local textile godown, blaze spreading rapidly to adjoining houses. Please resolve ASAP.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Grievance report: Mosquito breeding in stagnant water spreading Dengue and Malaria outbreak. Expecting quick response from authorities.,Healthcare,Mosquito Hazard,High,Frustrated
+Citizen alert: Birth certificate application pending for 45 days with no response from ward. Expecting quick response from authorities.,Municipal Corporation,Certificate Delay,Medium,Negative
+"Sir/Madam, Ambulance 108 helpline not answering call during medical emergency. We need urgent intervention.",Healthcare,Hospital Supplies,Emergency,Frustrated
+Complaint registered from Ward 14: Birth certificate application pending for 45 days with no response from ward. Kindly look into this immediately.,Municipal Corporation,Certificate Delay,Medium,Negative
+Calling regarding Stormwater drain slab broken and collapsed into drain on 2nd Avenue. Expecting quick response from authorities.,Public Works,Open Manhole,High,Frustrated
+"Issue reported: Heavy smoke and flames coming from chemical warehouse, send fire engine immediately. We need urgent intervention.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Filing grievance for There is no water supply in our colony since yesterday morning. Pipeline issue. Expecting quick response from authorities.,Water Board,No Supply,High,Frustrated
+Urgent complaint: Frequent voltage fluctuations damaging home electronics in Ward 9. Kindly look into this immediately.,Electricity Board,Voltage Fluctuation,High,Negative
+Kindly note Bio-medical waste discarded openly behind clinic in residential zone. We need urgent intervention.,Healthcare,Mosquito Hazard,Emergency,Frustrated
+"Calling regarding Drinking water line damaged during digging, water supply completely cut off. We need urgent intervention.",Water Board,No Supply,High,Frustrated
+"Complaint registered from Ward 14: Water tank billing issue, I was overcharged for this month. Over 100 families affected in our locality.",Water Board,Billing Issue,Low,Negative
+Filing grievance for Fallen tree blocking colony inner road after gusty winds. We need urgent intervention.,Municipal Corporation,Civic Amenities,High,Frustrated
+"Attention ward officer: Electrical short circuit fire in basement parking, smoke alarm ringing and people trapped. Over 100 families affected in our locality.",Fire & Rescue,Electrical Fire,Emergency,Frustrated
+Attention ward officer: Primary Health Centre doctor absent during official duty hours. Over 100 families affected in our locality.,Healthcare,Doctor Absence,High,Frustrated
+Bridge expansion joint damaged and vibrating dangerously under traffic.,Public Works,Bridge Defect,Emergency,Frustrated
+Attention ward officer: Low water pressure in Sector 4 Ward 12. Kindly inspect the pump house. We need urgent intervention.,Water Board,Low Pressure,Medium,Neutral
+"Sir/Madam, Fire emergency at local textile godown, blaze spreading rapidly to adjoining houses. Kindly look into this immediately.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Grievance report: Mosquito breeding in stagnant water spreading Dengue and Malaria outbreak. Kindly look into this immediately.,Healthcare,Mosquito Hazard,High,Frustrated
+Ambulance 108 helpline not answering call during medical emergency.,Healthcare,Hospital Supplies,Emergency,Frustrated
+Issue reported: Fire in garbage dump yard emitting toxic black smoke and spreading to nearby shops. Expecting quick response from authorities.,Fire & Rescue,Garbage Fire,High,Frustrated
+Urgent complaint: Bus driver driving rashly and skipped scheduled stops on Route 23. We need urgent intervention.,Transport,Bus Delay,Medium,Negative
+"Grievance report: Cylinder blast in residential apartment, fire spreading fast, call fire station rescue team. We need urgent intervention.",Fire & Rescue,Cylinder Explosion,Emergency,Frustrated
+Attention ward officer: Streetlight pole sparking continuously with loose wiring. Please resolve ASAP.,Electricity Board,Dangling Wire,High,Frustrated
+Urgent complaint: City bus route 45 consistently delayed by 1 hour daily during peak morning. Please resolve ASAP.,Transport,Bus Delay,Medium,Negative
+Kindly note City bus route 45 consistently delayed by 1 hour daily during peak morning. Expecting quick response from authorities.,Transport,Bus Delay,Medium,Negative
+Attention ward officer: Traffic light malfunction at Busy Cross junction creating chaotic congestion. We need urgent intervention.,Transport,Traffic Signal,High,Negative
+Electric wire hanging dangerous and low near primary school entrance.,Electricity Board,Dangling Wire,Emergency,Frustrated
+Grievance report: Open garbage dump overflowing on pedestrian walkway outside school. We need urgent intervention.,Sanitation,Garbage Pile,High,Frustrated
+"Kindly note Stray dog menace in colony, pack of dogs chasing children and two-wheelers. Over 100 families affected in our locality.",Municipal Corporation,Stray Animals,High,Frustrated
+Kindly note Dead animal lying on public road needs immediate sanitary removal. Expecting quick response from authorities.,Sanitation,Sanitation,High,Frustrated
+Primary Health Centre doctor absent during official duty hours.,Healthcare,Doctor Absence,High,Frustrated
+"Help needed: Water tank billing issue, I was overcharged for this month. We need urgent intervention.",Water Board,Billing Issue,Low,Negative
+"Filing grievance for Incorrect electricity bill generated, showing 10x normal consumption. Please resolve ASAP.",Electricity Board,Meter Defect,Medium,Negative
+"Grievance report: Bijli chali gayi hai 4 ghante se, transformer se dhuwa nikla hai. Expecting quick response from authorities.",Electricity Board,Power Outage,Emergency,Frustrated
+Attention ward officer: Contaminated yellow muddy water coming out of taps in Shastri Nagar. We need urgent intervention.,Water Board,Water Quality,High,Negative
+Kindly note Primary Health Centre doctor absent during official duty hours. Over 100 families affected in our locality.,Healthcare,Doctor Absence,High,Frustrated
+"Complaint registered from Ward 14: Pani nahi aa raha 2 din se, please jaldi saaf pani ki supply shuru karein. Over 100 families affected in our locality.",Water Board,No Supply,High,Frustrated
+"Paani ki pipe leak ho rahi hai main road par, bahut paani waste ho raha hai.",Water Board,Pipe Damage,Medium,Negative
+Kindly note Illegal parking blocking emergency ambulance entry route to building. Expecting quick response from authorities.,Police,Traffic Violation,High,Frustrated
+"Calling regarding Electrical short circuit fire in basement parking, smoke alarm ringing and people trapped. Please resolve ASAP.",Fire & Rescue,Electrical Fire,Emergency,Frustrated
+Urgent complaint: Government hospital emergency room out of basic lifesaving medicines. Over 100 families affected in our locality.,Healthcare,Hospital Supplies,Emergency,Frustrated
+Bus shelter collapsed and broken glass scattered around waiting area.,Transport,Transit Grievance,Medium,Negative
+"Complaint registered from Ward 14: Cylinder blast in residential apartment, fire spreading fast, call fire station rescue team. Expecting quick response from authorities.",Fire & Rescue,Cylinder Explosion,Emergency,Frustrated
+Filing grievance for There is no water supply in our colony since yesterday morning. Pipeline issue. Please resolve ASAP.,Water Board,No Supply,High,Frustrated
+Grievance report: Smart meter showing faulty readings after heavy rainfall. Please resolve ASAP.,Electricity Board,Meter Defect,Medium,Negative
+Grievance report: Public toilet in market complex completely uncleaned and unusable. We need urgent intervention.,Sanitation,Sanitation,Medium,Negative
+Filing grievance for Volt-ampere drop is causing refrigerator to trip continuously. Please resolve ASAP.,Electricity Board,Voltage Fluctuation,Medium,Neutral
+"Calling regarding Heavy smoke and flames coming from chemical warehouse, send fire engine immediately. Kindly look into this immediately.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Kindly note Bus shelter collapsed and broken glass scattered around waiting area. Kindly look into this immediately.,Transport,Transit Grievance,Medium,Negative
+Filing grievance for Chain snatching incident reported near central park 30 mins ago. Suspect ran away. Over 100 families affected in our locality.,Police,Theft,Emergency,Frustrated
+Grievance report: Low water pressure in Sector 4 Ward 12. Kindly inspect the pump house. Over 100 families affected in our locality.,Water Board,Low Pressure,Medium,Neutral
+"Citizen alert: Paani ki pipe leak ho rahi hai main road par, bahut paani waste ho raha hai. Kindly look into this immediately.",Water Board,Pipe Damage,Medium,Negative
+Kindly note Drainage line choked and blocked with plastic waste causing backflow. We need urgent intervention.,Sanitation,Sewage Overflow,High,Frustrated
+"Grievance report: Stray dog menace in colony, pack of dogs chasing children and two-wheelers. Kindly look into this immediately.",Municipal Corporation,Stray Animals,High,Frustrated
+Kindly note Frequent voltage fluctuations damaging home electronics in Ward 9. Over 100 families affected in our locality.,Electricity Board,Voltage Fluctuation,High,Negative
+Urgent complaint: Ambulance 108 helpline not answering call during medical emergency. Over 100 families affected in our locality.,Healthcare,Hospital Supplies,Emergency,Frustrated
+"Calling regarding Incorrect electricity bill generated, showing 10x normal consumption. Kindly look into this immediately.",Electricity Board,Meter Defect,Medium,Negative
+Help needed: Loud speakers playing beyond midnight illegally near residential area. Over 100 families affected in our locality.,Police,Noise Complaint,Medium,Frustrated
+"Sir/Madam, Road damaged and cracked after heavy rainfall, need urgent resurfacing. Kindly look into this immediately.",Public Works,Potholes,Medium,Negative
+Urgent complaint: Main water pipe burst near Green Park metro station. Water flooding the road! Over 100 families affected in our locality.,Water Board,Pipe Damage,Emergency,Frustrated
+"Citizen alert: Fire emergency at local textile godown, blaze spreading rapidly to adjoining houses. We need urgent intervention.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Filing grievance for Drunk persons creating public nuisance and harassing pedestrians at bus stop. Please resolve ASAP.,Police,Public Safety,High,Frustrated
+Issue reported: Illegal construction and encroachment on public park land. Expecting quick response from authorities.,Municipal Corporation,Encroachment,High,Frustrated
+"Issue reported: Thee pidithullathu, urgent fire station rescue and fire engine required. Kindly look into this immediately.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Help needed: Illegal parking blocking emergency ambulance entry route to building. Kindly look into this immediately.,Police,Traffic Violation,High,Frustrated
+"Sir/Madam, Paani ki pipe leak ho rahi hai main road par, bahut paani waste ho raha hai. Over 100 families affected in our locality.",Water Board,Pipe Damage,Medium,Negative
+"Grievance report: Water tank billing issue, I was overcharged for this month. Please resolve ASAP.",Water Board,Billing Issue,Low,Negative
+Filing grievance for Bus driver driving rashly and skipped scheduled stops on Route 23. Expecting quick response from authorities.,Transport,Bus Delay,Medium,Negative
+Grievance report: Stormwater drain slab broken and collapsed into drain on 2nd Avenue. Expecting quick response from authorities.,Public Works,Open Manhole,High,Frustrated
+Issue reported: Stormwater drain slab broken and collapsed into drain on 2nd Avenue. Please resolve ASAP.,Public Works,Open Manhole,High,Frustrated
+Grievance report: Government hospital emergency room out of basic lifesaving medicines. Please resolve ASAP.,Healthcare,Hospital Supplies,Emergency,Frustrated
+"Kindly note Water tank billing issue, I was overcharged for this month. Expecting quick response from authorities.",Water Board,Billing Issue,Low,Negative
+Kindly note Auto rickshaw drivers refusing by-meter fare and demanding double charges. Please resolve ASAP.,Transport,Transit Grievance,Low,Negative
+Grievance report: Traffic signal violation causing near accidents daily at cross junction. Kindly look into this immediately.,Police,Traffic Violation,Medium,Negative
+Attention ward officer: Thank you water department for repairing the broken pipe quickly today. Over 100 families affected in our locality.,Water Board,Pipe Damage,Low,Positive
+"Help needed: Attempted burglary at locked house in B-Block, door lock tampered. We need urgent intervention.",Police,Theft,Emergency,Frustrated
+Issue reported: Smart meter showing faulty readings after heavy rainfall. Please resolve ASAP.,Electricity Board,Meter Defect,Medium,Negative
+There is no water supply in our colony since yesterday morning. Pipeline issue.,Water Board,No Supply,High,Frustrated
+Kindly note Electric wire hanging dangerous and low near primary school entrance. Please resolve ASAP.,Electricity Board,Dangling Wire,Emergency,Frustrated
+"Underpass flooded with 3 feet of water, road completely impassable.",Public Works,Potholes,High,Frustrated
+Pedestrian sidewalk paving stones dug up and left unfinished.,Public Works,Potholes,Medium,Negative
+"Complaint registered from Ward 14: Water tank billing issue, I was overcharged for this month. We need urgent intervention.",Water Board,Billing Issue,Low,Negative
+Help needed: Main water pipe burst near Green Park metro station. Water flooding the road! Kindly look into this immediately.,Water Board,Pipe Damage,Emergency,Frustrated
+Urgent complaint: Electric wire hanging dangerous and low near primary school entrance. Kindly look into this immediately.,Electricity Board,Dangling Wire,Emergency,Frustrated
+Kindly note Auto rickshaw drivers refusing by-meter fare and demanding double charges. Kindly look into this immediately.,Transport,Transit Grievance,Low,Negative
+Issue reported: Illegal parking blocking emergency ambulance entry route to building. Kindly look into this immediately.,Police,Traffic Violation,High,Frustrated
+"Urgent complaint: Thee pidithullathu, urgent fire station rescue and fire engine required. Over 100 families affected in our locality.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Help needed: Public toilet in market complex completely uncleaned and unusable. Please resolve ASAP.,Sanitation,Sanitation,Medium,Negative
+Complaint registered from Ward 14: Pedestrian sidewalk paving stones dug up and left unfinished. Please resolve ASAP.,Public Works,Potholes,Medium,Negative
+Issue reported: Ambulance 108 helpline not answering call during medical emergency. Expecting quick response from authorities.,Healthcare,Hospital Supplies,Emergency,Frustrated
+"Sir/Madam, Power outage in Phase 2 for past 6 hours. Transformer sparked and caught fire! Over 100 families affected in our locality.",Electricity Board,Transformer Fire,Emergency,Frustrated
+Calling regarding Bio-medical waste discarded openly behind clinic in residential zone. Kindly look into this immediately.,Healthcare,Mosquito Hazard,Emergency,Frustrated
+Urgent complaint: Drunk persons creating public nuisance and harassing pedestrians at bus stop. We need urgent intervention.,Police,Public Safety,High,Frustrated
+"Sir/Madam, Cylinder blast in residential apartment, fire spreading fast, call fire station rescue team. Over 100 families affected in our locality.",Fire & Rescue,Cylinder Explosion,Emergency,Frustrated
+"Water tank billing issue, I was overcharged for this month.",Water Board,Billing Issue,Low,Negative
+"Forest and bush fire spreading near highway residential colony, need firefighters and water tenders.",Fire & Rescue,Wildfire Hazard,Emergency,Frustrated
+Help needed: Electric wire hanging dangerous and low near primary school entrance. We need urgent intervention.,Electricity Board,Dangling Wire,Emergency,Frustrated
+Filing grievance for Fire in garbage dump yard emitting toxic black smoke and spreading to nearby shops. Expecting quick response from authorities.,Fire & Rescue,Garbage Fire,High,Frustrated
+Attention ward officer: Low water pressure in Sector 4 Ward 12. Kindly inspect the pump house. Expecting quick response from authorities.,Water Board,Low Pressure,Medium,Neutral
+Filing grievance for City bus route 45 consistently delayed by 1 hour daily during peak morning. Please resolve ASAP.,Transport,Bus Delay,Medium,Negative
+Calling regarding Loud speakers playing beyond midnight illegally near residential area. Kindly look into this immediately.,Police,Noise Complaint,Medium,Frustrated
+Urgent complaint: Pedestrian sidewalk paving stones dug up and left unfinished. We need urgent intervention.,Public Works,Potholes,Medium,Negative
+"Sir/Madam, Cylinder blast in residential apartment, fire spreading fast, call fire station rescue team. Expecting quick response from authorities.",Fire & Rescue,Cylinder Explosion,Emergency,Frustrated
+Issue reported: Low water pressure in Sector 4 Ward 12. Kindly inspect the pump house. Kindly look into this immediately.,Water Board,Low Pressure,Medium,Neutral
+Urgent complaint: Traffic signal violation causing near accidents daily at cross junction. Please resolve ASAP.,Police,Traffic Violation,Medium,Negative
+Help needed: Pedestrian sidewalk paving stones dug up and left unfinished. Please resolve ASAP.,Public Works,Potholes,Medium,Negative
+Citizen alert: Traffic signal violation causing near accidents daily at cross junction. Kindly look into this immediately.,Police,Traffic Violation,Medium,Negative
+"Thee pidithullathu, urgent fire station rescue and fire engine required.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Kindly note Public toilet in market complex completely uncleaned and unusable. Over 100 families affected in our locality.,Sanitation,Sanitation,Medium,Negative
+Frequent voltage fluctuations damaging home electronics in Ward 9.,Electricity Board,Voltage Fluctuation,High,Negative
+"Calling regarding Kachra nahi uthaya gaya 3 din se, severe smell in entire lane. Expecting quick response from authorities.",Sanitation,Garbage Pile,High,Frustrated
+Filing grievance for Drainage line choked and blocked with plastic waste causing backflow. We need urgent intervention.,Sanitation,Sewage Overflow,High,Frustrated
+"Sir/Madam, Power outage in Phase 2 for past 6 hours. Transformer sparked and caught fire! We need urgent intervention.",Electricity Board,Transformer Fire,Emergency,Frustrated
+Issue reported: Streetlight pole sparking continuously with loose wiring. Over 100 families affected in our locality.,Electricity Board,Dangling Wire,High,Frustrated
+Kindly note Stormwater drain slab broken and collapsed into drain on 2nd Avenue. Please resolve ASAP.,Public Works,Open Manhole,High,Frustrated
+Calling regarding Power cut scheduled without prior notice in industrial layout. Expecting quick response from authorities.,Electricity Board,Power Outage,Medium,Negative
+Issue reported: Massive potholes on main road causing severe traffic jams and bike accidents. We need urgent intervention.,Public Works,Potholes,High,Frustrated
+Filing grievance for Sewage water mixing with rainwater and overflowing on main street. Please resolve ASAP.,Sanitation,Sewage Overflow,Emergency,Frustrated
+Citizen alert: Open garbage dump overflowing on pedestrian walkway outside school. Kindly look into this immediately.,Sanitation,Garbage Pile,High,Frustrated
+Attention ward officer: Sewage water mixing with rainwater and overflowing on main street. Please resolve ASAP.,Sanitation,Sewage Overflow,Emergency,Frustrated
+Attention ward officer: Electric wire hanging dangerous and low near primary school entrance. Expecting quick response from authorities.,Electricity Board,Dangling Wire,Emergency,Frustrated
+Calling regarding Power outage in Phase 2 for past 6 hours. Transformer sparked and caught fire! Expecting quick response from authorities.,Electricity Board,Transformer Fire,Emergency,Frustrated
+Help needed: Water tanker driver is asking for extra money illegally in Ward 5. Over 100 families affected in our locality.,Water Board,Billing Issue,High,Frustrated
+Calling regarding Electric wire hanging dangerous and low near primary school entrance. Expecting quick response from authorities.,Electricity Board,Dangling Wire,Emergency,Frustrated
+"Attention ward officer: Cylinder blast in residential apartment, fire spreading fast, call fire station rescue team. We need urgent intervention.",Fire & Rescue,Cylinder Explosion,Emergency,Frustrated
+Grievance report: Public toilet in market complex completely uncleaned and unusable. We need urgent intervention.,Sanitation,Sanitation,Medium,Negative
+Help needed: Public toilet in market complex completely uncleaned and unusable. Over 100 families affected in our locality.,Sanitation,Sanitation,Medium,Negative
+"Sir/Madam, Incorrect electricity bill generated, showing 10x normal consumption. Expecting quick response from authorities.",Electricity Board,Meter Defect,Medium,Negative
+Issue reported: Power cut scheduled without prior notice in industrial layout. Kindly look into this immediately.,Electricity Board,Power Outage,Medium,Negative
+Help needed: Power outage in Phase 2 for past 6 hours. Transformer sparked and caught fire! We need urgent intervention.,Electricity Board,Transformer Fire,Emergency,Frustrated
+Citizen alert: Illegal construction and encroachment on public park land. Kindly look into this immediately.,Municipal Corporation,Encroachment,High,Frustrated
+Citizen alert: Power outage in Phase 2 for past 6 hours. Transformer sparked and caught fire! Over 100 families affected in our locality.,Electricity Board,Transformer Fire,Emergency,Frustrated
+Urgent complaint: Fallen tree blocking colony inner road after gusty winds. We need urgent intervention.,Municipal Corporation,Civic Amenities,High,Frustrated
+"Citizen alert: Electrical short circuit fire in basement parking, smoke alarm ringing and people trapped. We need urgent intervention.",Fire & Rescue,Electrical Fire,Emergency,Frustrated
+Attention ward officer: Property tax portal showing wrong calculation and pending dues. Over 100 families affected in our locality.,Municipal Corporation,Property Tax,Low,Negative
+"Calling regarding Stray dog menace in colony, pack of dogs chasing children and two-wheelers. Kindly look into this immediately.",Municipal Corporation,Stray Animals,High,Frustrated
+Citizen alert: Auto rickshaw drivers refusing by-meter fare and demanding double charges. We need urgent intervention.,Transport,Transit Grievance,Low,Negative
+"Complaint registered from Ward 14: Water tank billing issue, I was overcharged for this month. Expecting quick response from authorities.",Water Board,Billing Issue,Low,Negative
+"Filing grievance for Fire broke out in commercial building near main market, urgent fire rescue needed! We need urgent intervention.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Kindly note Vehicle stolen from apartment parking lot last night. Expecting quick response from authorities.,Police,Theft,High,Frustrated
+"Attention ward officer: Aag lag gayi hai factory me, jaldi fire brigade aur rescue team bhejo. Expecting quick response from authorities.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Citizen alert: Trade license renewal delayed despite submitting all documents. We need urgent intervention.,Municipal Corporation,Certificate Delay,Low,Neutral
+"Kindly note Forest and bush fire spreading near highway residential colony, need firefighters and water tenders. Expecting quick response from authorities.",Fire & Rescue,Wildfire Hazard,Emergency,Frustrated
+"Urgent complaint: Paani ki pipe leak ho rahi hai main road par, bahut paani waste ho raha hai. Over 100 families affected in our locality.",Water Board,Pipe Damage,Medium,Negative
+"Fire broke out in commercial building near main market, urgent fire rescue needed!",Fire & Rescue,Building Fire,Emergency,Frustrated
+Help needed: Garbage collection vehicle not coming for last 4 days in Block D. Kindly look into this immediately.,Sanitation,Garbage Pile,High,Frustrated
+"Issue reported: Electrical short circuit fire in basement parking, smoke alarm ringing and people trapped. Over 100 families affected in our locality.",Fire & Rescue,Electrical Fire,Emergency,Frustrated
+Urgent complaint: Mosquito breeding in stagnant water spreading Dengue and Malaria outbreak. Expecting quick response from authorities.,Healthcare,Mosquito Hazard,High,Frustrated
+Urgent complaint: Low water pressure in Sector 4 Ward 12. Kindly inspect the pump house. We need urgent intervention.,Water Board,Low Pressure,Medium,Neutral
+"Attention ward officer: Attempted burglary at locked house in B-Block, door lock tampered. Kindly look into this immediately.",Police,Theft,Emergency,Frustrated
+Issue reported: Power outage in Phase 2 for past 6 hours. Transformer sparked and caught fire! Over 100 families affected in our locality.,Electricity Board,Transformer Fire,Emergency,Frustrated
+Help needed: Chain snatching incident reported near central park 30 mins ago. Suspect ran away. Expecting quick response from authorities.,Police,Theft,Emergency,Frustrated
+"Sir/Madam, Food poisoning outbreak reported from unhygienic street vendor stall. Kindly look into this immediately.",Healthcare,Food Safety,Emergency,Frustrated
+Kindly note Power cut scheduled without prior notice in industrial layout. Please resolve ASAP.,Electricity Board,Power Outage,Medium,Negative
+Attention ward officer: Frequent voltage fluctuations damaging home electronics in Ward 9. Over 100 families affected in our locality.,Electricity Board,Voltage Fluctuation,High,Negative
+Kindly note Pedestrian sidewalk paving stones dug up and left unfinished. We need urgent intervention.,Public Works,Potholes,Medium,Negative
+"Calling regarding Drinking water line damaged during digging, water supply completely cut off. Kindly look into this immediately.",Water Board,No Supply,High,Frustrated
+Calling regarding Property tax portal showing wrong calculation and pending dues. Please resolve ASAP.,Municipal Corporation,Property Tax,Low,Negative
+Citizen alert: Low water pressure in Sector 4 Ward 12. Kindly inspect the pump house. Kindly look into this immediately.,Water Board,Low Pressure,Medium,Neutral
+"Urgent complaint: Paani ki pipe leak ho rahi hai main road par, bahut paani waste ho raha hai. Over 100 families affected in our locality.",Water Board,Pipe Damage,Medium,Negative
+Attention ward officer: Birth certificate application pending for 45 days with no response from ward. Expecting quick response from authorities.,Municipal Corporation,Certificate Delay,Medium,Negative
+Grievance report: Volt-ampere drop is causing refrigerator to trip continuously. Over 100 families affected in our locality.,Electricity Board,Voltage Fluctuation,Medium,Neutral
+Complaint registered from Ward 14: Illegal construction and encroachment on public park land. We need urgent intervention.,Municipal Corporation,Encroachment,High,Frustrated
+Urgent complaint: Bus driver driving rashly and skipped scheduled stops on Route 23. Kindly look into this immediately.,Transport,Bus Delay,Medium,Negative
+"Sir/Madam, Open garbage dump overflowing on pedestrian walkway outside school. Over 100 families affected in our locality.",Sanitation,Garbage Pile,High,Frustrated
+"Sir/Madam, Fire in garbage dump yard emitting toxic black smoke and spreading to nearby shops. Expecting quick response from authorities.",Fire & Rescue,Garbage Fire,High,Frustrated
+Attention ward officer: Volt-ampere drop is causing refrigerator to trip continuously. Please resolve ASAP.,Electricity Board,Voltage Fluctuation,Medium,Neutral
+"Help needed: Thee pidithullathu, urgent fire station rescue and fire engine required. Over 100 families affected in our locality.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Calling regarding Government hospital emergency room out of basic lifesaving medicines. Kindly look into this immediately.,Healthcare,Hospital Supplies,Emergency,Frustrated
+Urgent complaint: Stormwater drain slab broken and collapsed into drain on 2nd Avenue. We need urgent intervention.,Public Works,Open Manhole,High,Frustrated
+Illegal parking blocking emergency ambulance entry route to building.,Police,Traffic Violation,High,Frustrated
+"Calling regarding Paani ki pipe leak ho rahi hai main road par, bahut paani waste ho raha hai. We need urgent intervention.",Water Board,Pipe Damage,Medium,Negative
+Complaint registered from Ward 14: Volt-ampere drop is causing refrigerator to trip continuously. Over 100 families affected in our locality.,Electricity Board,Voltage Fluctuation,Medium,Neutral
+Complaint registered from Ward 14: Government hospital emergency room out of basic lifesaving medicines. Kindly look into this immediately.,Healthcare,Hospital Supplies,Emergency,Frustrated
+Issue reported: Mosquito breeding in stagnant water spreading Dengue and Malaria outbreak. Expecting quick response from authorities.,Healthcare,Mosquito Hazard,High,Frustrated
+"Issue reported: Vehicle caught fire on main flyover, road blocked, fire brigade and rescue needed immediately. Expecting quick response from authorities.",Fire & Rescue,Vehicle Fire,Emergency,Frustrated
+"Calling regarding Pani nahi aa raha 2 din se, please jaldi saaf pani ki supply shuru karein. Please resolve ASAP.",Water Board,No Supply,High,Frustrated
+Issue reported: Power cut scheduled without prior notice in industrial layout. Expecting quick response from authorities.,Electricity Board,Power Outage,Medium,Negative
+Citizen alert: Pedestrian sidewalk paving stones dug up and left unfinished. Please resolve ASAP.,Public Works,Potholes,Medium,Negative
+Bus driver driving rashly and skipped scheduled stops on Route 23.,Transport,Bus Delay,Medium,Negative
+Issue reported: Frequent voltage fluctuations damaging home electronics in Ward 9. Over 100 families affected in our locality.,Electricity Board,Voltage Fluctuation,High,Negative
+Attention ward officer: Traffic light malfunction at Busy Cross junction creating chaotic congestion. Over 100 families affected in our locality.,Transport,Traffic Signal,High,Negative
+"Grievance report: Road damaged and cracked after heavy rainfall, need urgent resurfacing. Kindly look into this immediately.",Public Works,Potholes,Medium,Negative
+Citizen alert: Pedestrian sidewalk paving stones dug up and left unfinished. Expecting quick response from authorities.,Public Works,Potholes,Medium,Negative
+"Help needed: Attempted burglary at locked house in B-Block, door lock tampered. Please resolve ASAP.",Police,Theft,Emergency,Frustrated
+Grievance report: Traffic light malfunction at Busy Cross junction creating chaotic congestion. Kindly look into this immediately.,Transport,Traffic Signal,High,Negative
+"Sir/Madam, Ambulance 108 helpline not answering call during medical emergency. Expecting quick response from authorities.",Healthcare,Hospital Supplies,Emergency,Frustrated
+Issue reported: Vehicle stolen from apartment parking lot last night. Kindly look into this immediately.,Police,Theft,High,Frustrated
+"Help needed: Kachra nahi uthaya gaya 3 din se, severe smell in entire lane. Please resolve ASAP.",Sanitation,Garbage Pile,High,Frustrated
+Grievance report: Low water pressure in Sector 4 Ward 12. Kindly inspect the pump house. Expecting quick response from authorities.,Water Board,Low Pressure,Medium,Neutral
+Filing grievance for Smart meter showing faulty readings after heavy rainfall. We need urgent intervention.,Electricity Board,Meter Defect,Medium,Negative
+"Issue reported: Pani nahi aa raha 2 din se, please jaldi saaf pani ki supply shuru karein. Expecting quick response from authorities.",Water Board,No Supply,High,Frustrated
+"Kindly note Drinking water line damaged during digging, water supply completely cut off. Over 100 families affected in our locality.",Water Board,No Supply,High,Frustrated
+"Kindly note Kachra nahi uthaya gaya 3 din se, severe smell in entire lane. Kindly look into this immediately.",Sanitation,Garbage Pile,High,Frustrated
+Urgent complaint: Bridge expansion joint damaged and vibrating dangerously under traffic. Over 100 families affected in our locality.,Public Works,Bridge Defect,Emergency,Frustrated
+Attention ward officer: Water tanker driver is asking for extra money illegally in Ward 5. Expecting quick response from authorities.,Water Board,Billing Issue,High,Frustrated
+"Attention ward officer: Cylinder blast in residential apartment, fire spreading fast, call fire station rescue team. Over 100 families affected in our locality.",Fire & Rescue,Cylinder Explosion,Emergency,Frustrated
+Citizen alert: Fire in garbage dump yard emitting toxic black smoke and spreading to nearby shops. Over 100 families affected in our locality.,Fire & Rescue,Garbage Fire,High,Frustrated
+Traffic signal violation causing near accidents daily at cross junction.,Police,Traffic Violation,Medium,Negative
+Attention ward officer: Pedestrian sidewalk paving stones dug up and left unfinished. Expecting quick response from authorities.,Public Works,Potholes,Medium,Negative
+Filing grievance for Traffic signal violation causing near accidents daily at cross junction. We need urgent intervention.,Police,Traffic Violation,Medium,Negative
+Filing grievance for Open manhole on main street dangerous for pedestrians and children! Expecting quick response from authorities.,Public Works,Open Manhole,Emergency,Frustrated
+Grievance report: Traffic signal violation causing near accidents daily at cross junction. Kindly look into this immediately.,Police,Traffic Violation,Medium,Negative
+"Grievance report: Bijli chali gayi hai 4 ghante se, transformer se dhuwa nikla hai. Over 100 families affected in our locality.",Electricity Board,Power Outage,Emergency,Frustrated
+"Sir/Madam, Thee pidithullathu, urgent fire station rescue and fire engine required. We need urgent intervention.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Attention ward officer: Power outage in Phase 2 for past 6 hours. Transformer sparked and caught fire! Kindly look into this immediately.,Electricity Board,Transformer Fire,Emergency,Frustrated
+"Issue reported: Paani ki pipe leak ho rahi hai main road par, bahut paani waste ho raha hai. Please resolve ASAP.",Water Board,Pipe Damage,Medium,Negative
+Complaint registered from Ward 14: Power cut scheduled without prior notice in industrial layout. Please resolve ASAP.,Electricity Board,Power Outage,Medium,Negative
+Help needed: Electric wire hanging dangerous and low near primary school entrance. Over 100 families affected in our locality.,Electricity Board,Dangling Wire,Emergency,Frustrated
+Grievance report: Illegal parking blocking emergency ambulance entry route to building. Kindly look into this immediately.,Police,Traffic Violation,High,Frustrated
+Grievance report: Government hospital emergency room out of basic lifesaving medicines. Please resolve ASAP.,Healthcare,Hospital Supplies,Emergency,Frustrated
+Water tanker driver is asking for extra money illegally in Ward 5.,Water Board,Billing Issue,High,Frustrated
+Attention ward officer: Dead animal lying on public road needs immediate sanitary removal. We need urgent intervention.,Sanitation,Sanitation,High,Frustrated
+Issue reported: Government hospital emergency room out of basic lifesaving medicines. Over 100 families affected in our locality.,Healthcare,Hospital Supplies,Emergency,Frustrated
+Attention ward officer: Auto rickshaw drivers refusing by-meter fare and demanding double charges. Please resolve ASAP.,Transport,Transit Grievance,Low,Negative
+Citizen alert: Main water pipe burst near Green Park metro station. Water flooding the road! Kindly look into this immediately.,Water Board,Pipe Damage,Emergency,Frustrated
+Filing grievance for Primary Health Centre doctor absent during official duty hours. Over 100 families affected in our locality.,Healthcare,Doctor Absence,High,Frustrated
+Low water pressure in Sector 4 Ward 12. Kindly inspect the pump house.,Water Board,Low Pressure,Medium,Neutral
+"Attention ward officer: Bijli chali gayi hai 4 ghante se, transformer se dhuwa nikla hai. Expecting quick response from authorities.",Electricity Board,Power Outage,Emergency,Frustrated
+Help needed: Vehicle stolen from apartment parking lot last night. Over 100 families affected in our locality.,Police,Theft,High,Frustrated
+"Help needed: Underpass flooded with 3 feet of water, road completely impassable. We need urgent intervention.",Public Works,Potholes,High,Frustrated
+Help needed: Fire in garbage dump yard emitting toxic black smoke and spreading to nearby shops. Kindly look into this immediately.,Fire & Rescue,Garbage Fire,High,Frustrated
+Power cut scheduled without prior notice in industrial layout.,Electricity Board,Power Outage,Medium,Negative
+"Kindly note Aag lag gayi hai factory me, jaldi fire brigade aur rescue team bhejo. We need urgent intervention.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Help needed: Drainage line choked and blocked with plastic waste causing backflow. Please resolve ASAP.,Sanitation,Sewage Overflow,High,Frustrated
+Open manhole on main street dangerous for pedestrians and children!,Public Works,Open Manhole,Emergency,Frustrated
+Calling regarding Vehicle stolen from apartment parking lot last night. Kindly look into this immediately.,Police,Theft,High,Frustrated
+"Help needed: Drinking water line damaged during digging, water supply completely cut off. Expecting quick response from authorities.",Water Board,No Supply,High,Frustrated
+Issue reported: Massive potholes on main road causing severe traffic jams and bike accidents. Kindly look into this immediately.,Public Works,Potholes,High,Frustrated
+Issue reported: Water tanker driver is asking for extra money illegally in Ward 5. We need urgent intervention.,Water Board,Billing Issue,High,Frustrated
+Attention ward officer: Traffic signal violation causing near accidents daily at cross junction. Over 100 families affected in our locality.,Police,Traffic Violation,Medium,Negative
+"Kindly note Underpass flooded with 3 feet of water, road completely impassable. Kindly look into this immediately.",Public Works,Potholes,High,Frustrated
+Filing grievance for Chain snatching incident reported near central park 30 mins ago. Suspect ran away. Please resolve ASAP.,Police,Theft,Emergency,Frustrated
+Kindly note Mosquito breeding in stagnant water spreading Dengue and Malaria outbreak. Kindly look into this immediately.,Healthcare,Mosquito Hazard,High,Frustrated
+Issue reported: Fallen tree blocking colony inner road after gusty winds. Kindly look into this immediately.,Municipal Corporation,Civic Amenities,High,Frustrated
+Kindly note Pedestrian sidewalk paving stones dug up and left unfinished. We need urgent intervention.,Public Works,Potholes,Medium,Negative
+Help needed: Dead animal lying on public road needs immediate sanitary removal. We need urgent intervention.,Sanitation,Sanitation,High,Frustrated
+Filing grievance for Vehicle stolen from apartment parking lot last night. Over 100 families affected in our locality.,Police,Theft,High,Frustrated
+Attention ward officer: Power outage in Phase 2 for past 6 hours. Transformer sparked and caught fire! Kindly look into this immediately.,Electricity Board,Transformer Fire,Emergency,Frustrated
+Help needed: Illegal construction and encroachment on public park land. Expecting quick response from authorities.,Municipal Corporation,Encroachment,High,Frustrated
+"Filing grievance for Fire broke out in commercial building near main market, urgent fire rescue needed! We need urgent intervention.",Fire & Rescue,Building Fire,Emergency,Frustrated
+"Grievance report: Smoke coming out of closed shop, smell of burning wire and gas leak. Over 100 families affected in our locality.",Fire & Rescue,Electrical Fire,High,Frustrated
+Attention ward officer: Pedestrian sidewalk paving stones dug up and left unfinished. Expecting quick response from authorities.,Public Works,Potholes,Medium,Negative
+Citizen alert: Garbage collection vehicle not coming for last 4 days in Block D. Expecting quick response from authorities.,Sanitation,Garbage Pile,High,Frustrated
+Kindly note Bio-medical waste discarded openly behind clinic in residential zone. Please resolve ASAP.,Healthcare,Mosquito Hazard,Emergency,Frustrated
+"Urgent complaint: Incorrect electricity bill generated, showing 10x normal consumption. Expecting quick response from authorities.",Electricity Board,Meter Defect,Medium,Negative
+City bus route 45 consistently delayed by 1 hour daily during peak morning.,Transport,Bus Delay,Medium,Negative
+Filing grievance for Auto rickshaw drivers refusing by-meter fare and demanding double charges. We need urgent intervention.,Transport,Transit Grievance,Low,Negative
+"Sir/Madam, Heavy smoke and flames coming from chemical warehouse, send fire engine immediately. Kindly look into this immediately.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Issue reported: Auto rickshaw drivers refusing by-meter fare and demanding double charges. Expecting quick response from authorities.,Transport,Transit Grievance,Low,Negative
+"Pani nahi aa raha 2 din se, please jaldi saaf pani ki supply shuru karein.",Water Board,No Supply,High,Frustrated
+Help needed: Birth certificate application pending for 45 days with no response from ward. Kindly look into this immediately.,Municipal Corporation,Certificate Delay,Medium,Negative
+"Citizen alert: Attempted burglary at locked house in B-Block, door lock tampered. Over 100 families affected in our locality.",Police,Theft,Emergency,Frustrated
+Grievance report: Bus driver driving rashly and skipped scheduled stops on Route 23. Kindly look into this immediately.,Transport,Bus Delay,Medium,Negative
+Kindly note Traffic light malfunction at Busy Cross junction creating chaotic congestion. We need urgent intervention.,Transport,Traffic Signal,High,Negative
+Help needed: Property tax portal showing wrong calculation and pending dues. Kindly look into this immediately.,Municipal Corporation,Property Tax,Low,Negative
+Calling regarding Ambulance 108 helpline not answering call during medical emergency. We need urgent intervention.,Healthcare,Hospital Supplies,Emergency,Frustrated
+"Filing grievance for Vehicle caught fire on main flyover, road blocked, fire brigade and rescue needed immediately. We need urgent intervention.",Fire & Rescue,Vehicle Fire,Emergency,Frustrated
+Attention ward officer: Dead animal lying on public road needs immediate sanitary removal. Expecting quick response from authorities.,Sanitation,Sanitation,High,Frustrated
+Filing grievance for Bio-medical waste discarded openly behind clinic in residential zone. Over 100 families affected in our locality.,Healthcare,Mosquito Hazard,Emergency,Frustrated
+Complaint registered from Ward 14: Auto rickshaw drivers refusing by-meter fare and demanding double charges. We need urgent intervention.,Transport,Transit Grievance,Low,Negative
+"Help needed: Stray dog menace in colony, pack of dogs chasing children and two-wheelers. Over 100 families affected in our locality.",Municipal Corporation,Stray Animals,High,Frustrated
+"Filing grievance for Aag lag gayi hai factory me, jaldi fire brigade aur rescue team bhejo. Please resolve ASAP.",Fire & Rescue,Building Fire,Emergency,Frustrated
+"Sir/Madam, Bio-medical waste discarded openly behind clinic in residential zone. Kindly look into this immediately.",Healthcare,Mosquito Hazard,Emergency,Frustrated
+Urgent complaint: Birth certificate application pending for 45 days with no response from ward. Expecting quick response from authorities.,Municipal Corporation,Certificate Delay,Medium,Negative
+"Kindly note Incorrect electricity bill generated, showing 10x normal consumption. We need urgent intervention.",Electricity Board,Meter Defect,Medium,Negative
+Help needed: Chain snatching incident reported near central park 30 mins ago. Suspect ran away. We need urgent intervention.,Police,Theft,Emergency,Frustrated
+"Kindly note Cylinder blast in residential apartment, fire spreading fast, call fire station rescue team. Please resolve ASAP.",Fire & Rescue,Cylinder Explosion,Emergency,Frustrated
+Citizen alert: Stormwater drain slab broken and collapsed into drain on 2nd Avenue. Please resolve ASAP.,Public Works,Open Manhole,High,Frustrated
+"Kindly note Aag lag gayi hai factory me, jaldi fire brigade aur rescue team bhejo. We need urgent intervention.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Calling regarding Auto rickshaw drivers refusing by-meter fare and demanding double charges. Over 100 families affected in our locality.,Transport,Transit Grievance,Low,Negative
+Urgent complaint: Primary Health Centre doctor absent during official duty hours. Please resolve ASAP.,Healthcare,Doctor Absence,High,Frustrated
+Urgent complaint: Public toilet in market complex completely uncleaned and unusable. Expecting quick response from authorities.,Sanitation,Sanitation,Medium,Negative
+Issue reported: Volt-ampere drop is causing refrigerator to trip continuously. Please resolve ASAP.,Electricity Board,Voltage Fluctuation,Medium,Neutral
+"Electrical short circuit fire in basement parking, smoke alarm ringing and people trapped.",Fire & Rescue,Electrical Fire,Emergency,Frustrated
+Urgent complaint: Sewage water mixing with rainwater and overflowing on main street. Over 100 families affected in our locality.,Sanitation,Sewage Overflow,Emergency,Frustrated
+Loud speakers playing beyond midnight illegally near residential area.,Police,Noise Complaint,Medium,Frustrated
+Citizen alert: Pedestrian sidewalk paving stones dug up and left unfinished. Over 100 families affected in our locality.,Public Works,Potholes,Medium,Negative
+"Sir/Madam, Pedestrian sidewalk paving stones dug up and left unfinished. Please resolve ASAP.",Public Works,Potholes,Medium,Negative
+Urgent complaint: Low water pressure in Sector 4 Ward 12. Kindly inspect the pump house. Expecting quick response from authorities.,Water Board,Low Pressure,Medium,Neutral
+"Issue reported: Underpass flooded with 3 feet of water, road completely impassable. Please resolve ASAP.",Public Works,Potholes,High,Frustrated
+Thank you water department for repairing the broken pipe quickly today.,Water Board,Pipe Damage,Low,Positive
+"Attention ward officer: Bijli chali gayi hai 4 ghante se, transformer se dhuwa nikla hai. Expecting quick response from authorities.",Electricity Board,Power Outage,Emergency,Frustrated
+Drunk persons creating public nuisance and harassing pedestrians at bus stop.,Police,Public Safety,High,Frustrated
+"Sir/Madam, Power outage in Phase 2 for past 6 hours. Transformer sparked and caught fire! Over 100 families affected in our locality.",Electricity Board,Transformer Fire,Emergency,Frustrated
+Kindly note Government hospital emergency room out of basic lifesaving medicines. Over 100 families affected in our locality.,Healthcare,Hospital Supplies,Emergency,Frustrated
+Attention ward officer: Electric wire hanging dangerous and low near primary school entrance. Over 100 families affected in our locality.,Electricity Board,Dangling Wire,Emergency,Frustrated
+Issue reported: Bridge expansion joint damaged and vibrating dangerously under traffic. Please resolve ASAP.,Public Works,Bridge Defect,Emergency,Frustrated
+Complaint registered from Ward 14: Bus shelter collapsed and broken glass scattered around waiting area. We need urgent intervention.,Transport,Transit Grievance,Medium,Negative
+Citizen alert: Food poisoning outbreak reported from unhygienic street vendor stall. Please resolve ASAP.,Healthcare,Food Safety,Emergency,Frustrated
+"Bijli chali gayi hai 4 ghante se, transformer se dhuwa nikla hai.",Electricity Board,Power Outage,Emergency,Frustrated
+Complaint registered from Ward 14: Trade license renewal delayed despite submitting all documents. Expecting quick response from authorities.,Municipal Corporation,Certificate Delay,Low,Neutral
+Urgent complaint: Open garbage dump overflowing on pedestrian walkway outside school. Please resolve ASAP.,Sanitation,Garbage Pile,High,Frustrated
+Urgent complaint: Illegal construction and encroachment on public park land. Kindly look into this immediately.,Municipal Corporation,Encroachment,High,Frustrated
+Issue reported: Birth certificate application pending for 45 days with no response from ward. Kindly look into this immediately.,Municipal Corporation,Certificate Delay,Medium,Negative
+Massive potholes on main road causing severe traffic jams and bike accidents.,Public Works,Potholes,High,Frustrated
+"Sir/Madam, Government hospital emergency room out of basic lifesaving medicines. Over 100 families affected in our locality.",Healthcare,Hospital Supplies,Emergency,Frustrated
+"Calling regarding Stray dog menace in colony, pack of dogs chasing children and two-wheelers. Please resolve ASAP.",Municipal Corporation,Stray Animals,High,Frustrated
+Urgent complaint: Illegal parking blocking emergency ambulance entry route to building. Over 100 families affected in our locality.,Police,Traffic Violation,High,Frustrated
+Complaint registered from Ward 14: Open garbage dump overflowing on pedestrian walkway outside school. Expecting quick response from authorities.,Sanitation,Garbage Pile,High,Frustrated
+"Citizen alert: Stray dog menace in colony, pack of dogs chasing children and two-wheelers. We need urgent intervention.",Municipal Corporation,Stray Animals,High,Frustrated
+"Urgent complaint: Cylinder blast in residential apartment, fire spreading fast, call fire station rescue team. Over 100 families affected in our locality.",Fire & Rescue,Cylinder Explosion,Emergency,Frustrated
+Issue reported: Sewage water mixing with rainwater and overflowing on main street. Kindly look into this immediately.,Sanitation,Sewage Overflow,Emergency,Frustrated
+Calling regarding Bus shelter collapsed and broken glass scattered around waiting area. We need urgent intervention.,Transport,Transit Grievance,Medium,Negative
+Kindly note Open garbage dump overflowing on pedestrian walkway outside school. We need urgent intervention.,Sanitation,Garbage Pile,High,Frustrated
+Filing grievance for Open manhole on main street dangerous for pedestrians and children! Expecting quick response from authorities.,Public Works,Open Manhole,Emergency,Frustrated
+Urgent complaint: Fire in garbage dump yard emitting toxic black smoke and spreading to nearby shops. We need urgent intervention.,Fire & Rescue,Garbage Fire,High,Frustrated
+"Sir/Madam, Property tax portal showing wrong calculation and pending dues. Expecting quick response from authorities.",Municipal Corporation,Property Tax,Low,Negative
+Kindly note Chain snatching incident reported near central park 30 mins ago. Suspect ran away. We need urgent intervention.,Police,Theft,Emergency,Frustrated
+"Attention ward officer: Cylinder blast in residential apartment, fire spreading fast, call fire station rescue team. We need urgent intervention.",Fire & Rescue,Cylinder Explosion,Emergency,Frustrated
+Complaint registered from Ward 14: Ambulance 108 helpline not answering call during medical emergency. Over 100 families affected in our locality.,Healthcare,Hospital Supplies,Emergency,Frustrated
+Citizen alert: Mosquito breeding in stagnant water spreading Dengue and Malaria outbreak. Kindly look into this immediately.,Healthcare,Mosquito Hazard,High,Frustrated
+Help needed: Bridge expansion joint damaged and vibrating dangerously under traffic. Kindly look into this immediately.,Public Works,Bridge Defect,Emergency,Frustrated
+Urgent complaint: Government hospital emergency room out of basic lifesaving medicines. We need urgent intervention.,Healthcare,Hospital Supplies,Emergency,Frustrated
+Help needed: There is no water supply in our colony since yesterday morning. Pipeline issue. We need urgent intervention.,Water Board,No Supply,High,Frustrated
+Issue reported: Contaminated yellow muddy water coming out of taps in Shastri Nagar. Please resolve ASAP.,Water Board,Water Quality,High,Negative
+"Calling regarding Cylinder blast in residential apartment, fire spreading fast, call fire station rescue team. Over 100 families affected in our locality.",Fire & Rescue,Cylinder Explosion,Emergency,Frustrated
+Complaint registered from Ward 14: Volt-ampere drop is causing refrigerator to trip continuously. Please resolve ASAP.,Electricity Board,Voltage Fluctuation,Medium,Neutral
+Urgent complaint: Open manhole on main street dangerous for pedestrians and children! Please resolve ASAP.,Public Works,Open Manhole,Emergency,Frustrated
+Attention ward officer: Ambulance 108 helpline not answering call during medical emergency. We need urgent intervention.,Healthcare,Hospital Supplies,Emergency,Frustrated
+"Sir/Madam, Mosquito breeding in stagnant water spreading Dengue and Malaria outbreak. We need urgent intervention.",Healthcare,Mosquito Hazard,High,Frustrated
+"Sir/Madam, Drunk persons creating public nuisance and harassing pedestrians at bus stop. Over 100 families affected in our locality.",Police,Public Safety,High,Frustrated
+Government hospital emergency room out of basic lifesaving medicines.,Healthcare,Hospital Supplies,Emergency,Frustrated
+"Sir/Madam, Smoke coming out of closed shop, smell of burning wire and gas leak. Over 100 families affected in our locality.",Fire & Rescue,Electrical Fire,High,Frustrated
+Help needed: Streetlight pole sparking continuously with loose wiring. Over 100 families affected in our locality.,Electricity Board,Dangling Wire,High,Frustrated
+Grievance report: Frequent voltage fluctuations damaging home electronics in Ward 9. Expecting quick response from authorities.,Electricity Board,Voltage Fluctuation,High,Negative
+Urgent complaint: Primary Health Centre doctor absent during official duty hours. Over 100 families affected in our locality.,Healthcare,Doctor Absence,High,Frustrated
+Filing grievance for Food poisoning outbreak reported from unhygienic street vendor stall. We need urgent intervention.,Healthcare,Food Safety,Emergency,Frustrated
+Filing grievance for Primary Health Centre doctor absent during official duty hours. Expecting quick response from authorities.,Healthcare,Doctor Absence,High,Frustrated
+"Aag lag gayi hai factory me, jaldi fire brigade aur rescue team bhejo.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Help needed: Open manhole on main street dangerous for pedestrians and children! We need urgent intervention.,Public Works,Open Manhole,Emergency,Frustrated
+Public toilet in market complex completely uncleaned and unusable.,Sanitation,Sanitation,Medium,Negative
+Complaint registered from Ward 14: Loud speakers playing beyond midnight illegally near residential area. Kindly look into this immediately.,Police,Noise Complaint,Medium,Frustrated
+Urgent complaint: Bridge expansion joint damaged and vibrating dangerously under traffic. Please resolve ASAP.,Public Works,Bridge Defect,Emergency,Frustrated
+"Calling regarding Smoke coming out of closed shop, smell of burning wire and gas leak. Kindly look into this immediately.",Fire & Rescue,Electrical Fire,High,Frustrated
+"Help needed: Kachra nahi uthaya gaya 3 din se, severe smell in entire lane. Over 100 families affected in our locality.",Sanitation,Garbage Pile,High,Frustrated
+Attention ward officer: Government hospital emergency room out of basic lifesaving medicines. Over 100 families affected in our locality.,Healthcare,Hospital Supplies,Emergency,Frustrated
+"Grievance report: Heavy smoke and flames coming from chemical warehouse, send fire engine immediately. Kindly look into this immediately.",Fire & Rescue,Building Fire,Emergency,Frustrated
+"Sir/Madam, Fire in garbage dump yard emitting toxic black smoke and spreading to nearby shops. Please resolve ASAP.",Fire & Rescue,Garbage Fire,High,Frustrated
+Grievance report: Bridge expansion joint damaged and vibrating dangerously under traffic. Please resolve ASAP.,Public Works,Bridge Defect,Emergency,Frustrated
+Attention ward officer: City bus route 45 consistently delayed by 1 hour daily during peak morning. Over 100 families affected in our locality.,Transport,Bus Delay,Medium,Negative
+Attention ward officer: Open garbage dump overflowing on pedestrian walkway outside school. We need urgent intervention.,Sanitation,Garbage Pile,High,Frustrated
+Filing grievance for Pedestrian sidewalk paving stones dug up and left unfinished. Over 100 families affected in our locality.,Public Works,Potholes,Medium,Negative
+Filing grievance for Trade license renewal delayed despite submitting all documents. We need urgent intervention.,Municipal Corporation,Certificate Delay,Low,Neutral
+"Sir/Madam, Vehicle stolen from apartment parking lot last night. Please resolve ASAP.",Police,Theft,High,Frustrated
+Help needed: Thank you water department for repairing the broken pipe quickly today. Expecting quick response from authorities.,Water Board,Pipe Damage,Low,Positive
+Kindly note Pedestrian sidewalk paving stones dug up and left unfinished. Please resolve ASAP.,Public Works,Potholes,Medium,Negative
+"Grievance report: Water tank billing issue, I was overcharged for this month. We need urgent intervention.",Water Board,Billing Issue,Low,Negative
+Issue reported: Thank you water department for repairing the broken pipe quickly today. We need urgent intervention.,Water Board,Pipe Damage,Low,Positive
+Kindly note Fallen tree blocking colony inner road after gusty winds. Please resolve ASAP.,Municipal Corporation,Civic Amenities,High,Frustrated
+"Grievance report: Vehicle caught fire on main flyover, road blocked, fire brigade and rescue needed immediately. Kindly look into this immediately.",Fire & Rescue,Vehicle Fire,Emergency,Frustrated
+"Urgent complaint: Water tank billing issue, I was overcharged for this month. Over 100 families affected in our locality.",Water Board,Billing Issue,Low,Negative
+"Complaint registered from Ward 14: Thee pidithullathu, urgent fire station rescue and fire engine required. Please resolve ASAP.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Complaint registered from Ward 14: Fallen tree blocking colony inner road after gusty winds. Over 100 families affected in our locality.,Municipal Corporation,Civic Amenities,High,Frustrated
+Issue reported: Chain snatching incident reported near central park 30 mins ago. Suspect ran away. Over 100 families affected in our locality.,Police,Theft,Emergency,Frustrated
+"Calling regarding Underpass flooded with 3 feet of water, road completely impassable. Please resolve ASAP.",Public Works,Potholes,High,Frustrated
+Help needed: Primary Health Centre doctor absent during official duty hours. Over 100 families affected in our locality.,Healthcare,Doctor Absence,High,Frustrated
+Calling regarding Illegal parking blocking emergency ambulance entry route to building. Expecting quick response from authorities.,Police,Traffic Violation,High,Frustrated
+Help needed: Bus driver driving rashly and skipped scheduled stops on Route 23. Over 100 families affected in our locality.,Transport,Bus Delay,Medium,Negative
+Filing grievance for Public toilet in market complex completely uncleaned and unusable. Over 100 families affected in our locality.,Sanitation,Sanitation,Medium,Negative
+Urgent complaint: Birth certificate application pending for 45 days with no response from ward. Kindly look into this immediately.,Municipal Corporation,Certificate Delay,Medium,Negative
+Urgent complaint: Fire in garbage dump yard emitting toxic black smoke and spreading to nearby shops. We need urgent intervention.,Fire & Rescue,Garbage Fire,High,Frustrated
+"Kindly note Pani nahi aa raha 2 din se, please jaldi saaf pani ki supply shuru karein. Please resolve ASAP.",Water Board,No Supply,High,Frustrated
+"Grievance report: Road damaged and cracked after heavy rainfall, need urgent resurfacing. We need urgent intervention.",Public Works,Potholes,Medium,Negative
+Grievance report: Main water pipe burst near Green Park metro station. Water flooding the road! We need urgent intervention.,Water Board,Pipe Damage,Emergency,Frustrated
+Calling regarding There is no water supply in our colony since yesterday morning. Pipeline issue. Kindly look into this immediately.,Water Board,No Supply,High,Frustrated
+Kindly note Illegal parking blocking emergency ambulance entry route to building. Please resolve ASAP.,Police,Traffic Violation,High,Frustrated
+"Calling regarding Aag lag gayi hai factory me, jaldi fire brigade aur rescue team bhejo. Over 100 families affected in our locality.",Fire & Rescue,Building Fire,Emergency,Frustrated
+"Grievance report: Aag lag gayi hai factory me, jaldi fire brigade aur rescue team bhejo. Expecting quick response from authorities.",Fire & Rescue,Building Fire,Emergency,Frustrated
+"Help needed: Heavy smoke and flames coming from chemical warehouse, send fire engine immediately. We need urgent intervention.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Complaint registered from Ward 14: Drunk persons creating public nuisance and harassing pedestrians at bus stop. Expecting quick response from authorities.,Police,Public Safety,High,Frustrated
+Citizen alert: Volt-ampere drop is causing refrigerator to trip continuously. Please resolve ASAP.,Electricity Board,Voltage Fluctuation,Medium,Neutral
+Help needed: Dead animal lying on public road needs immediate sanitary removal. Over 100 families affected in our locality.,Sanitation,Sanitation,High,Frustrated
+Calling regarding Vehicle stolen from apartment parking lot last night. Over 100 families affected in our locality.,Police,Theft,High,Frustrated
+Filing grievance for Vehicle stolen from apartment parking lot last night. Over 100 families affected in our locality.,Police,Theft,High,Frustrated
+Kindly note Bio-medical waste discarded openly behind clinic in residential zone. Please resolve ASAP.,Healthcare,Mosquito Hazard,Emergency,Frustrated
+Kindly note Contaminated yellow muddy water coming out of taps in Shastri Nagar. Expecting quick response from authorities.,Water Board,Water Quality,High,Negative
+Citizen alert: Chain snatching incident reported near central park 30 mins ago. Suspect ran away. Please resolve ASAP.,Police,Theft,Emergency,Frustrated
+Citizen alert: Property tax portal showing wrong calculation and pending dues. Expecting quick response from authorities.,Municipal Corporation,Property Tax,Low,Negative
+"Attention ward officer: Incorrect electricity bill generated, showing 10x normal consumption. Over 100 families affected in our locality.",Electricity Board,Meter Defect,Medium,Negative
+"Issue reported: Forest and bush fire spreading near highway residential colony, need firefighters and water tenders. Expecting quick response from authorities.",Fire & Rescue,Wildfire Hazard,Emergency,Frustrated
+"Calling regarding Road damaged and cracked after heavy rainfall, need urgent resurfacing. Kindly look into this immediately.",Public Works,Potholes,Medium,Negative
+"Sir/Madam, Public toilet in market complex completely uncleaned and unusable. Please resolve ASAP.",Sanitation,Sanitation,Medium,Negative
+"Issue reported: Drinking water line damaged during digging, water supply completely cut off. Expecting quick response from authorities.",Water Board,No Supply,High,Frustrated
+"Filing grievance for Thee pidithullathu, urgent fire station rescue and fire engine required. Kindly look into this immediately.",Fire & Rescue,Building Fire,Emergency,Frustrated
+"Sir/Madam, Food poisoning outbreak reported from unhygienic street vendor stall. We need urgent intervention.",Healthcare,Food Safety,Emergency,Frustrated
+Grievance report: Bus shelter collapsed and broken glass scattered around waiting area. Over 100 families affected in our locality.,Transport,Transit Grievance,Medium,Negative
+"Sir/Madam, Mosquito breeding in stagnant water spreading Dengue and Malaria outbreak. Kindly look into this immediately.",Healthcare,Mosquito Hazard,High,Frustrated
+Citizen alert: Traffic signal violation causing near accidents daily at cross junction. Kindly look into this immediately.,Police,Traffic Violation,Medium,Negative
+Issue reported: There is no water supply in our colony since yesterday morning. Pipeline issue. We need urgent intervention.,Water Board,No Supply,High,Frustrated
+Calling regarding Traffic signal violation causing near accidents daily at cross junction. Over 100 families affected in our locality.,Police,Traffic Violation,Medium,Negative
+"Attention ward officer: Water tank billing issue, I was overcharged for this month. We need urgent intervention.",Water Board,Billing Issue,Low,Negative
+Kindly note City bus route 45 consistently delayed by 1 hour daily during peak morning. Please resolve ASAP.,Transport,Bus Delay,Medium,Negative
+"Urgent complaint: Electrical short circuit fire in basement parking, smoke alarm ringing and people trapped. Kindly look into this immediately.",Fire & Rescue,Electrical Fire,Emergency,Frustrated
+"Complaint registered from Ward 14: Aag lag gayi hai factory me, jaldi fire brigade aur rescue team bhejo. Kindly look into this immediately.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Attention ward officer: Bus driver driving rashly and skipped scheduled stops on Route 23. Please resolve ASAP.,Transport,Bus Delay,Medium,Negative
+Citizen alert: Property tax portal showing wrong calculation and pending dues. We need urgent intervention.,Municipal Corporation,Property Tax,Low,Negative
+Urgent complaint: Drainage line choked and blocked with plastic waste causing backflow. Kindly look into this immediately.,Sanitation,Sewage Overflow,High,Frustrated
+Issue reported: City bus route 45 consistently delayed by 1 hour daily during peak morning. Kindly look into this immediately.,Transport,Bus Delay,Medium,Negative
+"Sir/Madam, Underpass flooded with 3 feet of water, road completely impassable. Kindly look into this immediately.",Public Works,Potholes,High,Frustrated
+Attention ward officer: Government hospital emergency room out of basic lifesaving medicines. We need urgent intervention.,Healthcare,Hospital Supplies,Emergency,Frustrated
+Attention ward officer: Fallen tree blocking colony inner road after gusty winds. Over 100 families affected in our locality.,Municipal Corporation,Civic Amenities,High,Frustrated
+Complaint registered from Ward 14: Mosquito breeding in stagnant water spreading Dengue and Malaria outbreak. Expecting quick response from authorities.,Healthcare,Mosquito Hazard,High,Frustrated
+"Filing grievance for Heavy smoke and flames coming from chemical warehouse, send fire engine immediately. Please resolve ASAP.",Fire & Rescue,Building Fire,Emergency,Frustrated
+"Urgent complaint: Smoke coming out of closed shop, smell of burning wire and gas leak. Please resolve ASAP.",Fire & Rescue,Electrical Fire,High,Frustrated
+"Grievance report: Thee pidithullathu, urgent fire station rescue and fire engine required. Over 100 families affected in our locality.",Fire & Rescue,Building Fire,Emergency,Frustrated
+"Kindly note Incorrect electricity bill generated, showing 10x normal consumption. We need urgent intervention.",Electricity Board,Meter Defect,Medium,Negative
+Grievance report: Chain snatching incident reported near central park 30 mins ago. Suspect ran away. Please resolve ASAP.,Police,Theft,Emergency,Frustrated
+"Help needed: Kachra nahi uthaya gaya 3 din se, severe smell in entire lane. We need urgent intervention.",Sanitation,Garbage Pile,High,Frustrated
+"Grievance report: Vehicle caught fire on main flyover, road blocked, fire brigade and rescue needed immediately. Expecting quick response from authorities.",Fire & Rescue,Vehicle Fire,Emergency,Frustrated
+"Sir/Madam, Pani nahi aa raha 2 din se, please jaldi saaf pani ki supply shuru karein. We need urgent intervention.",Water Board,No Supply,High,Frustrated
+Issue reported: Mosquito breeding in stagnant water spreading Dengue and Malaria outbreak. Expecting quick response from authorities.,Healthcare,Mosquito Hazard,High,Frustrated
+Attention ward officer: Stormwater drain slab broken and collapsed into drain on 2nd Avenue. Kindly look into this immediately.,Public Works,Open Manhole,High,Frustrated
+"Complaint registered from Ward 14: Cylinder blast in residential apartment, fire spreading fast, call fire station rescue team. Over 100 families affected in our locality.",Fire & Rescue,Cylinder Explosion,Emergency,Frustrated
+Help needed: Volt-ampere drop is causing refrigerator to trip continuously. Please resolve ASAP.,Electricity Board,Voltage Fluctuation,Medium,Neutral
+Filing grievance for Auto rickshaw drivers refusing by-meter fare and demanding double charges. Please resolve ASAP.,Transport,Transit Grievance,Low,Negative
+Attention ward officer: There is no water supply in our colony since yesterday morning. Pipeline issue. Kindly look into this immediately.,Water Board,No Supply,High,Frustrated
+Kindly note Bridge expansion joint damaged and vibrating dangerously under traffic. Please resolve ASAP.,Public Works,Bridge Defect,Emergency,Frustrated
+Grievance report: Electric wire hanging dangerous and low near primary school entrance. Over 100 families affected in our locality.,Electricity Board,Dangling Wire,Emergency,Frustrated
+"Calling regarding Cylinder blast in residential apartment, fire spreading fast, call fire station rescue team. Expecting quick response from authorities.",Fire & Rescue,Cylinder Explosion,Emergency,Frustrated
+"Complaint registered from Ward 14: Vehicle caught fire on main flyover, road blocked, fire brigade and rescue needed immediately. Please resolve ASAP.",Fire & Rescue,Vehicle Fire,Emergency,Frustrated
+Filing grievance for Drunk persons creating public nuisance and harassing pedestrians at bus stop. Kindly look into this immediately.,Police,Public Safety,High,Frustrated
+"Sir/Madam, Primary Health Centre doctor absent during official duty hours. Kindly look into this immediately.",Healthcare,Doctor Absence,High,Frustrated
+Drainage line choked and blocked with plastic waste causing backflow.,Sanitation,Sewage Overflow,High,Frustrated
+"Issue reported: Bijli chali gayi hai 4 ghante se, transformer se dhuwa nikla hai. Expecting quick response from authorities.",Electricity Board,Power Outage,Emergency,Frustrated
+"Urgent complaint: Drinking water line damaged during digging, water supply completely cut off. Please resolve ASAP.",Water Board,No Supply,High,Frustrated
+"Sir/Madam, Bio-medical waste discarded openly behind clinic in residential zone. Over 100 families affected in our locality.",Healthcare,Mosquito Hazard,Emergency,Frustrated
+Attention ward officer: Drainage line choked and blocked with plastic waste causing backflow. Please resolve ASAP.,Sanitation,Sewage Overflow,High,Frustrated
+"Filing grievance for Incorrect electricity bill generated, showing 10x normal consumption. Kindly look into this immediately.",Electricity Board,Meter Defect,Medium,Negative
+"Attention ward officer: Cylinder blast in residential apartment, fire spreading fast, call fire station rescue team. Over 100 families affected in our locality.",Fire & Rescue,Cylinder Explosion,Emergency,Frustrated
+Kindly note Illegal construction and encroachment on public park land. We need urgent intervention.,Municipal Corporation,Encroachment,High,Frustrated
+"Complaint registered from Ward 14: Smoke coming out of closed shop, smell of burning wire and gas leak. We need urgent intervention.",Fire & Rescue,Electrical Fire,High,Frustrated
+Issue reported: Bridge expansion joint damaged and vibrating dangerously under traffic. Kindly look into this immediately.,Public Works,Bridge Defect,Emergency,Frustrated
+Grievance report: Dead animal lying on public road needs immediate sanitary removal. Over 100 families affected in our locality.,Sanitation,Sanitation,High,Frustrated
+Help needed: Garbage collection vehicle not coming for last 4 days in Block D. We need urgent intervention.,Sanitation,Garbage Pile,High,Frustrated
+Issue reported: Water tanker driver is asking for extra money illegally in Ward 5. Please resolve ASAP.,Water Board,Billing Issue,High,Frustrated
+Help needed: Drainage line choked and blocked with plastic waste causing backflow. Kindly look into this immediately.,Sanitation,Sewage Overflow,High,Frustrated
+Kindly note City bus route 45 consistently delayed by 1 hour daily during peak morning. We need urgent intervention.,Transport,Bus Delay,Medium,Negative
+Urgent complaint: Auto rickshaw drivers refusing by-meter fare and demanding double charges. Over 100 families affected in our locality.,Transport,Transit Grievance,Low,Negative
+Calling regarding Dead animal lying on public road needs immediate sanitary removal. Kindly look into this immediately.,Sanitation,Sanitation,High,Frustrated
+"Citizen alert: Smoke coming out of closed shop, smell of burning wire and gas leak. Over 100 families affected in our locality.",Fire & Rescue,Electrical Fire,High,Frustrated
+Filing grievance for Government hospital emergency room out of basic lifesaving medicines. Expecting quick response from authorities.,Healthcare,Hospital Supplies,Emergency,Frustrated
+Fire in garbage dump yard emitting toxic black smoke and spreading to nearby shops.,Fire & Rescue,Garbage Fire,High,Frustrated
+Issue reported: Electric wire hanging dangerous and low near primary school entrance. Over 100 families affected in our locality.,Electricity Board,Dangling Wire,Emergency,Frustrated
+Citizen alert: Volt-ampere drop is causing refrigerator to trip continuously. Kindly look into this immediately.,Electricity Board,Voltage Fluctuation,Medium,Neutral
+Citizen alert: Property tax portal showing wrong calculation and pending dues. Over 100 families affected in our locality.,Municipal Corporation,Property Tax,Low,Negative
+"Kindly note Road damaged and cracked after heavy rainfall, need urgent resurfacing. Expecting quick response from authorities.",Public Works,Potholes,Medium,Negative
+Attention ward officer: Stormwater drain slab broken and collapsed into drain on 2nd Avenue. Kindly look into this immediately.,Public Works,Open Manhole,High,Frustrated
+"Urgent complaint: Road damaged and cracked after heavy rainfall, need urgent resurfacing. We need urgent intervention.",Public Works,Potholes,Medium,Negative
+Attention ward officer: Food poisoning outbreak reported from unhygienic street vendor stall. Expecting quick response from authorities.,Healthcare,Food Safety,Emergency,Frustrated
+"Kindly note Road damaged and cracked after heavy rainfall, need urgent resurfacing. We need urgent intervention.",Public Works,Potholes,Medium,Negative
+"Attempted burglary at locked house in B-Block, door lock tampered.",Police,Theft,Emergency,Frustrated
+Dead animal lying on public road needs immediate sanitary removal.,Sanitation,Sanitation,High,Frustrated
+"Sir/Madam, Paani ki pipe leak ho rahi hai main road par, bahut paani waste ho raha hai. Over 100 families affected in our locality.",Water Board,Pipe Damage,Medium,Negative
+"Kindly note Paani ki pipe leak ho rahi hai main road par, bahut paani waste ho raha hai. Expecting quick response from authorities.",Water Board,Pipe Damage,Medium,Negative
+Volt-ampere drop is causing refrigerator to trip continuously.,Electricity Board,Voltage Fluctuation,Medium,Neutral
+"Complaint registered from Ward 14: Forest and bush fire spreading near highway residential colony, need firefighters and water tenders. Expecting quick response from authorities.",Fire & Rescue,Wildfire Hazard,Emergency,Frustrated
+Citizen alert: Fallen tree blocking colony inner road after gusty winds. Kindly look into this immediately.,Municipal Corporation,Civic Amenities,High,Frustrated
+"Attention ward officer: Vehicle caught fire on main flyover, road blocked, fire brigade and rescue needed immediately. Expecting quick response from authorities.",Fire & Rescue,Vehicle Fire,Emergency,Frustrated
+"Calling regarding Electrical short circuit fire in basement parking, smoke alarm ringing and people trapped. Over 100 families affected in our locality.",Fire & Rescue,Electrical Fire,Emergency,Frustrated
+Urgent complaint: Illegal parking blocking emergency ambulance entry route to building. Please resolve ASAP.,Police,Traffic Violation,High,Frustrated
+Citizen alert: Property tax portal showing wrong calculation and pending dues. Kindly look into this immediately.,Municipal Corporation,Property Tax,Low,Negative
+Filing grievance for Open manhole on main street dangerous for pedestrians and children! Over 100 families affected in our locality.,Public Works,Open Manhole,Emergency,Frustrated
+Grievance report: Auto rickshaw drivers refusing by-meter fare and demanding double charges. We need urgent intervention.,Transport,Transit Grievance,Low,Negative
+"Calling regarding Thee pidithullathu, urgent fire station rescue and fire engine required. Please resolve ASAP.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Issue reported: Dead animal lying on public road needs immediate sanitary removal. Expecting quick response from authorities.,Sanitation,Sanitation,High,Frustrated
+"Filing grievance for Underpass flooded with 3 feet of water, road completely impassable. Kindly look into this immediately.",Public Works,Potholes,High,Frustrated
+Illegal construction and encroachment on public park land.,Municipal Corporation,Encroachment,High,Frustrated
+"Attention ward officer: Forest and bush fire spreading near highway residential colony, need firefighters and water tenders. Over 100 families affected in our locality.",Fire & Rescue,Wildfire Hazard,Emergency,Frustrated
+Filing grievance for Contaminated yellow muddy water coming out of taps in Shastri Nagar. Over 100 families affected in our locality.,Water Board,Water Quality,High,Negative
+"Citizen alert: Pani nahi aa raha 2 din se, please jaldi saaf pani ki supply shuru karein. Over 100 families affected in our locality.",Water Board,No Supply,High,Frustrated
+Kindly note Low water pressure in Sector 4 Ward 12. Kindly inspect the pump house. Expecting quick response from authorities.,Water Board,Low Pressure,Medium,Neutral
+Citizen alert: Illegal parking blocking emergency ambulance entry route to building. Kindly look into this immediately.,Police,Traffic Violation,High,Frustrated
+Birth certificate application pending for 45 days with no response from ward.,Municipal Corporation,Certificate Delay,Medium,Negative
+Contaminated yellow muddy water coming out of taps in Shastri Nagar.,Water Board,Water Quality,High,Negative
+Complaint registered from Ward 14: Fallen tree blocking colony inner road after gusty winds. Please resolve ASAP.,Municipal Corporation,Civic Amenities,High,Frustrated
+Stormwater drain slab broken and collapsed into drain on 2nd Avenue.,Public Works,Open Manhole,High,Frustrated
+Kindly note Open manhole on main street dangerous for pedestrians and children! Expecting quick response from authorities.,Public Works,Open Manhole,Emergency,Frustrated
+"Sir/Madam, Heavy smoke and flames coming from chemical warehouse, send fire engine immediately. Over 100 families affected in our locality.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Urgent complaint: Trade license renewal delayed despite submitting all documents. Expecting quick response from authorities.,Municipal Corporation,Certificate Delay,Low,Neutral
+Kindly note Thank you water department for repairing the broken pipe quickly today. Expecting quick response from authorities.,Water Board,Pipe Damage,Low,Positive
+Mosquito breeding in stagnant water spreading Dengue and Malaria outbreak.,Healthcare,Mosquito Hazard,High,Frustrated
+Issue reported: Smart meter showing faulty readings after heavy rainfall. Kindly look into this immediately.,Electricity Board,Meter Defect,Medium,Negative
+Kindly note Ambulance 108 helpline not answering call during medical emergency. Expecting quick response from authorities.,Healthcare,Hospital Supplies,Emergency,Frustrated
+"Sir/Madam, Vehicle caught fire on main flyover, road blocked, fire brigade and rescue needed immediately. We need urgent intervention.",Fire & Rescue,Vehicle Fire,Emergency,Frustrated
+Attention ward officer: Electric wire hanging dangerous and low near primary school entrance. Please resolve ASAP.,Electricity Board,Dangling Wire,Emergency,Frustrated
+Attention ward officer: Drainage line choked and blocked with plastic waste causing backflow. Over 100 families affected in our locality.,Sanitation,Sewage Overflow,High,Frustrated
+Calling regarding Ambulance 108 helpline not answering call during medical emergency. Over 100 families affected in our locality.,Healthcare,Hospital Supplies,Emergency,Frustrated
+"Help needed: Forest and bush fire spreading near highway residential colony, need firefighters and water tenders. Expecting quick response from authorities.",Fire & Rescue,Wildfire Hazard,Emergency,Frustrated
+"Filing grievance for Heavy smoke and flames coming from chemical warehouse, send fire engine immediately. Kindly look into this immediately.",Fire & Rescue,Building Fire,Emergency,Frustrated
+"Grievance report: Fire emergency at local textile godown, blaze spreading rapidly to adjoining houses. Expecting quick response from authorities.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Help needed: Power cut scheduled without prior notice in industrial layout. Expecting quick response from authorities.,Electricity Board,Power Outage,Medium,Negative
+Filing grievance for Smart meter showing faulty readings after heavy rainfall. Please resolve ASAP.,Electricity Board,Meter Defect,Medium,Negative
+"Kindly note Electrical short circuit fire in basement parking, smoke alarm ringing and people trapped. We need urgent intervention.",Fire & Rescue,Electrical Fire,Emergency,Frustrated
+Grievance report: Trade license renewal delayed despite submitting all documents. Kindly look into this immediately.,Municipal Corporation,Certificate Delay,Low,Neutral
+"Urgent complaint: Underpass flooded with 3 feet of water, road completely impassable. Expecting quick response from authorities.",Public Works,Potholes,High,Frustrated
+Urgent complaint: Property tax portal showing wrong calculation and pending dues. Over 100 families affected in our locality.,Municipal Corporation,Property Tax,Low,Negative
+Grievance report: Power cut scheduled without prior notice in industrial layout. Please resolve ASAP.,Electricity Board,Power Outage,Medium,Negative
+Attention ward officer: Main water pipe burst near Green Park metro station. Water flooding the road! Over 100 families affected in our locality.,Water Board,Pipe Damage,Emergency,Frustrated
+"Heavy smoke and flames coming from chemical warehouse, send fire engine immediately.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Grievance report: Dead animal lying on public road needs immediate sanitary removal. Over 100 families affected in our locality.,Sanitation,Sanitation,High,Frustrated
+Calling regarding Frequent voltage fluctuations damaging home electronics in Ward 9. Kindly look into this immediately.,Electricity Board,Voltage Fluctuation,High,Negative
+Issue reported: Contaminated yellow muddy water coming out of taps in Shastri Nagar. Kindly look into this immediately.,Water Board,Water Quality,High,Negative
+Filing grievance for Trade license renewal delayed despite submitting all documents. We need urgent intervention.,Municipal Corporation,Certificate Delay,Low,Neutral
+Open garbage dump overflowing on pedestrian walkway outside school.,Sanitation,Garbage Pile,High,Frustrated
+"Sir/Madam, Sewage water mixing with rainwater and overflowing on main street. We need urgent intervention.",Sanitation,Sewage Overflow,Emergency,Frustrated
+Attention ward officer: Power outage in Phase 2 for past 6 hours. Transformer sparked and caught fire! Over 100 families affected in our locality.,Electricity Board,Transformer Fire,Emergency,Frustrated
+Calling regarding There is no water supply in our colony since yesterday morning. Pipeline issue. We need urgent intervention.,Water Board,No Supply,High,Frustrated
+Help needed: Drunk persons creating public nuisance and harassing pedestrians at bus stop. Kindly look into this immediately.,Police,Public Safety,High,Frustrated
+Citizen alert: Mosquito breeding in stagnant water spreading Dengue and Malaria outbreak. Expecting quick response from authorities.,Healthcare,Mosquito Hazard,High,Frustrated
+Kindly note Drainage line choked and blocked with plastic waste causing backflow. Expecting quick response from authorities.,Sanitation,Sewage Overflow,High,Frustrated
+Filing grievance for Vehicle stolen from apartment parking lot last night. Please resolve ASAP.,Police,Theft,High,Frustrated
+Attention ward officer: Bus driver driving rashly and skipped scheduled stops on Route 23. Expecting quick response from authorities.,Transport,Bus Delay,Medium,Negative
+"Sir/Madam, Low water pressure in Sector 4 Ward 12. Kindly inspect the pump house. Kindly look into this immediately.",Water Board,Low Pressure,Medium,Neutral
+Main water pipe burst near Green Park metro station. Water flooding the road!,Water Board,Pipe Damage,Emergency,Frustrated
+Attention ward officer: Dead animal lying on public road needs immediate sanitary removal. Kindly look into this immediately.,Sanitation,Sanitation,High,Frustrated
+"Sir/Madam, Traffic signal violation causing near accidents daily at cross junction. Please resolve ASAP.",Police,Traffic Violation,Medium,Negative
+Help needed: Low water pressure in Sector 4 Ward 12. Kindly inspect the pump house. We need urgent intervention.,Water Board,Low Pressure,Medium,Neutral
+"Grievance report: Cylinder blast in residential apartment, fire spreading fast, call fire station rescue team. Please resolve ASAP.",Fire & Rescue,Cylinder Explosion,Emergency,Frustrated
+Help needed: Birth certificate application pending for 45 days with no response from ward. Expecting quick response from authorities.,Municipal Corporation,Certificate Delay,Medium,Negative
+"Issue reported: Heavy smoke and flames coming from chemical warehouse, send fire engine immediately. Please resolve ASAP.",Fire & Rescue,Building Fire,Emergency,Frustrated
+"Issue reported: Bijli chali gayi hai 4 ghante se, transformer se dhuwa nikla hai. Kindly look into this immediately.",Electricity Board,Power Outage,Emergency,Frustrated
+"Urgent complaint: Thee pidithullathu, urgent fire station rescue and fire engine required. Over 100 families affected in our locality.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Help needed: Drunk persons creating public nuisance and harassing pedestrians at bus stop. Kindly look into this immediately.,Police,Public Safety,High,Frustrated
+Complaint registered from Ward 14: Thank you water department for repairing the broken pipe quickly today. Please resolve ASAP.,Water Board,Pipe Damage,Low,Positive
+Complaint registered from Ward 14: Volt-ampere drop is causing refrigerator to trip continuously. Over 100 families affected in our locality.,Electricity Board,Voltage Fluctuation,Medium,Neutral
+Filing grievance for Drainage line choked and blocked with plastic waste causing backflow. We need urgent intervention.,Sanitation,Sewage Overflow,High,Frustrated
+Complaint registered from Ward 14: Mosquito breeding in stagnant water spreading Dengue and Malaria outbreak. Please resolve ASAP.,Healthcare,Mosquito Hazard,High,Frustrated
+Citizen alert: Massive potholes on main road causing severe traffic jams and bike accidents. Expecting quick response from authorities.,Public Works,Potholes,High,Frustrated
+Help needed: Primary Health Centre doctor absent during official duty hours. Please resolve ASAP.,Healthcare,Doctor Absence,High,Frustrated
+Kindly note Bridge expansion joint damaged and vibrating dangerously under traffic. We need urgent intervention.,Public Works,Bridge Defect,Emergency,Frustrated
+Citizen alert: Traffic light malfunction at Busy Cross junction creating chaotic congestion. Expecting quick response from authorities.,Transport,Traffic Signal,High,Negative
+"Attention ward officer: Incorrect electricity bill generated, showing 10x normal consumption. Expecting quick response from authorities.",Electricity Board,Meter Defect,Medium,Negative
+Help needed: Ambulance 108 helpline not answering call during medical emergency. Kindly look into this immediately.,Healthcare,Hospital Supplies,Emergency,Frustrated
+Traffic light malfunction at Busy Cross junction creating chaotic congestion.,Transport,Traffic Signal,High,Negative
+Calling regarding Public toilet in market complex completely uncleaned and unusable. We need urgent intervention.,Sanitation,Sanitation,Medium,Negative
+Calling regarding City bus route 45 consistently delayed by 1 hour daily during peak morning. Please resolve ASAP.,Transport,Bus Delay,Medium,Negative
+"Grievance report: Cylinder blast in residential apartment, fire spreading fast, call fire station rescue team. Please resolve ASAP.",Fire & Rescue,Cylinder Explosion,Emergency,Frustrated
+Help needed: Property tax portal showing wrong calculation and pending dues. Kindly look into this immediately.,Municipal Corporation,Property Tax,Low,Negative
+Power outage in Phase 2 for past 6 hours. Transformer sparked and caught fire!,Electricity Board,Transformer Fire,Emergency,Frustrated
+Attention ward officer: Trade license renewal delayed despite submitting all documents. Over 100 families affected in our locality.,Municipal Corporation,Certificate Delay,Low,Neutral
+Kindly note Drainage line choked and blocked with plastic waste causing backflow. Please resolve ASAP.,Sanitation,Sewage Overflow,High,Frustrated
+"Sir/Madam, Massive potholes on main road causing severe traffic jams and bike accidents. Expecting quick response from authorities.",Public Works,Potholes,High,Frustrated
+"Issue reported: Attempted burglary at locked house in B-Block, door lock tampered. We need urgent intervention.",Police,Theft,Emergency,Frustrated
+"Sir/Madam, Sewage water mixing with rainwater and overflowing on main street. Expecting quick response from authorities.",Sanitation,Sewage Overflow,Emergency,Frustrated
+Calling regarding Property tax portal showing wrong calculation and pending dues. Expecting quick response from authorities.,Municipal Corporation,Property Tax,Low,Negative
+"Attention ward officer: Underpass flooded with 3 feet of water, road completely impassable. Over 100 families affected in our locality.",Public Works,Potholes,High,Frustrated
+Citizen alert: Smart meter showing faulty readings after heavy rainfall. Expecting quick response from authorities.,Electricity Board,Meter Defect,Medium,Negative
+Citizen alert: Open garbage dump overflowing on pedestrian walkway outside school. Please resolve ASAP.,Sanitation,Garbage Pile,High,Frustrated
+"Grievance report: Kachra nahi uthaya gaya 3 din se, severe smell in entire lane. Expecting quick response from authorities.",Sanitation,Garbage Pile,High,Frustrated
+Citizen alert: Fire in garbage dump yard emitting toxic black smoke and spreading to nearby shops. Kindly look into this immediately.,Fire & Rescue,Garbage Fire,High,Frustrated
+Attention ward officer: Bus driver driving rashly and skipped scheduled stops on Route 23. Expecting quick response from authorities.,Transport,Bus Delay,Medium,Negative
+Grievance report: Open garbage dump overflowing on pedestrian walkway outside school. Expecting quick response from authorities.,Sanitation,Garbage Pile,High,Frustrated
+"Sir/Madam, Bus shelter collapsed and broken glass scattered around waiting area. Kindly look into this immediately.",Transport,Transit Grievance,Medium,Negative
+"Calling regarding Smoke coming out of closed shop, smell of burning wire and gas leak. We need urgent intervention.",Fire & Rescue,Electrical Fire,High,Frustrated
+"Sir/Madam, Bijli chali gayi hai 4 ghante se, transformer se dhuwa nikla hai. Kindly look into this immediately.",Electricity Board,Power Outage,Emergency,Frustrated
+Complaint registered from Ward 14: Bridge expansion joint damaged and vibrating dangerously under traffic. Please resolve ASAP.,Public Works,Bridge Defect,Emergency,Frustrated
+Help needed: Dead animal lying on public road needs immediate sanitary removal. We need urgent intervention.,Sanitation,Sanitation,High,Frustrated
+Citizen alert: Primary Health Centre doctor absent during official duty hours. We need urgent intervention.,Healthcare,Doctor Absence,High,Frustrated
+"Issue reported: Attempted burglary at locked house in B-Block, door lock tampered. Please resolve ASAP.",Police,Theft,Emergency,Frustrated
+"Calling regarding Pani nahi aa raha 2 din se, please jaldi saaf pani ki supply shuru karein. Kindly look into this immediately.",Water Board,No Supply,High,Frustrated
+Citizen alert: Frequent voltage fluctuations damaging home electronics in Ward 9. Expecting quick response from authorities.,Electricity Board,Voltage Fluctuation,High,Negative
+Help needed: There is no water supply in our colony since yesterday morning. Pipeline issue. Please resolve ASAP.,Water Board,No Supply,High,Frustrated
+"Drinking water line damaged during digging, water supply completely cut off.",Water Board,No Supply,High,Frustrated
+"Kindly note Fire emergency at local textile godown, blaze spreading rapidly to adjoining houses. Expecting quick response from authorities.",Fire & Rescue,Building Fire,Emergency,Frustrated
+Filing grievance for Ambulance 108 helpline not answering call during medical emergency. Over 100 families affected in our locality.,Healthcare,Hospital Supplies,Emergency,Frustrated
+Urgent complaint: Traffic signal violation causing near accidents daily at cross junction. Expecting quick response from authorities.,Police,Traffic Violation,Medium,Negative
+Grievance report: Illegal construction and encroachment on public park land. Kindly look into this immediately.,Municipal Corporation,Encroachment,High,Frustrated
+Help needed: Illegal parking blocking emergency ambulance entry route to building. Kindly look into this immediately.,Police,Traffic Violation,High,Frustrated
+"Attention ward officer: Cylinder blast in residential apartment, fire spreading fast, call fire station rescue team. Over 100 families affected in our locality.",Fire & Rescue,Cylinder Explosion,Emergency,Frustrated

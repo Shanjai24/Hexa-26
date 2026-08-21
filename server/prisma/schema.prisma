@@ -1,0 +1,238 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String         @id @default(uuid())
+  employeeId        String?        @unique
+  name              String
+  email             String         @unique
+  phone             String?
+  passwordHash      String
+  role              String         @default("CITIZEN") // ADMIN, EXECUTIVE, OFFICER, CALL_CENTER_AGENT, SUPERVISOR, CITIZEN
+  departmentId      String?
+  department        Department?    @relation(fields: [departmentId], references: [id])
+  status            String         @default("ACTIVE")
+  preferredLanguage String         @default("Tamil")
+  lastLoginAt       DateTime?
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  officerProfile    Officer?
+  citizenProfile    Citizen?
+  notifications     Notification[]
+  auditLogs         AuditLog[]
+}
+
+model Department {
+  id            String      @id @default(uuid())
+  name          String      @unique
+  code          String      @unique
+  description   String?
+  active        Boolean     @default(true)
+  slaHours      Int         @default(24)
+  contactNumber String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  users         User[]
+  officers      Officer[]
+  complaints    Complaint[]
+  incidents     Incident[]
+  auditLogs     AuditLog[]
+}
+
+model Officer {
+  id                   String      @id @default(uuid())
+  userId               String      @unique
+  user                 User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  departmentId         String
+  department           Department  @relation(fields: [departmentId], references: [id])
+  zone                 String      @default("Zone 4")
+  designation          String      @default("Field Engineer")
+  availabilityStatus   String      @default("AVAILABLE") // AVAILABLE, BUSY, OFF_DUTY
+  activeComplaintCount Int         @default(0)
+  performanceScore     Float       @default(95.0)
+  assignedComplaints   Complaint[]
+  createdAt            DateTime    @default(now())
+  updatedAt            DateTime    @updatedAt
+}
+
+model Citizen {
+  id                String      @id @default(uuid())
+  userId            String?     @unique
+  user              User?       @relation(fields: [userId], references: [id])
+  name              String
+  phone             String      @unique
+  email             String?
+  preferredLanguage String      @default("Tamil")
+  address           String?
+  zone              String      @default("Zone 4")
+  complaints        Complaint[]
+  calls             Call[]
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+}
+
+model Complaint {
+  id                  String               @id @default(uuid())
+  complaintNumber     String               @unique // e.g. CMP-10452
+  citizenId           String?
+  citizen             Citizen?             @relation(fields: [citizenId], references: [id])
+  callId              String?              @unique
+  call                Call?                @relation(fields: [callId], references: [id])
+  category            String
+  subcategory         String
+  description         String
+  transcript          String?
+  aiSummary           String?
+  language            String               @default("Tamil")
+  sentiment           String               @default("Frustrated")
+  priority            String               @default("HIGH") // LOW, MEDIUM, HIGH, CRITICAL
+  urgency             Int                  @default(75)
+  emergencyDetected   Boolean              @default(false)
+  emergencyType       String?
+  location            String
+  latitude            Float                @default(13.0827)
+  longitude           Float                @default(80.2707)
+  zone                String               @default("Zone 4")
+  departmentId        String
+  department          Department           @relation(fields: [departmentId], references: [id])
+  assignedOfficerId   String?
+  assignedOfficer     Officer?             @relation(fields: [assignedOfficerId], references: [id])
+  status              String               @default("NEW") // NEW, AI_ANALYZING, ASSIGNED, IN_PROGRESS, WAITING_FOR_CITIZEN, ESCALATED, RESOLVED, CLOSED, REJECTED
+  slaHours            Int                  @default(24)
+  slaDeadline         DateTime
+  resolvedAt          DateTime?
+  resolutionNotes     String?
+  aiConfidence        Float                @default(0.95)
+  incidentId          String?
+  incident            Incident?            @relation(fields: [incidentId], references: [id])
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  analyses            AIAnalysis[]
+  emergencyIncidents  EmergencyIncident[]
+  similaritiesSource  ComplaintSimilarity[] @relation("SourceSimilarity")
+  similaritiesMatched ComplaintSimilarity[] @relation("MatchedSimilarity")
+}
+
+model Call {
+  id               String      @id @default(uuid())
+  callNumber       String      @unique // e.g. CALL-10452
+  citizenId        String?
+  citizen          Citizen?    @relation(fields: [citizenId], references: [id])
+  agentId          String?
+  phoneMasked      String
+  language         String      @default("Tamil")
+  startedAt        DateTime    @default(now())
+  endedAt          DateTime?
+  duration         String      @default("04:32")
+  status           String      @default("ACTIVE") // WAITING, ACTIVE, ON_HOLD, COMPLETED, EMERGENCY
+  audioUrl         String?
+  transcript       String?
+  aiAnalysisStatus String      @default("COMPLETED")
+  complaint        Complaint?
+  analyses         AIAnalysis[]
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+}
+
+model AIAnalysis {
+  id                       String     @id @default(uuid())
+  callId                   String?
+  call                     Call?      @relation(fields: [callId], references: [id])
+  complaintId              String?
+  complaint                Complaint? @relation(fields: [complaintId], references: [id])
+  language                 String
+  category                 String
+  subcategory              String
+  summary                  String
+  sentiment                String
+  priority                 String
+  urgency                  Int
+  emergencyDetected        Boolean    @default(false)
+  entities                 String     // JSON payload
+  departmentRecommendation String
+  duplicateMatches         String     // JSON payload
+  confidenceScores         String     // JSON payload
+  processingTime           Float      @default(0.78)
+  status                   String     @default("COMPLETED")
+  createdAt                DateTime   @default(now())
+}
+
+model EmergencyIncident {
+  id           String    @id @default(uuid())
+  complaintId  String
+  complaint    Complaint @relation(fields: [complaintId], references: [id])
+  type         String    @default("Structural Fire")
+  description  String
+  location     String
+  latitude     Float     @default(13.0827)
+  longitude    Float     @default(80.2707)
+  severity     String    @default("CRITICAL")
+  status       String    @default("DETECTED") // DETECTED, ACKNOWLEDGED, DISPATCHED, RESPONDING, RESOLVED
+  detectedAt   DateTime  @default(now())
+  dispatchedAt DateTime?
+  resolvedAt   DateTime?
+}
+
+model Incident {
+  id             String      @id @default(uuid())
+  incidentNumber String      @unique // e.g. INC-104
+  title          String
+  description    String
+  category       String
+  departmentId   String
+  department     Department  @relation(fields: [departmentId], references: [id])
+  severity       String      @default("High")
+  location       String
+  zone           String      @default("Zone 4")
+  latitude       Float       @default(13.0827)
+  longitude      Float       @default(80.2707)
+  complaintCount Int         @default(1)
+  status         String      @default("Active Response")
+  complaints     Complaint[]
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+}
+
+model ComplaintSimilarity {
+  id                 String    @id @default(uuid())
+  complaintId        String
+  complaint          Complaint @relation("SourceSimilarity", fields: [complaintId], references: [id])
+  matchedComplaintId String
+  matchedComplaint   Complaint @relation("MatchedSimilarity", fields: [matchedComplaintId], references: [id])
+  similarityScore    Float     @default(0.94)
+  reason             String
+  createdAt          DateTime  @default(now())
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  citizenId String?
+  type      String   @default("COMPLAINT") // EMERGENCY, SLA, COMPLAINT, AI_ALERT, SYSTEM
+  title     String
+  message   String
+  severity  String   @default("info")
+  read      Boolean  @default(false)
+  metadata  String?  // JSON string
+  createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id           String      @id @default(uuid())
+  action       String
+  actorId      String?
+  actor        User?       @relation(fields: [actorId], references: [id])
+  departmentId String?
+  department   Department? @relation(fields: [departmentId], references: [id])
+  entityType   String
+  entityId     String?
+  details      String?
+  createdAt    DateTime    @default(now())
+}
