@@ -85,8 +85,39 @@ export async function handleVoiceComplaint(req: Request, res: Response) {
 
     let citizen = await prisma.citizen.findFirst({ where: { phone } });
     if (!citizen) {
+      const email = `${phone.replace('+', '').replace(/[\s\-()]/g, '')}@citizen.civicsense.local`;
+      let user = await prisma.user.findUnique({ where: { email } });
+      if (!user) {
+        user = await prisma.user.create({
+          data: {
+            name: citizenName,
+            email,
+            passwordHash: '',
+            role: 'CITIZEN',
+            phone
+          }
+        });
+      }
       citizen = await prisma.citizen.create({
-        data: { name: citizenName, phone, preferredLanguage: sttResult.detectedLanguage, zone: analysis.zone || 'Zone 4' }
+        data: { name: citizenName, phone, userId: user.id, preferredLanguage: sttResult.detectedLanguage, zone: analysis.zone || 'Zone 4' }
+      });
+    } else if (!citizen.userId) {
+      const email = `${phone.replace('+', '').replace(/[\s\-()]/g, '')}@citizen.civicsense.local`;
+      let user = await prisma.user.findUnique({ where: { email } });
+      if (!user) {
+        user = await prisma.user.create({
+          data: {
+            name: citizen.name,
+            email,
+            passwordHash: '',
+            role: 'CITIZEN',
+            phone
+          }
+        });
+      }
+      citizen = await prisma.citizen.update({
+        where: { id: citizen.id },
+        data: { userId: user.id }
       });
     }
 
@@ -131,6 +162,8 @@ export async function handleVoiceComplaint(req: Request, res: Response) {
       data: {
         complaintNumber,
         citizenId: citizen.id,
+        reportedName: citizenName || citizen.name,
+        reportedById: citizen.id,
         category: categoryName,
         subcategory: subcategoryName,
         description: finalTranscript,

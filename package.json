@@ -12,5 +12,8 @@
     "build:server": "npm --prefix server run build",
     "db:push": "npm --prefix server run db:push",
     "db:seed": "npm --prefix server run db:seed"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0"
   }
 }

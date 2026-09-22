@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { prisma } from '../config/prisma.js';
 import { AIFactory } from '../integrations/ai/AIProvider.js';
+import { handleChatReport, isGrievanceMessage } from './chatReportController.js';
 
 // Comprehensive Civic Knowledge Base for Instant Offline & Online QA
 const CIVIC_KNOWLEDGE_BASE = [
@@ -87,11 +88,21 @@ export async function processChatbotMessage(req: Request, res: Response) {
       const cmp = ticketId 
         ? await prisma.complaint.findFirst({
             where: { OR: [{ complaintNumber: ticketId }, { id: ticketId }] },
-            include: { department: true, assignedOfficer: { include: { user: true } }, citizen: true }
+            include: {
+              department: true,
+              assignedOfficer: { include: { user: true } },
+              citizen: true,
+              statusHistory: { orderBy: { changedAt: 'asc' } }
+            }
           })
         : await prisma.complaint.findFirst({
             orderBy: { createdAt: 'desc' },
-            include: { department: true, assignedOfficer: { include: { user: true } }, citizen: true }
+            include: {
+              department: true,
+              assignedOfficer: { include: { user: true } },
+              citizen: true,
+              statusHistory: { orderBy: { changedAt: 'asc' } }
+            }
           });
 
       if (cmp) {
@@ -113,15 +124,26 @@ export async function processChatbotMessage(req: Request, res: Response) {
           remaining = '✅ Resolved';
         }
 
+        const historyTimeline = (cmp.statusHistory && cmp.statusHistory.length > 0)
+          ? '\n\n📜 **Progress Timeline:**\n' + cmp.statusHistory.map((h: any) => 
+              `• **${h.status}** (${new Date(h.changedAt).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}) — ${h.notes || 'Status updated'} *[${h.changedBy || 'System'}]*`
+            ).join('\n')
+          : '';
+
+        const latestNote = cmp.statusHistory && cmp.statusHistory.length > 0
+          ? cmp.statusHistory[cmp.statusHistory.length - 1].notes
+          : 'Under review';
+
         return res.json({
           success: true,
           data: {
-            message: `🎫 **Ticket Details for ${cmp.complaintNumber}**${citizenInfo}\n\n• **Department**: ${cmp.department.name}\n• **Problem Statement**: ${cmp.category} — ${cmp.subcategory}\n• **Current Status**: **${cmp.status}**\n• **Priority / Urgency**: ${cmp.priority} (SLA: ${cmp.slaHours || 24}h)\n• **Assigned Field Officer**: ${assignedName} (📞 ${officerPhone})\n• **Location**: ${cmp.location} (${cmp.zone})\n• **SLA Target Deadline**: ${remaining} (${cmp.slaDeadline ? new Date(cmp.slaDeadline).toLocaleString('en-IN') : 'N/A'})\n\nWould you like to check anything else regarding this ticket or report another issue?`,
+            message: `🎫 **${cmp.complaintNumber} is currently ${cmp.status}**${citizenInfo}\n\n• **Department**: ${cmp.department.name}\n• **Problem**: ${cmp.category} — ${cmp.subcategory}\n• **Current Status**: **${cmp.status}** (${latestNote})\n• **Priority / Urgency**: ${cmp.priority} (SLA: ${cmp.slaHours || 24}h)\n• **Assigned Officer**: ${assignedName} (📞 ${officerPhone})\n• **Location**: ${cmp.location} (${cmp.zone})\n• **Resolution Target**: ${remaining}${historyTimeline}\n\nWould you like to check anything else regarding this ticket or report another issue?`,
             complaint: {
               id: cmp.complaintNumber,
               status: cmp.status,
               department: cmp.department.name,
-              category: cmp.category
+              category: cmp.category,
+              timeline: cmp.statusHistory
             }
           }
         });
@@ -224,5 +246,51 @@ Keep answers concise (3-5 bullet points) and practical.`
     });
   } catch (error: any) {
     return res.status(500).json({ success: false, error: { code: 'INTERNAL_ERROR', message: error.message } });
+  }
+}
+
+/**
+ * Unified Intent Gate: POST /api/chat/message
+ * Automatically categorizes incoming citizen chat into Question (Q&A / Ticket Lookup) vs Grievance (State Machine)
+ */
+export async function handleUnifiedChatMessage(req: Request, res: Response) {
+  try {
+    const rawMsg = (req.body?.message || '').trim();
+    const sessionId = (req.body?.sessionId || '').trim();
+
+    // 1. If an active unfiled session exists, route to grievance state machine
+    if (sessionId) {
+      const activeSession = await prisma.chatSession.findUnique({ where: { id: sessionId } });
+      if (activeSession && activeSession.state !== 'FILED' && activeSession.state !== 'CANCELLED') {
+        return handleChatReport(req, res);
+      }
+    }
+
+    // 2. Status inquiry check (e.g. "what's the status of CMP-10452")
+    const isStatusQuery = /CMP-\d+/i.test(rawMsg) || 
+      /status|track|where is my complaint|ticket/i.test(rawMsg);
+    if (isStatusQuery) {
+      return processChatbotMessage(req, res);
+    }
+
+    // 3. Question check (FAQ, procedure, guidelines, contact info)
+    const isQuestion = /^(how|what|where|who|when|why|can i|is there|tell me|give me|guidelines|procedure|process|apply|download|do we|does)\b/i.test(rawMsg) ||
+      /\b(how to|what to do|what are|how do i|how can i|procedure for|guidelines for|timings|schedules?|fee structure|contact numbers?|helpline numbers?)\b/i.test(rawMsg);
+
+    const isExplicitReport = /\b(report|file complaint|lodge complaint|raise ticket|broken|burst|leaking|flooding|sparking|blackout|dangling|stinking|overflowing|not working)\b/i.test(rawMsg);
+
+    if (isQuestion && !isExplicitReport) {
+      return processChatbotMessage(req, res);
+    }
+
+    // 4. Grievance message check
+    if (isGrievanceMessage(rawMsg)) {
+      return handleChatReport(req, res);
+    }
+
+    // 5. Default: informational Q&A
+    return processChatbotMessage(req, res);
+  } catch (err: any) {
+    return res.status(500).json({ success: false, error: { code: 'INTERNAL_ERROR', message: err.message } });
   }
 }

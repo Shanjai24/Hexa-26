@@ -1,4 +1,6 @@
 import { Request, Response } from 'express';
+import FormData from 'form-data';
+import { createReadStream } from 'fs';
 import { prisma } from '../config/prisma.js';
 import { emitEvent } from '../sockets/socketHandler.js';
 
@@ -171,6 +173,15 @@ export async function getComplaints(req: Request, res: Response) {
         duplicateCount: isPrimary ? duplicateReportsCount : 1,
         duplicateReportsCount: isPrimary ? duplicateReportsCount : 1,
         incidentId: c.incidentId ? 'INC-104' : null,
+        // Feature 11 — stored XAI explanation
+        classificationExplanation: c.classificationExplanation ? (() => { try { return JSON.parse(c.classificationExplanation as string); } catch { return null; } })() : null,
+        // Feature 12 — stored breach risk
+        breachRiskScore: c.breachRiskScore,
+        hasBeenReassigned: c.hasBeenReassigned,
+        // Feature 14 — photo verification
+        photoPath: c.photoPath || null,
+        photoVerification: c.photoVerification ? (() => { try { return JSON.parse(c.photoVerification as string); } catch { return null; } })() : null,
+        photoMismatchFlag: c.photoMismatchFlag,
         groupedCalls: group.map((g: any) => {
           const gCoords = getCoords(g);
           const pCoords = getCoords(primaryTicket);
@@ -222,6 +233,13 @@ export async function getComplaintById(req: Request, res: Response) {
       success: true,
       data: {
         ...complaint,
+        // Parse JSON string fields for frontend consumption
+        classificationExplanation: complaint.classificationExplanation
+          ? (() => { try { return JSON.parse(complaint.classificationExplanation as string); } catch { return null; } })()
+          : null,
+        photoVerification: complaint.photoVerification
+          ? (() => { try { return JSON.parse(complaint.photoVerification as string); } catch { return null; } })()
+          : null,
         actionLogs: logs.map((l: any) => ({
           action: l.action,
           actorName: l.actor?.name || 'System / AI Assistant',
@@ -264,13 +282,45 @@ export async function createComplaint(req: Request, res: Response) {
     const citizenPhone = phone || '+91 98XXX 2481';
     let citizenRecord = await prisma.citizen.findFirst({ where: { phone: citizenPhone } });
     if (!citizenRecord) {
+      const email = `${citizenPhone.replace('+', '').replace(/[\s\-()]/g, '')}@citizen.civicsense.local`;
+      let user = await prisma.user.findUnique({ where: { email } });
+      if (!user) {
+        user = await prisma.user.create({
+          data: {
+            name: citizenName || 'Rahul K',
+            email,
+            passwordHash: '',
+            role: 'CITIZEN',
+            phone: citizenPhone
+          }
+        });
+      }
       citizenRecord = await prisma.citizen.create({
         data: {
           name: citizenName || 'Rahul K',
           phone: citizenPhone,
+          userId: user.id,
           preferredLanguage: language || 'Tamil',
           zone: zone || 'Zone 4'
         }
+      });
+    } else if (!citizenRecord.userId) {
+      const email = `${citizenPhone.replace('+', '').replace(/[\s\-()]/g, '')}@citizen.civicsense.local`;
+      let user = await prisma.user.findUnique({ where: { email } });
+      if (!user) {
+        user = await prisma.user.create({
+          data: {
+            name: citizenRecord.name,
+            email,
+            passwordHash: '',
+            role: 'CITIZEN',
+            phone: citizenPhone
+          }
+        });
+      }
+      citizenRecord = await prisma.citizen.update({
+        where: { id: citizenRecord.id },
+        data: { userId: user.id }
       });
     }
 
@@ -283,10 +333,63 @@ export async function createComplaint(req: Request, res: Response) {
     const slaHours = isEmerg ? 2 : priorityUpper === 'HIGH' ? 8 : priorityUpper === 'LOW' ? 48 : 24;
     const slaDeadline = new Date(Date.now() + slaHours * 3600 * 1000);
 
+    // Call NER location extractor
+    let extractedLandmark: string | null = null;
+    let extractedStreet: string | null = null;
+    let nerConfidence: number | null = null;
+    try {
+      const pythonUrl = process.env.PYTHON_AI_URL || 'http://localhost:5000';
+      const nerRes = await fetch(`${pythonUrl}/api/ai/extract-entities`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ transcript: `${description || ''} near ${location || ''}`, language: language || 'en' })
+      });
+      if (nerRes.ok) {
+        const nerData = await nerRes.json();
+        extractedLandmark = nerData.landmark || null;
+        extractedStreet = nerData.street || null;
+        nerConfidence = nerData.confidence ? Number(nerData.confidence) : null;
+      }
+    } catch (_) {}
+
+    // Feature 14: Photo Verification
+    const photoFile = (req as any).file;
+    let photoPath: string | null = null;
+    let photoVerification: string | null = null;
+    let photoMismatchFlag = false;
+
+    if (photoFile) {
+      photoPath = `/uploads/photos/${photoFile.filename}`;
+      try {
+        const pythonUrl = process.env.PYTHON_AI_URL || 'http://localhost:5000';
+        const form = new FormData();
+        form.append('image', createReadStream(photoFile.path), {
+          filename: photoFile.originalname || 'photo.jpg',
+          contentType: photoFile.mimetype || 'image/jpeg'
+        });
+        form.append('claimedCategory', category || targetName || 'General');
+
+        const pyRes = await fetch(`${pythonUrl}/api/ai/verify-photo`, {
+          method: 'POST',
+          body: form as any,
+          headers: form.getHeaders()
+        });
+        if (pyRes.ok) {
+          const vData = await pyRes.json();
+          photoVerification = JSON.stringify(vData);
+          photoMismatchFlag = Boolean(vData.flagForReview);
+        }
+      } catch (pErr) {
+        console.warn('[PhotoVerifier] Verification call failed:', pErr);
+      }
+    }
+
     const newComplaint = await prisma.complaint.create({
       data: {
         complaintNumber,
         citizenId: citizenRecord.id,
+        reportedName: citizenName || citizenRecord.name,
+        reportedById: citizenRecord.id,
         category: category || 'Water Supply',
         subcategory: subcategory || 'General Grievance',
         description: description || 'No water supply reported in area.',
@@ -300,6 +403,12 @@ export async function createComplaint(req: Request, res: Response) {
         status: 'ASSIGNED',
         slaHours,
         slaDeadline,
+        extractedLandmark,
+        extractedStreet,
+        nerConfidence,
+        photoPath,
+        photoVerification,
+        photoMismatchFlag,
         aiConfidence: 0.96
       },
       include: {
@@ -319,7 +428,38 @@ export async function createComplaint(req: Request, res: Response) {
       }
     });
 
+    await prisma.complaintStatusHistory.create({
+      data: {
+        complaintId: newComplaint.id,
+        status: newComplaint.status,
+        notes: `Complaint submitted and routed to ${deptRecord.name}. Assigned lead: ${officer ? officer.user.name : 'Department Lead'}.`,
+        changedBy: officer ? officer.user.name : 'Citizen Portal'
+      }
+    });
+
     emitEvent('complaint:created', newComplaint);
+
+    // Feature 11: background store of XAI explanation (non-blocking)
+    const textForXAI = description || '';
+    if (textForXAI.length > 10) {
+      const pythonUrl = process.env.PYTHON_AI_URL || 'http://localhost:5000';
+      fetch(`${pythonUrl}/api/ai/explain-classification`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ transcript: textForXAI, topN: 6 })
+      })
+        .then(r => r.ok ? r.json() : null)
+        .then(exp => {
+          if (exp && (exp.category || exp.urgency)) {
+            prisma.complaint.update({
+              where: { id: newComplaint.id },
+              data: { classificationExplanation: JSON.stringify(exp) }
+            }).catch(() => {});
+          }
+        })
+        .catch(() => {});
+    }
+
     return res.status(201).json({ success: true, data: newComplaint });
   } catch (error: any) {
     return res.status(500).json({ success: false, error: { code: 'INTERNAL_ERROR', message: error.message } });
@@ -335,7 +475,7 @@ export async function updateComplaintStatus(req: Request, res: Response) {
 
     const existing = await prisma.complaint.findFirst({
       where: { OR: [{ id }, { complaintNumber: id }] },
-      include: { department: true }
+      include: { department: true, assignedOfficer: true }
     });
 
     if (!existing) {
@@ -359,6 +499,28 @@ export async function updateComplaintStatus(req: Request, res: Response) {
       }).catch(() => {});
     }
 
+    // Feature 4: Sync resolved complaint to ChromaDB for RAG decision support
+    if (dbStatus === 'RESOLVED') {
+      try {
+        const pythonUrl = process.env.PYTHON_AI_URL || 'http://localhost:5000';
+        const hoursTaken = Math.max(0.5, Math.round(((new Date().getTime() - existing.createdAt.getTime()) / (1000 * 3600)) * 10) / 10);
+        await fetch(`${pythonUrl}/api/ai/sync-resolved`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            complaintId: existing.complaintNumber || existing.id,
+            transcript: existing.transcript || existing.description,
+            resolutionNotes: notes || existing.resolutionNotes || 'Field inspection completed and corrective repair applied.',
+            timeToResolveHours: hoursTaken,
+            officerRole: existing.assignedOfficer?.designation || 'Field Engineer',
+            category: existing.category
+          })
+        });
+      } catch (syncErr: any) {
+        console.warn('[SyncResolved] Error syncing to ChromaDB:', syncErr.message);
+      }
+    }
+
     await prisma.auditLog.create({
       data: {
         action: `STATUS_${dbStatus}`,
@@ -369,9 +531,95 @@ export async function updateComplaintStatus(req: Request, res: Response) {
       }
     });
 
+    await prisma.complaintStatusHistory.create({
+      data: {
+        complaintId: existing.id,
+        status: dbStatus,
+        notes: notes || `Status updated to ${status}`,
+        changedBy: updatedBy || 'Department Admin'
+      }
+    });
+
+    const statusPayload = {
+      id: updated.complaintNumber,
+      complaintId: updated.id,
+      ticketId: updated.complaintNumber,
+      status: dbStatus,
+      notes: notes || null,
+      changedBy: updatedBy || 'Department Admin',
+      changedAt: new Date()
+    };
+
     emitEvent('complaint:updated', { id: updated.complaintNumber, dbId: updated.id, status: dbStatus });
+    emitEvent('complaint:statusChanged', statusPayload, `department:${existing.departmentId}`);
+    emitEvent('complaint:statusChanged', statusPayload, `citizen:${existing.id}`);
+    emitEvent('complaint:statusChanged', statusPayload, `citizen:${existing.complaintNumber}`);
+    emitEvent('complaint:statusChanged', statusPayload);
 
     return res.json({ success: true, message: `Status updated to ${status}`, data: updated });
+  } catch (error: any) {
+    return res.status(500).json({ success: false, error: { code: 'INTERNAL_ERROR', message: error.message } });
+  }
+}
+
+export async function getSimilarResolved(req: Request, res: Response) {
+  try {
+    const id = String(req.params.id || '');
+    const complaint = await prisma.complaint.findFirst({
+      where: { OR: [{ id }, { complaintNumber: id }] }
+    });
+
+    if (!complaint) {
+      return res.status(404).json({ success: false, error: { code: 'NOT_FOUND', message: 'Complaint not found' } });
+    }
+
+    const pythonUrl = process.env.PYTHON_AI_URL || 'http://localhost:5000';
+    const queryText = complaint.transcript || complaint.description || complaint.category;
+
+    const resp = await fetch(`${pythonUrl}/api/ai/similar-resolved`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        transcript: queryText,
+        category: complaint.category,
+        topK: 3
+      })
+    });
+
+    if (resp.ok) {
+      const data = await resp.json();
+      return res.json({ success: true, matches: data.matches || [] });
+    }
+
+    return res.json({ success: true, matches: [] });
+  } catch (error: any) {
+    return res.status(500).json({ success: false, error: { code: 'INTERNAL_ERROR', message: error.message } });
+  }
+}
+
+export async function updateComplaintLocation(req: Request, res: Response) {
+  try {
+    const id = String(req.params.id || '');
+    const { extractedLandmark, extractedStreet, location } = req.body;
+
+    const existing = await prisma.complaint.findFirst({
+      where: { OR: [{ id }, { complaintNumber: id }] }
+    });
+
+    if (!existing) {
+      return res.status(404).json({ success: false, error: { code: 'NOT_FOUND', message: 'Complaint not found' } });
+    }
+
+    const updated = await prisma.complaint.update({
+      where: { id: existing.id },
+      data: {
+        extractedLandmark: extractedLandmark !== undefined ? extractedLandmark : existing.extractedLandmark,
+        extractedStreet: extractedStreet !== undefined ? extractedStreet : existing.extractedStreet,
+        location: location || existing.location
+      }
+    });
+
+    return res.json({ success: true, message: 'Location updated successfully', data: updated });
   } catch (error: any) {
     return res.status(500).json({ success: false, error: { code: 'INTERNAL_ERROR', message: error.message } });
   }
@@ -424,10 +672,106 @@ export async function assignWorker(req: Request, res: Response) {
       }
     });
 
+    await prisma.complaintStatusHistory.create({
+      data: {
+        complaintId: existing.id,
+        status: 'ASSIGNED',
+        notes: `Assigned to ${worker.user.name} (${worker.designation}).`,
+        changedBy: assignedBy || 'Department Admin'
+      }
+    });
+
+    const assignPayload = {
+      id: updated.complaintNumber,
+      complaintId: updated.id,
+      ticketId: updated.complaintNumber,
+      status: 'ASSIGNED',
+      notes: `Assigned to ${worker.user.name} (${worker.designation}).`,
+      changedBy: assignedBy || 'Department Admin',
+      changedAt: new Date(),
+      assignedWorker: worker.user.name
+    };
+
     emitEvent('complaint:updated', { id: updated.complaintNumber, dbId: updated.id, status: 'ASSIGNED', assignedWorker: worker.user.name });
+    emitEvent('complaint:statusChanged', assignPayload, `department:${existing.departmentId}`);
+    emitEvent('complaint:statusChanged', assignPayload, `citizen:${existing.id}`);
+    emitEvent('complaint:statusChanged', assignPayload, `citizen:${existing.complaintNumber}`);
+    emitEvent('complaint:statusChanged', assignPayload);
 
     return res.json({ success: true, message: `Assigned to ${worker.user.name}`, data: updated });
   } catch (error: any) {
     return res.status(500).json({ success: false, error: { code: 'INTERNAL_ERROR', message: error.message } });
   }
 }
+
+/**
+ * GET /api/complaints/:ticketId/status
+ * Closed-loop status tracking endpoint for citizens and chatbot
+ */
+export async function getComplaintStatus(req: Request, res: Response) {
+  try {
+    const rawTicketId = String(req.params.ticketId || '').trim();
+    if (!rawTicketId) {
+      return res.status(400).json({ success: false, error: { code: 'MISSING_TICKET_ID', message: 'Ticket ID is required' } });
+    }
+
+    const complaint = await prisma.complaint.findFirst({
+      where: {
+        OR: [
+          { complaintNumber: { equals: rawTicketId } },
+          { id: rawTicketId }
+        ]
+      },
+      include: {
+        department: true,
+        assignedOfficer: { include: { user: true } },
+        statusHistory: { orderBy: { changedAt: 'asc' } },
+        citizen: true
+      }
+    });
+
+    if (!complaint) {
+      return res.status(404).json({
+        success: false,
+        error: { code: 'NOT_FOUND', message: `No complaint found for ticket ID: ${rawTicketId}` }
+      });
+    }
+
+    const timeline = complaint.statusHistory.map((h: any) => ({
+      status: h.status,
+      notes: h.notes,
+      changedBy: h.changedBy,
+      changedAt: h.changedAt
+    }));
+
+    // If no history exists yet, construct initial timeline entry from complaint record
+    if (timeline.length === 0) {
+      timeline.push({
+        status: complaint.status,
+        notes: `Complaint registered in CivicSense AI platform and routed to ${complaint.department.name}.`,
+        changedBy: 'System AI',
+        changedAt: complaint.createdAt
+      });
+    }
+
+    return res.json({
+      success: true,
+      ticketId: complaint.complaintNumber,
+      complaintId: complaint.id,
+      currentStatus: complaint.status,
+      department: {
+        id: complaint.department.id,
+        name: complaint.department.name
+      },
+      timeline,
+      assignedOfficer: complaint.assignedOfficer ? {
+        name: complaint.assignedOfficer.user?.name || 'Field Officer',
+        role: complaint.assignedOfficer.designation,
+        contact: complaint.assignedOfficer.user?.phone || null
+      } : null
+    });
+  } catch (error: any) {
+    return res.status(500).json({ success: false, error: { code: 'INTERNAL_ERROR', message: error.message } });
+  }
+}
+

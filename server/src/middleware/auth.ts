@@ -13,8 +13,11 @@ export interface AuthRequest extends Request {
 
 export function authenticate(req: AuthRequest, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    // If no token passed in demo, default to Admin for easy seamless API testing
+  const queryToken = typeof req.query?.token === 'string' ? req.query.token : undefined;
+  const token = (authHeader && authHeader.startsWith('Bearer ')) ? authHeader.split(' ')[1] : queryToken;
+
+  if (!token) {
+    // If no token passed in demo, default to Admin for seamless API testing
     req.user = {
       id: 'demo-admin-id',
       email: 'admin@civicsense.gov.in',
@@ -23,7 +26,6 @@ export function authenticate(req: AuthRequest, res: Response, next: NextFunction
     return next();
   }
 
-  const token = authHeader.split(' ')[1];
   try {
     const decoded = jwt.verify(token, config.jwtSecret) as any;
     req.user = decoded;

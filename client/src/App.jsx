@@ -101,6 +101,42 @@ export default function App() {
     };
   }, []);
 
+  const DEFAULT_CITIZEN = {
+    name: 'Citizen User',
+    role: 'CITIZEN',
+    email: 'citizen@civicsense.gov.in',
+    phone: '+91 98400 11223',
+    view: 'citizen-portal'
+  };
+
+  const [initialTrackId, setInitialTrackId] = useState(null);
+
+  // Sync with browser URL / routing
+  useEffect(() => {
+    const handleLocation = () => {
+      const path = window.location.pathname.toLowerCase();
+      if (path === '/login') {
+        setCurrentUser(null);
+        setCurrentView('login');
+      } else if (path === '/chat') {
+        setCurrentUser((prev) => prev || DEFAULT_CITIZEN);
+        setCurrentView('citizen-chatbot');
+      } else if (path.startsWith('/track')) {
+        const parts = window.location.pathname.split('/');
+        const tId = parts[2];
+        setCurrentUser((prev) => prev || DEFAULT_CITIZEN);
+        if (tId) setInitialTrackId(tId);
+        setCurrentView('citizen-portal');
+      } else if (path === '/' && !currentUser) {
+        setCurrentUser(DEFAULT_CITIZEN);
+        setCurrentView('citizen-portal');
+      }
+    };
+    handleLocation();
+    window.addEventListener('popstate', handleLocation);
+    return () => window.removeEventListener('popstate', handleLocation);
+  }, []);
+
   const handleSetCurrentUser = (user) => {
     setCurrentUser(user);
     if (!user) { localStorage.removeItem('civicsense_token'); }
@@ -109,7 +145,7 @@ export default function App() {
     }
   };
 
-  if (!currentUser) {
+  if (!currentUser || currentView === 'login') {
     return (
       <LoginView 
         onLogin={(user) => {
@@ -329,11 +365,15 @@ export default function App() {
                 currentUser={currentUser}
                 onNavigate={setCurrentView}
                 onRegisterComplaint={handleRegisterComplaint}
+                initialTicket={initialTrackId}
               />
             )}
 
             {currentView === 'citizen-chatbot' && (
-              <CitizenChatbotView />
+              <CitizenChatbotView 
+                currentUser={currentUser}
+                onNavigate={setCurrentView}
+              />
             )}
 
             {currentView === 'ai-insights' && (

@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { 
   Building2, Users, FileText, CheckCircle2, Clock, AlertTriangle, Flame, 
   UserPlus, ShieldAlert, ArrowUpRight, Search, Filter, RefreshCw, Activity,
-  ChevronDown, History, Check, UserCheck, MessageSquare
+  ChevronDown, History, Check, UserCheck, MessageSquare, PhoneCall, X
 } from 'lucide-react';
 import PriorityBadge from '../components/PriorityBadge';
 import StatusBadge from '../components/StatusBadge';
 import { api } from '../services/api.js';
+import { socket } from '../services/socket.js';
+import DepartmentCallModal from '../components/DepartmentCallModal.jsx';
+import BreachRiskPanel from '../components/BreachRiskPanel.jsx';
 
 export default function DepartmentDashboardView({ 
   currentUser, 
@@ -21,6 +24,10 @@ export default function DepartmentDashboardView({
   const [complaintSubFilter, setComplaintSubFilter] = useState('all'); // 'all' | 'unassigned' | 'in_progress' | 'history'
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedWorkerForInspection, setSelectedWorkerForInspection] = useState(null);
+
+  // Feature 8: Virtual Call Line State
+  const [incomingCallAlert, setIncomingCallAlert] = useState(null);
+  const [callModalOpen, setCallModalOpen] = useState(false);
 
   // Assign Worker Modal State & Audio Call Intelligence
   const [assignModalOpen, setAssignModalOpen] = useState(false);
@@ -84,6 +91,25 @@ export default function DepartmentDashboardView({
     }
     fetchDashboard();
   }, [selectedDeptId, currentUser]);
+
+  useEffect(() => {
+    const deptId = deptData?.department?.id;
+    if (!deptId) return;
+
+    const roomName = `department:${deptId}`;
+    socket.emit('join:room', roomName);
+
+    const handleCallRecorded = (call) => {
+      setIncomingCallAlert(call);
+    };
+
+    socket.on('call:recorded', handleCallRecorded);
+
+    return () => {
+      socket.emit('leave:room', roomName);
+      socket.off('call:recorded', handleCallRecorded);
+    };
+  }, [deptData?.department?.id]);
 
   const handleAssignSubmit = async (e) => {
     e.preventDefault();
@@ -176,6 +202,12 @@ export default function DepartmentDashboardView({
           <p className="text-xs text-slate-300 mt-1">
             Admin in charge: <strong className="text-white">{deptData?.department?.adminName || 'Department Admin'}</strong> ({deptData?.department?.adminEmail})
           </p>
+          {deptData?.department?.virtualNumber && (
+            <div className="mt-2.5 inline-flex items-center gap-2 bg-blue-500/20 border border-blue-400/30 px-3 py-1 rounded-lg text-xs font-mono text-blue-200">
+              <PhoneCall className="w-3.5 h-3.5 text-blue-400" />
+              <span>Direct Virtual Line: {deptData.department.virtualNumber}</span>
+            </div>
+          )}
         </div>
 
         {/* Department Switcher */}
@@ -200,8 +232,66 @@ export default function DepartmentDashboardView({
               </>
             )}
           </select>
+          <button
+            onClick={() => setCallModalOpen(true)}
+            className="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 transition cursor-pointer"
+          >
+            <PhoneCall className="w-3.5 h-3.5" />
+            <span>Test Line</span>
+          </button>
         </div>
       </div>
+
+      {/* Live Incoming Virtual Line Call Alert */}
+      {incomingCallAlert && (
+        <div className="bg-gradient-to-r from-blue-950 via-slate-900 to-indigo-950 border-2 border-blue-500/50 p-4 rounded-2xl shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4 animate-in fade-in slide-in-from-top-3">
+          <div className="flex items-start gap-3">
+            <div className="p-2.5 bg-blue-500/20 text-blue-400 rounded-xl mt-0.5 animate-pulse">
+              <PhoneCall className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold uppercase tracking-wider text-blue-400">
+                  Live Virtual Call Recorded
+                </span>
+                <span className="text-xs font-mono text-slate-300">
+                  from {incomingCallAlert.phoneNumber}
+                </span>
+                {incomingCallAlert.mismatchWarning && (
+                  <span className="text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-full flex items-center gap-1">
+                    <AlertTriangle className="w-3 h-3 text-amber-400" />
+                    Department Mismatch Warning
+                  </span>
+                )}
+                {incomingCallAlert.isFlaggedSpam && (
+                  <span className="text-[10px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30 px-2 py-0.5 rounded-full flex items-center gap-1">
+                    <ShieldAlert className="w-3 h-3 text-rose-400" />
+                    Spam Flagged
+                  </span>
+                )}
+              </div>
+              <p className="text-xs text-slate-200 mt-1 italic line-clamp-2">
+                "{incomingCallAlert.transcript || 'Audio call recorded on department virtual line.'}"
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              onClick={() => onNavigate && onNavigate('calls')}
+              className="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 transition cursor-pointer"
+            >
+              <span>View in Call Center</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </button>
+            <button
+              onClick={() => setIncomingCallAlert(null)}
+              className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition cursor-pointer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* KPI Stats Bar */}
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
@@ -263,7 +353,7 @@ export default function DepartmentDashboardView({
             }`}
           >
             <FileText className="w-4 h-4" />
-            <span>Department Complaints ({deptData?.complaints?.length || 0})</span>
+            <span>Live Queue ({deptData?.complaints?.length || 0})</span>
           </button>
 
           <button
@@ -301,6 +391,14 @@ export default function DepartmentDashboardView({
           </button>
         )}
       </div>
+
+      {/* Feature 12 — SLA Breach Risk Prediction Panel (shown in complaints tab) */}
+      {activeTab === 'complaints' && deptData?.complaints?.length > 0 && (
+        <BreachRiskPanel
+          complaints={deptData.complaints}
+          onSelectComplaint={onSelectComplaint}
+        />
+      )}
 
       {/* TAB 1: COMPLAINTS TABLE */}
       {activeTab === 'complaints' && (
@@ -407,7 +505,12 @@ export default function DepartmentDashboardView({
                           </button>
                         </div>
                       )}
-                      <div className="font-mono font-black text-blue-600 text-xs whitespace-nowrap tracking-wide">{c.id}</div>
+                      <div 
+                        onClick={() => onSelectComplaint(c)} 
+                        className="font-mono font-black text-blue-600 text-xs whitespace-nowrap tracking-wide cursor-pointer hover:underline"
+                      >
+                        {c.id}
+                      </div>
                     </td>
 
                     {/* Citizen Column */}
@@ -476,6 +579,14 @@ export default function DepartmentDashboardView({
                         >
                           Assign Worker
                         </button>
+                        {c.status !== 'In Progress' && c.status !== 'Resolved' && (
+                          <button
+                            onClick={() => handleStatusUpdate(c.id, 'IN_PROGRESS')}
+                            className="px-3 py-1.5 bg-blue-50 text-blue-700 hover:bg-blue-100 font-bold rounded-lg text-[11px] transition-colors cursor-pointer whitespace-nowrap"
+                          >
+                            Mark In Progress
+                          </button>
+                        )}
                         {c.status !== 'Resolved' && (
                           <button
                             onClick={() => handleStatusUpdate(c.id, 'Resolved')}

@@ -29,20 +29,22 @@ model User {
 }
 
 model Department {
-  id            String      @id @default(uuid())
-  name          String      @unique
-  code          String      @unique
+  id            String       @id @default(uuid())
+  name          String       @unique
+  code          String       @unique
   description   String?
-  active        Boolean     @default(true)
-  slaHours      Int         @default(24)
+  active        Boolean      @default(true)
+  slaHours      Int          @default(24)
   contactNumber String?
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  virtualNumber String?      // e.g. 1800-001-1001 for Department Virtual Call Line
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
   users         User[]
   officers      Officer[]
   complaints    Complaint[]
   incidents     Incident[]
   auditLogs     AuditLog[]
+  callRecords   CallRecord[]
 }
 
 model Officer {
@@ -62,19 +64,20 @@ model Officer {
 }
 
 model Citizen {
-  id                String      @id @default(uuid())
-  userId            String?     @unique
-  user              User?       @relation(fields: [userId], references: [id])
+  id                String       @id @default(uuid())
+  userId            String?      @unique
+  user              User?        @relation(fields: [userId], references: [id])
   name              String
-  phone             String      @unique
+  phone             String       @unique
   email             String?
-  preferredLanguage String      @default("Tamil")
+  preferredLanguage String       @default("Tamil")
   address           String?
-  zone              String      @default("Zone 4")
+  zone              String       @default("Zone 4")
   complaints        Complaint[]
+  reportedComplaints Complaint[] @relation("ReportedBy")
   calls             Call[]
-  createdAt         DateTime    @default(now())
-  updatedAt         DateTime    @updatedAt
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
 }
 
 model Complaint {
@@ -111,12 +114,27 @@ model Complaint {
   aiConfidence        Float                @default(0.95)
   incidentId          String?
   incident            Incident?            @relation(fields: [incidentId], references: [id])
-  createdAt           DateTime             @default(now())
-  updatedAt           DateTime             @updatedAt
-  analyses            AIAnalysis[]
-  emergencyIncidents  EmergencyIncident[]
-  similaritiesSource  ComplaintSimilarity[] @relation("SourceSimilarity")
-  similaritiesMatched ComplaintSimilarity[] @relation("MatchedSimilarity")
+  extractedLandmark   String?
+  extractedStreet     String?
+  nerConfidence       Float?
+  reportedName              String?              // NER-extracted caller name (Feature 3)
+  reportedById              String?              // Cross-channel phone identity (Feature 7)
+  reportedBy                Citizen?             @relation("ReportedBy", fields: [reportedById], references: [id])
+  classificationExplanation String?              // JSON: { category: { predicted, topTerms }, urgency: { predicted, topTerms } } (Feature 11)
+  breachRiskScore           Float?               // 0-1 probability of SLA breach (Feature 12)
+  breachRiskFactors         String?              // JSON: [{ factor, contribution }] (Feature 12)
+  hasBeenReassigned         Boolean              @default(false) // Used in breach prediction (Feature 12)
+  photoPath                 String?              // Uploaded photo file path (Feature 14)
+  photoVerification         String?              // JSON: { predictedVisualClass, confidence, matchesClaimedCategory } (Feature 14)
+  photoMismatchFlag         Boolean              @default(false) // Flag for officer review (Feature 14)
+  callRecords               CallRecord[]
+  createdAt                 DateTime             @default(now())
+  updatedAt                 DateTime             @updatedAt
+  analyses                  AIAnalysis[]
+  emergencyIncidents        EmergencyIncident[]
+  similaritiesSource        ComplaintSimilarity[] @relation("SourceSimilarity")
+  similaritiesMatched       ComplaintSimilarity[] @relation("MatchedSimilarity")
+  statusHistory             ComplaintStatusHistory[]
 }
 
 model Call {
@@ -236,3 +254,61 @@ model AuditLog {
   details      String?
   createdAt    DateTime    @default(now())
 }
+
+model CallRecord {
+  id                String      @id @default(cuid())
+  phoneNumber       String
+  audioFilePath     String
+  durationSeconds   Int
+  languageDetected  String
+  transcriptRaw     String
+  transcriptCleaned String?
+  isFlaggedSpam     Boolean     @default(false)
+  mismatchWarning   Boolean     @default(false) // classifier vs. department mismatch (Feature 8)
+  createdAt         DateTime    @default(now())
+  complaint         Complaint?  @relation(fields: [complaintId], references: [id])
+  complaintId       String?
+  department        Department? @relation(fields: [departmentId], references: [id])
+  departmentId      String?     // explicit department from virtual call line (Feature 8)
+}
+
+model CallerHistory {
+  id            String   @id @default(cuid())
+  phoneNumber   String   @unique
+  totalCalls24h Int      @default(1)
+  lastCallAt    DateTime @default(now())
+  spamScore     Float    @default(0)
+}
+
+model RecurringIssueSignal {
+  id          String   @id @default(cuid())
+  category    String
+  geoCellLat  Float
+  geoCellLng  Float
+  windowStart DateTime
+  windowEnd   DateTime
+  count       Int
+  trailingAvg Float
+  trendFlag   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+model ChatSession {
+  id            String   @id @default(cuid())
+  phoneNumber   String?
+  state         String   @default("AWAITING_INFO") // AWAITING_INFO | NEED_PHONE | NEED_LOCATION | FILED
+  collectedData String?  // JSON string: { category, department, landmark, transcript }
+  createdAt     DateTime @default(now())
+  complaintId   String?  // set once FILED
+}
+
+model ComplaintStatusHistory {
+  id          String    @id @default(cuid())
+  complaint   Complaint @relation(fields: [complaintId], references: [id], onDelete: Cascade)
+  complaintId String
+  status      String    // NEW, ASSIGNED, IN_PROGRESS, RESOLVED, CLOSED
+  notes       String?
+  changedBy   String?   // officer id/name or "System AI"
+  changedAt   DateTime  @default(now())
+}
+

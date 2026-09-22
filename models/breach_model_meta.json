@@ -1,0 +1,16 @@
+{
+  "trained_at": "2026-09-22T07:48:08.267798+00:00",
+  "n_samples": 150,
+  "class_distribution": {
+    "not_breached": 77,
+    "breached": 73
+  },
+  "feature_names": [
+    "urgencyScore",
+    "departmentBreachRate",
+    "officerWorkload",
+    "hoursElapsed",
+    "hasBeenReassigned"
+  ],
+  "note": "Trained on seeded historical data as proof-of-concept. Production deployment would retrain continuously on real resolution outcomes."
+}

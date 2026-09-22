@@ -13,6 +13,14 @@ from services.duplicate_detector import get_duplicate_detector
 from services.local_whisper import get_local_whisper
 from services.local_summarizer import get_local_summarizer
 from services.geo_clusterer import get_geo_clusterer
+from services.spam_detector import get_spam_detector
+from services.ner_extractor import extract_location
+from services.rag_resolution_assist import get_rag_resolution_assist
+from services.recurrence_predictor import compute_recurrence_signals
+from services.explainer import explain_classification          # Feature 11
+from services.breach_predictor import get_breach_model, predict_breach_risk, train_breach_model  # Feature 12
+from services.voice_reply import generate_confirmation_audio, get_audio_url  # Feature 13
+from services.photo_verifier import verify_photo, get_photo_verifier  # Feature 14
 
 load_dotenv()
 
@@ -50,6 +58,29 @@ except Exception as e:
     print(f"[App Init Warning] GeoClusterer startup: {e}")
     geo_clusterer = None
 
+try:
+    spam_detector = get_spam_detector()
+except Exception as e:
+    print(f"[App Init Warning] SpamDetector startup: {e}")
+    spam_detector = None
+
+try:
+    rag_assist = get_rag_resolution_assist()
+except Exception as e:
+    print(f"[App Init Warning] RAGResolutionAssist startup: {e}")
+    rag_assist = None
+
+try:
+    breach_model = get_breach_model()  # Feature 12
+except Exception as e:
+    print(f"[App Init Warning] BreachPredictor startup: {e}")
+    breach_model = None
+
+try:
+    get_photo_verifier()  # Feature 14 — pre-warm MobileNetV2
+except Exception as e:
+    print(f"[App Init Warning] PhotoVerifier startup: {e}")
+
 
 @app.route("/health", methods=["GET"])
 def health_check():
@@ -81,10 +112,15 @@ def get_metrics():
 
 
 @app.route("/transcribe", methods=["POST"])
+@app.route("/api/transcribe", methods=["POST"])
 def transcribe_audio():
     """
-    POST /transcribe
+    POST /transcribe or POST /api/transcribe
     Local Speech-to-Text transcription via local Whisper on CPU.
+    Accepts:
+      - Multipart: 'audio' or 'file'
+      - JSON: { audioFilePath } (saves re-uploading bytes from backend)
+      - JSON: { transcript } (direct text pass-through)
     """
     try:
         if 'audio' in request.files:
@@ -97,16 +133,361 @@ def transcribe_audio():
             return jsonify(result), 200
         
         data = request.get_json(silent=True) or {}
+        if "audioFilePath" in data and data["audioFilePath"]:
+            path = data["audioFilePath"]
+            if os.path.exists(path):
+                result = transcriber.transcribe(path)
+                return jsonify(result), 200
+            else:
+                return jsonify({"error": f"Audio file path '{path}' not found on server."}), 404
+
         if "transcript" in data:
+            t = data["transcript"]
+            from services.local_whisper import clean_transcript
             return jsonify({
-                "transcript": data["transcript"],
+                "transcript": t,
+                "transcriptCleaned": clean_transcript(t),
                 "language": data.get("language", "en"),
-                "status": "passed_through"
+                "durationSeconds": int(data.get("durationSeconds", 15)),
+                "status": "passed_through",
+                "needsManualReview": len(t.strip()) == 0
             }), 200
         
-        return jsonify({"error": "No audio file uploaded ('audio'/'file') and no 'transcript' JSON field provided."}), 400
+        return jsonify({"error": "No audio file uploaded, no 'audioFilePath', and no 'transcript' provided."}), 400
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+@app.route("/check-spam", methods=["POST"])
+@app.route("/api/ai/check-spam", methods=["POST"])
+def check_spam():
+    """
+    POST /check-spam or POST /api/ai/check-spam
+    Body: { phoneNumber, transcript, callRecordId, totalCalls24h }
+    Evaluates repeat caller frequency and ChromaDB cosine similarity to prior calls from the same number.
+    """
+    try:
+        data = request.get_json() or {}
+        phone_number = data.get("phoneNumber", "")
+        transcript = data.get("transcript", "")
+        call_record_id = data.get("callRecordId")
+        total_calls_24h = int(data.get("totalCalls24h", 1))
+
+        if not spam_detector:
+            return jsonify({"isFlaggedSpam": False, "spamScore": 0.0, "reason": "Spam detector unavailable"}), 200
+
+        result = spam_detector.check_spam(phone_number, transcript, call_record_id, total_calls_24h)
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/extract-entities", methods=["POST"])
+@app.route("/api/ai/extract-entities", methods=["POST"])
+def extract_entities():
+    """
+    POST /extract-entities or POST /api/ai/extract-entities
+    Body: { transcript, language }
+    Returns: { landmark, street, confidence }
+    """
+    try:
+        data = request.get_json() or {}
+        transcript = data.get("transcript", "")
+        language = data.get("language", "en")
+
+        result = extract_location(transcript, language)
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/similar-resolved", methods=["POST"])
+@app.route("/api/ai/similar-resolved", methods=["POST"])
+def similar_resolved():
+    """
+    POST /similar-resolved or POST /api/ai/similar-resolved
+    Body: { transcript, category, topK }
+    Returns: { matches: [{ complaintId, similarity, resolutionNotes, timeToResolveHours, assignedRole, category }] }
+    """
+    try:
+        data = request.get_json() or {}
+        transcript = data.get("transcript", "")
+        category = data.get("category")
+        top_k = int(data.get("topK", 3))
+
+        if not rag_assist:
+            return jsonify({"matches": []}), 200
+
+        matches = rag_assist.get_similar_resolved(transcript, top_k=top_k, category=category)
+        return jsonify({"matches": matches}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/sync-resolved", methods=["POST"])
+@app.route("/api/ai/sync-resolved", methods=["POST"])
+def sync_resolved():
+    """
+    POST /sync-resolved or POST /api/ai/sync-resolved
+    Body: { complaintId, transcript, resolutionNotes, timeToResolveHours, officerRole, category }
+    Upserts a resolved complaint into ChromaDB.
+    """
+    try:
+        data = request.get_json() or {}
+        complaint_id = data.get("complaintId")
+        transcript = data.get("transcript", "")
+        resolution_notes = data.get("resolutionNotes", "")
+        time_to_resolve_hours = float(data.get("timeToResolveHours", 4.0))
+        officer_role = data.get("officerRole", "Field Engineer")
+        category = data.get("category", "General")
+
+        if not rag_assist:
+            return jsonify({"status": "error", "message": "RAG assist unavailable"}), 500
+
+        res = rag_assist.sync_resolved_case(
+            complaint_id, transcript, resolution_notes, time_to_resolve_hours, officer_role, category
+        )
+        return jsonify(res), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/recurrence-signals", methods=["POST"])
+@app.route("/api/ai/recurrence-signals", methods=["POST"])
+def recurrence_signals():
+    """
+    POST /recurrence-signals or POST /api/ai/recurrence-signals
+    Body: { complaints: [...] }
+    Returns: { signals: [{ category, geoCellLat, geoCellLng, count, trailingAvg, trendFlag, ... }] }
+    """
+    try:
+        data = request.get_json() or {}
+        complaints = data.get("complaints", [])
+        signals = compute_recurrence_signals(complaints)
+        return jsonify({"signals": signals}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Feature 11 — Explainable-AI Classification
+# ──────────────────────────────────────────────────────────────────────────────
+
+@app.route("/explain-classification", methods=["POST"])
+@app.route("/api/ai/explain-classification", methods=["POST"])
+def explain_classification_route():
+    """
+    POST /api/ai/explain-classification
+    Body: { transcript: string, topN?: int }
+    Returns:
+    {
+      category: { predicted, topTerms: [{ term, weight }], lowConfidence },
+      urgency:  { predicted, topTerms: [{ term, weight }], lowConfidence }
+    }
+    """
+    try:
+        data = request.get_json() or {}
+        transcript = data.get("transcript", "")
+        top_n = int(data.get("topN", 5))
+
+        if not classifier:
+            return jsonify({"error": "Classifier unavailable"}), 503
+
+        result = explain_classification(
+            transcript,
+            classifier.vectorizer,
+            classifier.category_model,
+            classifier.urgency_model,
+            top_n=top_n
+        )
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Feature 12 — SLA Breach Risk Prediction
+# ──────────────────────────────────────────────────────────────────────────────
+
+@app.route("/breach-risk", methods=["POST"])
+@app.route("/api/ai/breach-risk", methods=["POST"])
+def breach_risk_single():
+    """
+    POST /api/ai/breach-risk
+    Body: { complaint: { urgencyScore, departmentBreachRate, officerWorkload,
+                         createdAt, priority, hasBeenReassigned } }
+    Returns: { breachRiskScore, atRisk, factors, hoursRemaining }
+    """
+    try:
+        data = request.get_json() or {}
+        complaint = data.get("complaint", {})
+        if not breach_model:
+            return jsonify({"error": "Breach model unavailable"}), 503
+        result = predict_breach_risk(complaint, breach_model)
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/breach-risk-batch", methods=["POST"])
+@app.route("/api/ai/breach-risk-batch", methods=["POST"])
+def breach_risk_batch():
+    """
+    POST /api/ai/breach-risk-batch
+    Body: { complaints: [ { complaintId, ticketId, urgencyScore, ... } ] }
+    Returns: { atRisk: [ { complaintId, ticketId, breachRiskScore, factors, hoursRemaining } ] }
+    """
+    try:
+        data = request.get_json() or {}
+        complaints = data.get("complaints", [])
+        if not breach_model:
+            return jsonify({"atRisk": []}), 200
+
+        at_risk = []
+        for c in complaints:
+            result = predict_breach_risk(c, breach_model)
+            if result.get("atRisk"):
+                at_risk.append({
+                    "complaintId": c.get("complaintId") or c.get("dbId") or c.get("id"),
+                    "ticketId": c.get("ticketId") or c.get("id"),
+                    "breachRiskScore": result["breachRiskScore"],
+                    "factors": result["factors"],
+                    "hoursRemaining": result["hoursRemaining"]
+                })
+        at_risk.sort(key=lambda x: x["breachRiskScore"], reverse=True)
+        return jsonify({"atRisk": at_risk}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/train-breach-model", methods=["POST"])
+@app.route("/api/ai/train-breach-model", methods=["POST"])
+def train_breach_model_route():
+    """
+    POST /api/ai/train-breach-model
+    Body: { resolvedComplaints: [...] }
+    Retrains the breach model on the provided resolved complaint history.
+    """
+    global breach_model
+    try:
+        data = request.get_json() or {}
+        resolved = data.get("resolvedComplaints", [])
+        meta = train_breach_model(resolved)
+        from services.breach_predictor import get_breach_model as _reload
+        import importlib, services.breach_predictor as _bp_module
+        _bp_module._breach_model = None  # force reload
+        breach_model = _reload()
+        return jsonify({"status": "trained", "meta": meta}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Feature 13 — Closed-Loop Voice Reply (Offline TTS)
+# ──────────────────────────────────────────────────────────────────────────────
+
+@app.route("/generate-confirmation", methods=["POST"])
+@app.route("/api/ai/generate-confirmation", methods=["POST"])
+def generate_confirmation_route():
+    """
+    POST /api/ai/generate-confirmation
+    Body: { ticketId, departmentName, language? }
+    Returns: { audioUrl: "/confirmations/CMP-10452_abc123.wav" } or { audioUrl: null, fallback: true }
+    """
+    try:
+        data = request.get_json() or {}
+        ticket_id = data.get("ticketId", "CMP-XXXXX")
+        department_name = data.get("departmentName", "your department")
+        language = data.get("language", "en")
+
+        file_path = generate_confirmation_audio(ticket_id, department_name, language)
+        audio_url = get_audio_url(file_path) if file_path else None
+
+        return jsonify({
+            "audioUrl": audio_url,
+            "ticketId": ticket_id,
+            "departmentName": department_name,
+            "fallback": audio_url is None
+        }), 200
+    except Exception as e:
+        return jsonify({"audioUrl": None, "fallback": True, "error": str(e)}), 200
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Feature 14 — Photo Verification Cross-Check
+# ──────────────────────────────────────────────────────────────────────────────
+
+@app.route("/verify-photo", methods=["POST"])
+@app.route("/api/ai/verify-photo", methods=["POST"])
+def verify_photo_route():
+    """
+    POST /api/ai/verify-photo
+    Body: multipart/form-data with 'image' (file) and 'claimedCategory' (string)
+    Returns:
+    {
+      predictedVisualClass: str,
+      confidence: float,
+      topPredictions: [{ label, confidence }],
+      matchesClaimedCategory: bool,
+      flagForReview: bool,
+      modelNote: str
+    }
+    """
+    import tempfile
+    import re
+
+    claimed_category = request.form.get("claimedCategory") or request.args.get("claimedCategory") or "General"
+
+    # Accept JSON payload with base64 image path (from Node backend)
+    if request.is_json:
+        data = request.get_json() or {}
+        image_path = data.get("imagePath")
+        claimed_category = data.get("claimedCategory", claimed_category)
+        if image_path and os.path.exists(image_path):
+            result = verify_photo(image_path, claimed_category)
+            return jsonify(result), 200
+        return jsonify({"error": "imagePath not found"}), 400
+
+    # Multipart upload — save to temp file
+    if "image" not in request.files:
+        return jsonify({"error": "No 'image' file in request"}), 400
+
+    file = request.files["image"]
+    ext = os.path.splitext(file.filename or "")[1].lower() or ".jpg"
+    allowed = {".jpg", ".jpeg", ".png", ".webp", ".gif", ".bmp"}
+    if ext not in allowed:
+        return jsonify({"error": f"Unsupported image type: {ext}"}), 400
+
+    try:
+        with tempfile.NamedTemporaryFile(suffix=ext, delete=False) as tmp:
+            file.save(tmp.name)
+            tmp_path = tmp.name
+
+        result = verify_photo(tmp_path, claimed_category)
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        try:
+            if 'tmp_path' in locals() and os.path.exists(tmp_path):
+                os.remove(tmp_path)
+        except Exception:
+            pass
+
+
+# Serve confirmation audio files
+@app.route("/confirmations/<filename>", methods=["GET"])
+def serve_confirmation_audio(filename):
+    """Serve TTS-generated WAV confirmation files."""
+    import re
+    from flask import send_from_directory
+    # Basic filename sanitization
+    if not re.match(r'^[\w\-\.]+\.wav$', filename):
+        return jsonify({"error": "Invalid filename"}), 400
+    confirmations_dir = os.path.join(os.path.dirname(__file__), "uploads", "confirmations")
+    return send_from_directory(confirmations_dir, filename)
+
 
 
 @app.route("/predict", methods=["POST"])
@@ -269,4 +650,4 @@ if __name__ == "__main__":
     print(f" Citizen Call Intelligence Microservice (100% Local)")
     print(f" Listening on http://localhost:{port}")
     print(f"==================================================\n")
-    app.run(host="0.0.0.0", port=port, debug=True)
+    app.run(host="0.0.0.0", port=port, debug=False)

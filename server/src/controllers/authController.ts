@@ -99,3 +99,84 @@ export async function getCurrentUser(req: AuthRequest, res: Response) {
     return res.status(500).json({ success: false, error: { code: 'INTERNAL_ERROR', message: error.message } });
   }
 }
+
+/**
+ * POST /api/auth/citizen-login
+ * Progressive citizen registration — phone number is the sole required identifier.
+ * First contact creates a Citizen + linked User; subsequent calls return existing records.
+ * No password wall: optional password support reserved for future OAuth/OTP flows.
+ */
+export async function citizenLogin(req: Request, res: Response) {
+  try {
+    const rawPhone = (req.body?.phoneNumber || '').trim().replace(/[\s\-()]/g, '');
+    if (!rawPhone || !/^\+?[0-9]{10,15}$/.test(rawPhone)) {
+      return res.status(400).json({
+        success: false,
+        error: { code: 'INVALID_PHONE', message: 'Valid phone number required (10–15 digits, e.g. +919840011223)' }
+      });
+    }
+
+    const citizenName = (req.body?.name || '').trim() || `Citizen ${rawPhone.slice(-4)}`;
+
+    // Find or create Citizen record (phone is the unique cross-channel identity)
+    let citizen = await prisma.citizen.findUnique({ where: { phone: rawPhone } });
+    let isNewUser = false;
+
+    if (!citizen) {
+      isNewUser = true;
+      // Create a linked User for JWT issuance
+      const newUser = await prisma.user.create({
+        data: {
+          name: citizenName,
+          email: `${rawPhone.replace('+', '')}@citizen.civicsense.local`,
+          passwordHash: '',
+          role: 'CITIZEN',
+          phone: rawPhone
+        }
+      });
+      citizen = await prisma.citizen.create({
+        data: {
+          name: citizenName,
+          phone: rawPhone,
+          userId: newUser.id,
+          preferredLanguage: req.body?.preferredLanguage || 'Tamil'
+        }
+      });
+    } else if (!citizen.userId) {
+      // Citizen exists but no linked User — create one
+      const newUser = await prisma.user.create({
+        data: {
+          name: citizen.name,
+          email: `${rawPhone.replace('+', '')}@citizen.civicsense.local`,
+          passwordHash: '',
+          role: 'CITIZEN',
+          phone: rawPhone
+        }
+      });
+      citizen = await prisma.citizen.update({
+        where: { id: citizen.id },
+        data: { userId: newUser.id }
+      });
+    }
+
+    const token = jwt.sign(
+      { id: citizen.userId, phone: rawPhone, role: 'CITIZEN', citizenId: citizen.id },
+      config.jwtSecret,
+      { expiresIn: '24h' }
+    );
+
+    return res.status(isNewUser ? 201 : 200).json({
+      success: true,
+      data: {
+        token,
+        userId: citizen.userId,
+        citizenId: citizen.id,
+        name: citizen.name,
+        phone: rawPhone,
+        isNewUser
+      }
+    });
+  } catch (error: any) {
+    return res.status(500).json({ success: false, error: { code: 'INTERNAL_ERROR', message: error.message } });
+  }
+}

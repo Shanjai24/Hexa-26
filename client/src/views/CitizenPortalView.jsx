@@ -1,14 +1,19 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { 
   Mic, Square, Play, Pause, Upload, Sparkles, CheckCircle2, ShieldCheck, 
   Send, Clock, UserCheck, MapPin, Building, Activity, FileText, Search, ArrowRight,
   PhoneCall, Building2, Zap, Droplets, Bus, HeartPulse, ShieldAlert, AlertTriangle, HelpCircle,
-  Volume2, Cpu, Check, AlertCircle, RefreshCw
+  Volume2, Cpu, Check, AlertCircle, RefreshCw, Camera, Image as ImageIcon, X, Wifi, WifiOff,
+  Radio, Rss
 } from 'lucide-react';
 import { api } from '../services/api.js';
+import { socket } from '../services/socket.js';
+import DepartmentCallModal from '../components/DepartmentCallModal.jsx';
+import { enqueueReport, getPendingCount, initOnlineListener, flushQueue } from '../offline/offlineQueue.js';
 
-export default function CitizenPortalView({ onNavigate, onRegisterComplaint, currentUser }) {
-  const [activeTab, setActiveTab] = useState('report'); // 'report' | 'track' | 'history'
+export default function CitizenPortalView({ onNavigate, onRegisterComplaint, currentUser, initialTicket = null }) {
+  const [activeTab, setActiveTab] = useState(initialTicket ? 'track' : 'report'); // 'report' | 'track' | 'history'
+  const [callModalOpen, setCallModalOpen] = useState(false);
 
   // Audio Recording State
   const [isRecording, setIsRecording] = useState(false);
@@ -33,6 +38,16 @@ export default function CitizenPortalView({ onNavigate, onRegisterComplaint, cur
   const [citizenName, setCitizenName] = useState(currentUser?.name || 'Citizen User');
   const [phone, setPhone] = useState(currentUser?.phone || '+91 98400 11223');
 
+  // Feature 14: Photo Attachment State
+  const [photoFile, setPhotoFile] = useState(null);
+  const [photoPreview, setPhotoPreview] = useState(null);
+
+  // Feature 15: Offline-First PWA State
+  const [isOnline, setIsOnline] = useState(typeof navigator !== 'undefined' ? navigator.onLine : true);
+  const [pendingOfflineCount, setPendingOfflineCount] = useState(0);
+  const [syncToast, setSyncToast] = useState(null);
+  const [isSyncingOffline, setIsSyncingOffline] = useState(false);
+
   // Sync state whenever currentUser changes (e.g. login/registration)
   useEffect(() => {
     if (currentUser?.name) {
@@ -42,6 +57,32 @@ export default function CitizenPortalView({ onNavigate, onRegisterComplaint, cur
       setPhone(currentUser.phone);
     }
   }, [currentUser]);
+
+  // Offline queue listener & auto-sync on reconnect
+  useEffect(() => {
+    getPendingCount().then(setPendingOfflineCount).catch(() => {});
+
+    const updateStatus = () => {
+      setIsOnline(navigator.onLine);
+    };
+    window.addEventListener('online', updateStatus);
+    window.addEventListener('offline', updateStatus);
+
+    const cleanup = initOnlineListener(async (res) => {
+      if (res && res.syncedCount > 0) {
+        setSyncToast(`Synced ${res.syncedCount} offline report(s) successfully!`);
+        getPendingCount().then(setPendingOfflineCount);
+        loadCitizenHistory();
+        setTimeout(() => setSyncToast(null), 5000);
+      }
+    });
+
+    return () => {
+      window.removeEventListener('online', updateStatus);
+      window.removeEventListener('offline', updateStatus);
+      if (cleanup) cleanup();
+    };
+  }, []);
 
   const [isLocating, setIsLocating] = useState(false);
 
@@ -132,6 +173,8 @@ export default function CitizenPortalView({ onNavigate, onRegisterComplaint, cur
   const [trackInput, setTrackInput] = useState('CMP-10452');
   const [trackedData, setTrackedData] = useState(null);
   const [isTrackingLoading, setIsTrackingLoading] = useState(false);
+  const [liveTimeline, setLiveTimeline] = useState(null); // real-time socket-pushed timeline
+  const socketJoinedRoomRef = useRef(null); // tracks which citizen:${ticketId} room we've joined
 
   // Citizen Complaint History State (Persistent via Database + LocalStorage)
   const [citizenHistory, setCitizenHistory] = useState(() => {
@@ -411,6 +454,50 @@ export default function CitizenPortalView({ onNavigate, onRegisterComplaint, cur
     if (!aiPreview) return;
     setIsSubmitting(true);
 
+    // Feature 15: Offline PWA Queue handling
+    if (!navigator.onLine) {
+      const offlinePayload = {
+        citizen: citizenName,
+        phone,
+        department: aiPreview.detectedDepartment,
+        category: aiPreview.detectedDepartment,
+        subcategory: aiPreview.problemStatement,
+        description: description || aiPreview.transcript,
+        location,
+        priority: aiPreview.riskLevel,
+        createdAt: new Date().toISOString()
+      };
+      const offlineId = await enqueueReport(offlinePayload);
+      const count = await getPendingCount();
+      setPendingOfflineCount(count);
+      setIsSubmitting(false);
+
+      const finalResult = {
+        complaintNumber: offlineId,
+        transcript: offlinePayload.description,
+        detectedLanguage: "English / Tamil",
+        modelUsed: "IndexedDB Offline Queue (PWA)",
+        category: offlinePayload.department,
+        problemStatement: offlinePayload.subcategory,
+        riskLevel: offlinePayload.priority,
+        urgencyScore: 85,
+        confidenceScore: "Stored Locally",
+        assignedDepartment: offlinePayload.department,
+        location,
+        assignedOfficer: "Pending Network Sync",
+        status: "Queued (Offline)",
+        isOffline: true,
+        timeline: [
+          { step: '1. Report Captured Offline', status: 'Completed', time: 'Just now' },
+          { step: '2. Enqueued in Browser Storage (IndexedDB)', status: 'Completed', time: 'Saved' },
+          { step: '3. Awaiting Network Connection', status: 'Active', time: 'Pending Sync' },
+          { step: '4. Automatic Server Routing on Reconnect', status: 'Pending', time: 'Auto' }
+        ]
+      };
+      setSubmissionResult(finalResult);
+      return;
+    }
+
     const formData = new FormData();
     if (audioBlob) {
       formData.append('audio', audioBlob, 'citizen_voice_recording.webm');
@@ -425,10 +512,20 @@ export default function CitizenPortalView({ onNavigate, onRegisterComplaint, cur
     formData.append('citizenName', citizenName);
     formData.append('phone', phone);
 
-    const res = await api.uploadVoiceComplaint(formData);
+    let res;
+    if (photoFile) {
+      formData.append('photo', photoFile);
+      formData.append('citizen', citizenName);
+      formData.append('category', aiPreview.detectedDepartment);
+      formData.append('subcategory', aiPreview.problemStatement);
+      formData.append('priority', aiPreview.riskLevel);
+      res = await api.uploadComplaintWithPhoto(formData);
+    } else {
+      res = await api.uploadVoiceComplaint(formData);
+    }
     setIsSubmitting(false);
 
-    const ticketNum = res.data?.complaintNumber || `CMP-${Math.floor(10452 + Math.random() * 500)}`;
+    const ticketNum = res.data?.complaintNumber || res.data?.id || `CMP-${Math.floor(10452 + Math.random() * 500)}`;
     const finalResult = {
       complaintNumber: ticketNum,
       transcript: aiPreview.transcript,
@@ -500,22 +597,77 @@ export default function CitizenPortalView({ onNavigate, onRegisterComplaint, cur
     }
   };
 
-  // Search Action Tracker by Ticket CMP Number
-  const handleTrackSearch = async () => {
-    if (!trackInput.trim()) return;
+  // Search Action Tracker by Ticket CMP Number — uses new unified status API
+  const handleTrackSearch = useCallback(async (overrideTicket) => {
+    const query = (overrideTicket || trackInput || '').trim();
+    if (!query) return;
     setIsTrackingLoading(true);
+    setLiveTimeline(null);
 
-    const res = await api.trackComplaintByNumber(trackInput);
+    // Leave any previously joined citizen room
+    if (socketJoinedRoomRef.current) {
+      socket.emit('leave:room', `citizen:${socketJoinedRoomRef.current}`);
+      socket.off('complaint:statusChanged');
+      socketJoinedRoomRef.current = null;
+    }
+
+    const res = await api.getComplaintStatus(query);
     setIsTrackingLoading(false);
 
-    if (res.success && res.data) {
-      setTrackedData(res.data);
+    if (res.success) {
+      // Map the new API response to the legacy trackedData shape used in the UI
+      const now = new Date();
+      let slaLabel = 'On Schedule';
+      // Use timeline's first event date if available to compute SLA deadline
+      const mapped = {
+        complaintNumber: res.ticketId || query.toUpperCase(),
+        category: res.department?.name || 'General',
+        subcategory: 'AI-Routed Ticket',
+        location: 'Civic Area',
+        zone: 'Zone 4',
+        status: res.currentStatus || 'NEW',
+        department: res.department?.name || 'Municipal',
+        assignedTeam: res.assignedOfficer ? `${res.department?.name || ''} Response Team` : null,
+        assignedOfficer: res.assignedOfficer?.name || null,
+        officerPhone: res.assignedOfficer?.contact || null,
+        slaRemaining: slaLabel,
+        aiSummary: null,
+        created: res.timeline?.[0] ? new Date(res.timeline[0].changedAt).toLocaleString('en-IN', { dateStyle: 'short', timeStyle: 'short' }) : 'Recently',
+        updated: res.timeline?.length > 0 ? new Date(res.timeline[res.timeline.length - 1].changedAt).toLocaleString('en-IN', { dateStyle: 'short', timeStyle: 'short' }) : 'Recently',
+        // Render history as the live timeline
+        statusTimeline: res.timeline || []
+      };
+      setTrackedData(mapped);
+
+      // Join Socket.IO citizen room for live push updates
+      const ticketId = res.ticketId || query.toUpperCase();
+      const roomName = `citizen:${ticketId}`;
+      socket.emit('join:room', roomName);
+      socketJoinedRoomRef.current = ticketId;
+
+      socket.on('complaint:statusChanged', (payload) => {
+        if (payload.ticketId === ticketId || payload.id === ticketId) {
+          // Append new status to the live timeline
+          setLiveTimeline((prev) => [
+            ...(prev || mapped.statusTimeline),
+            {
+              status: payload.status,
+              notes: payload.notes,
+              changedBy: payload.changedBy,
+              changedAt: payload.changedAt
+            }
+          ]);
+          const formattedStatus = payload.status === 'IN_PROGRESS' ? 'In Progress' : payload.status === 'RESOLVED' ? 'Resolved' : payload.status;
+          setTrackedData((prev) => prev ? { ...prev, status: formattedStatus } : prev);
+        }
+      });
     } else {
+      // Fallback demo data so the UI always shows something meaningful
       setTrackedData({
-        complaintNumber: trackInput.toUpperCase(),
+        complaintNumber: query.toUpperCase(),
         category: 'Water Board',
         subcategory: 'Water Pipeline Breakdown',
-        location: 'Annur',
+        location: 'Annur, Coimbatore',
         zone: 'Zone 4',
         status: 'In Progress',
         department: 'Department of Water Supply & Drainage',
@@ -526,18 +678,22 @@ export default function CitizenPortalView({ onNavigate, onRegisterComplaint, cur
         aiSummary: 'Water supply disruption caused by main trunk line damage.',
         created: 'Today, 06:30 AM',
         updated: '15 mins ago',
-        timeline: [
-          { step: '1. Audio Voice Call Intake', status: 'Completed', time: '06:30 AM' },
-          { step: '2. Whisper STT Transcription', status: 'Completed', time: '06:31 AM' },
-          { step: '3. ML Model Department Classification (Water Board)', status: 'Completed', time: '06:31 AM' },
-          { step: '4. Routed to Water Board Unassigned Queue', status: 'Completed', time: '06:35 AM' },
-          { step: '5. Assigned to Field Worker Arun Kumar', status: 'Completed', time: '06:45 AM' },
-          { step: '6. Field Inspection & Repair Action', status: 'In Progress', time: 'Active Now' },
-          { step: '7. Resolution & Citizen Verification', status: 'Pending', time: 'Target 6:00 PM' }
+        statusTimeline: [
+          { status: 'NEW', notes: 'Voice call auto-routed to Water Board.', changedBy: 'System AI Voice Line', changedAt: new Date().toISOString() },
+          { status: 'ASSIGNED', notes: 'Assigned to Arun Kumar (Field Engineer).', changedBy: 'Department Admin', changedAt: new Date().toISOString() },
+          { status: 'IN_PROGRESS', notes: 'Field inspection and repair in progress.', changedBy: 'Arun Kumar', changedAt: new Date().toISOString() }
         ]
       });
     }
-  };
+  }, [trackInput]);
+
+  useEffect(() => {
+    if (initialTicket) {
+      setActiveTab('track');
+      setTrackInput(initialTicket);
+      handleTrackSearch(initialTicket);
+    }
+  }, [initialTicket, handleTrackSearch]);
 
   const togglePlayAudio = () => {
     if (!audioPlayerRef.current) return;
@@ -552,6 +708,54 @@ export default function CitizenPortalView({ onNavigate, onRegisterComplaint, cur
 
   return (
     <div className="p-6 space-y-6 max-w-5xl mx-auto font-sans">
+      {/* Offline Status & Sync Alert Banner (Feature 15) */}
+      {!isOnline && (
+        <div className="p-3.5 bg-amber-500/15 border border-amber-400/30 rounded-2xl flex items-center justify-between text-amber-900 text-xs">
+          <div className="flex items-center gap-2 font-bold">
+            <WifiOff className="w-4 h-4 text-amber-600 shrink-0" />
+            <span>You are currently offline. Any grievance submitted will be saved to your local device and synced automatically once internet is restored.</span>
+          </div>
+          <span className="px-2 py-0.5 rounded-full bg-amber-200 text-amber-900 text-[10px] font-mono font-bold shrink-0">
+            Offline PWA Mode
+          </span>
+        </div>
+      )}
+
+      {pendingOfflineCount > 0 && (
+        <div className="p-3.5 bg-blue-50 border border-blue-200 rounded-2xl flex items-center justify-between text-blue-900 text-xs">
+          <div className="flex items-center gap-2 font-bold">
+            <Wifi className="w-4 h-4 text-blue-600 shrink-0" />
+            <span>{pendingOfflineCount} grievance report(s) queued locally in offline storage.</span>
+          </div>
+          <button
+            type="button"
+            disabled={isSyncingOffline || !isOnline}
+            onClick={async () => {
+              setIsSyncingOffline(true);
+              const res = await flushQueue();
+              setIsSyncingOffline(false);
+              const count = await getPendingCount();
+              setPendingOfflineCount(count);
+              if (res.syncedCount > 0) {
+                setSyncToast(`Synced ${res.syncedCount} report(s) successfully!`);
+                loadCitizenHistory();
+                setTimeout(() => setSyncToast(null), 4000);
+              }
+            }}
+            className="px-3 py-1 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-lg text-xs font-bold cursor-pointer transition-all"
+          >
+            {isSyncingOffline ? 'Syncing...' : 'Sync Now'}
+          </button>
+        </div>
+      )}
+
+      {syncToast && (
+        <div className="p-3 bg-emerald-50 border border-emerald-300 text-emerald-900 rounded-2xl text-xs font-bold flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+          <span>{syncToast}</span>
+        </div>
+      )}
+
       {/* Top Banner & Tab Switcher */}
       <div className="bg-gradient-to-r from-blue-900 via-slate-900 to-indigo-950 text-white p-8 rounded-3xl shadow-xl text-center space-y-3">
         <div className="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-xs border border-white/20">
@@ -591,6 +795,13 @@ export default function CitizenPortalView({ onNavigate, onRegisterComplaint, cur
           >
             <FileText className="w-4 h-4 text-blue-600" />
             <span>My Grievance History ({citizenHistory.length})</span>
+          </button>
+          <button
+            onClick={() => setCallModalOpen(true)}
+            className="px-5 py-2.5 rounded-xl font-extrabold text-xs transition-all cursor-pointer flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-lg shadow-emerald-900/40 border border-emerald-400/30"
+          >
+            <PhoneCall className="w-4 h-4 text-emerald-200" />
+            <span>Call Unified Voice Line (1800-CIVICSENSE)</span>
           </button>
         </div>
       </div>
@@ -644,6 +855,61 @@ export default function CitizenPortalView({ onNavigate, onRegisterComplaint, cur
                       <span>{selectedFile ? selectedFile.name : 'Select Audio File (MP3 / WAV / WEBM)'}</span>
                       <input type="file" accept="audio/*" onChange={handleFileUpload} className="hidden" />
                     </label>
+                  </div>
+
+                  {/* Photo Attachment (Feature 14 — AI Visual Verification) */}
+                  <div className="pt-2 text-left space-y-1">
+                    <label className="text-xs font-bold text-slate-700 flex items-center justify-between">
+                      <span className="flex items-center gap-1.5">
+                        <Camera className="w-3.5 h-3.5 text-indigo-600" />
+                        <span>Attach Grievance Photo (AI Visual Verification):</span>
+                      </span>
+                      <span className="text-[10px] text-slate-400 font-normal">Optional</span>
+                    </label>
+
+                    {!photoPreview ? (
+                      <label className="px-4 py-2.5 bg-indigo-50/60 hover:bg-indigo-50 text-indigo-900 text-xs font-bold rounded-xl border border-indigo-200 border-dashed shadow-2xs cursor-pointer flex items-center justify-center gap-2 transition-all">
+                        <ImageIcon className="w-4 h-4 text-indigo-600" />
+                        <span>Click to Attach Photo (Water Leak, Pothole, Trash, Fire...)</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              setPhotoFile(file);
+                              setPhotoPreview(URL.createObjectURL(file));
+                            }
+                          }}
+                          className="hidden"
+                        />
+                      </label>
+                    ) : (
+                      <div className="relative inline-flex items-center gap-3 p-2.5 bg-slate-100 rounded-2xl border border-slate-200">
+                        <img
+                          src={photoPreview}
+                          alt="Selected issue"
+                          className="w-16 h-16 object-cover rounded-xl border border-slate-300 shadow-xs"
+                        />
+                        <div className="text-xs">
+                          <span className="font-bold text-slate-800 block truncate max-w-[200px]">{photoFile?.name}</span>
+                          <span className="text-[10px] text-slate-500 font-mono">{(photoFile.size / 1024).toFixed(1)} KB</span>
+                          <span className="block text-[10px] text-emerald-600 font-semibold mt-0.5">Ready for AI cross-check</span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (photoPreview) URL.revokeObjectURL(photoPreview);
+                            setPhotoFile(null);
+                            setPhotoPreview(null);
+                          }}
+                          className="p-1.5 bg-red-100 hover:bg-red-200 text-red-700 rounded-lg cursor-pointer transition-all ml-2"
+                          title="Remove photo"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                    )}
                   </div>
 
                   {/* Optional Text Description Input */}
@@ -1026,44 +1292,47 @@ export default function CitizenPortalView({ onNavigate, onRegisterComplaint, cur
                 )}
               </div>
 
-              {/* Progression Timeline */}
+              {/* Live Status History Timeline */}
               <div className="space-y-2 pt-2">
-                <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                  <Activity className="w-4 h-4 text-blue-600" /> Progression Timeline
-                </span>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                    <Activity className="w-4 h-4 text-blue-600" /> Status History Timeline
+                  </span>
+                  {socketJoinedRoomRef.current && (
+                    <span className="flex items-center gap-1 text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
+                      <Rss className="w-3 h-3 animate-pulse" /> LIVE
+                    </span>
+                  )}
+                </div>
                 <div className="space-y-2">
-                  {trackedData.timeline?.map((t, idx) => (
-                    <div key={idx} className="p-2.5 bg-white rounded-xl border border-slate-200 text-xs flex justify-between items-center">
-                      <div className="flex items-center gap-2">
-                        <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold flex-shrink-0 ${
-                          t.status === 'Completed' ? 'bg-emerald-100 text-emerald-700' :
-                          t.status === 'In Progress' || t.status === 'Active' ? 'bg-blue-100 text-blue-700' :
-                          'bg-slate-100 text-slate-400'
-                        }`}>
-                          {t.status === 'Completed' ? <Check className="w-4 h-4" /> : idx + 1}
+                  {(liveTimeline || trackedData.statusTimeline || []).map((t, idx, arr) => {
+                    const isLast = idx === arr.length - 1;
+                    const statusColor = 
+                      t.status === 'RESOLVED' || t.status === 'CLOSED' ? 'bg-emerald-100 text-emerald-700 border-emerald-200' :
+                      t.status === 'IN_PROGRESS' || t.status === 'ASSIGNED' ? 'bg-blue-100 text-blue-700 border-blue-200' :
+                      t.status === 'NEW' ? 'bg-slate-100 text-slate-600 border-slate-200' :
+                      'bg-amber-100 text-amber-700 border-amber-200';
+                    return (
+                      <div key={idx} className={`p-3 rounded-xl border text-xs flex gap-3 items-start ${isLast ? 'ring-1 ring-blue-400/40 shadow-sm' : 'bg-white border-slate-100'}`}>
+                        <div className={`w-2.5 h-2.5 rounded-full border-2 flex-shrink-0 mt-0.5 ${isLast ? 'bg-blue-500 border-blue-400 animate-pulse' : 'bg-emerald-400 border-emerald-300'}`} />
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between gap-2 flex-wrap">
+                            <span className={`px-2 py-0.5 rounded font-bold text-[11px] border ${statusColor}`}>{t.status}</span>
+                            <span className="text-[10px] text-slate-400 font-mono flex-shrink-0">
+                              {t.changedAt ? new Date(t.changedAt).toLocaleString('en-IN', { dateStyle: 'short', timeStyle: 'short' }) : ''}
+                            </span>
+                          </div>
+                          {t.notes && <p className="text-slate-700 mt-1 leading-snug">{t.notes}</p>}
+                          {t.changedBy && <p className="text-[10px] text-slate-400 mt-0.5">— {t.changedBy}</p>}
                         </div>
-                        <span className="font-medium text-slate-800">{t.step}</span>
                       </div>
-                      <span className="text-[10px] font-bold text-slate-500 font-mono">{t.time}</span>
-                    </div>
-                  ))}
+                    );
+                  })}
+                  {(!trackedData.statusTimeline || trackedData.statusTimeline.length === 0) && (
+                    <p className="text-xs text-slate-400 italic">No status history recorded yet.</p>
+                  )}
                 </div>
               </div>
-
-              {/* Action Logs from Audit Trail */}
-              {trackedData.actionLogs?.length > 0 && (
-                <div className="space-y-2 pt-2">
-                  <span className="text-xs font-bold text-slate-800">Audit Trail</span>
-                  <div className="space-y-1.5">
-                    {trackedData.actionLogs.map((log, idx) => (
-                      <div key={idx} className="p-2 bg-white rounded-lg border border-slate-100 text-[10px] flex justify-between">
-                        <div><span className="font-bold text-slate-700">{log.action}</span> — <span className="text-slate-500">{log.details}</span></div>
-                        <span className="text-slate-400 font-mono flex-shrink-0 ml-2">{log.timestamp}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
           )}
         </div>
@@ -1096,7 +1365,7 @@ export default function CitizenPortalView({ onNavigate, onRegisterComplaint, cur
                     {h.status}
                   </span>
                   <button
-                    onClick={() => { setTrackInput(h.id); setActiveTab('track'); handleTrackSearch(); }}
+                    onClick={() => { setTrackInput(h.id); setActiveTab('track'); handleTrackSearch(h.id); }}
                     className="px-3 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 text-xs font-bold rounded-lg transition-colors cursor-pointer"
                   >
                     Track Progress
@@ -1107,6 +1376,19 @@ export default function CitizenPortalView({ onNavigate, onRegisterComplaint, cur
           </div>
         </div>
       )}
+
+      {/* Feature 8: Unified Helpline Call Modal */}
+      <DepartmentCallModal 
+        isOpen={callModalOpen} 
+        onClose={() => setCallModalOpen(false)} 
+        currentUser={currentUser}
+        onTrackTicket={(ticketId) => {
+          setCallModalOpen(false);
+          setTrackInput(ticketId);
+          setActiveTab('track');
+          handleTrackSearch(ticketId);
+        }}
+      />
     </div>
   );
 }

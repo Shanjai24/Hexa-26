@@ -18,6 +18,41 @@ def _ensure_ffmpeg():
         except Exception:
             pass
 
+def clean_transcript(text: str) -> str:
+    """Cleans raw speech transcription by removing filler words, repetitive artifacts, and normalizing formatting."""
+    if not text:
+        return ""
+    import re
+    cleaned = text.strip()
+    # Normalize common filler sounds/words in telephony
+    fillers = r'\b(uh|um|umm|uhh|ah|ahh|erm|er|like|you know|i mean|hmm)\b'
+    cleaned = re.sub(fillers, '', cleaned, flags=re.IGNORECASE)
+    # Remove duplicate consecutive words (stuttering speech)
+    cleaned = re.sub(r'\b(\w+)(?:\s+\1\b)+', r'\1', cleaned, flags=re.IGNORECASE)
+    # Collapse multiple spaces and trim
+    cleaned = re.sub(r'\s+', ' ', cleaned).strip()
+    if cleaned and not cleaned[0].isupper():
+        cleaned = cleaned[0].upper() + cleaned[1:]
+    return cleaned
+
+def get_audio_duration_seconds(file_path: str) -> int:
+    """Calculates audio duration in seconds using wave module with fallback estimation."""
+    try:
+        import wave
+        with wave.open(file_path, 'rb') as wf:
+            frames = wf.getnframes()
+            rate = wf.getframerate()
+            if rate > 0:
+                return max(1, int(round(frames / float(rate))))
+    except Exception:
+        pass
+    try:
+        size = os.path.getsize(file_path)
+        # 16kHz 16-bit mono PCM is 32000 bytes per second
+        return max(1, int(round(size / 32000.0)))
+    except Exception:
+        return 15
+
 class LocalWhisperTranscriber:
     def __init__(self, model_name="tiny"):
         _ensure_ffmpeg()
@@ -41,11 +76,11 @@ class LocalWhisperTranscriber:
 
     def transcribe(self, file_storage_or_path, language: str = None):
         """
-        Transcribes audio locally using Whisper on CPU.
+        Transcribes audio locally using Whisper on CPU, returning transcript, language, durationSeconds, and needsManualReview.
         """
+        duration_seconds = 15
         if self.model:
             try:
-                # Save input buffer to temp file
                 suffix = ".wav"
                 if hasattr(file_storage_or_path, 'filename') and file_storage_or_path.filename:
                     ext = os.path.splitext(file_storage_or_path.filename)[1]
@@ -59,6 +94,9 @@ class LocalWhisperTranscriber:
                         tmp_path = tmp.name
                 else:
                     tmp_path = str(file_storage_or_path)
+
+                if os.path.exists(tmp_path):
+                    duration_seconds = get_audio_duration_seconds(tmp_path)
 
                 try:
                     # If standard whisper model
@@ -75,12 +113,7 @@ class LocalWhisperTranscriber:
                             initial_prompt="Civic grievance report regarding fire rescue, water supply, electricity power outage, road damage, garbage sanitation, police, ambulance emergency."
                         )
                         transcript_text = result.get("text", "").strip()
-                        return {
-                            "transcript": transcript_text,
-                            "language": result.get("language", language or "en"),
-                            "status": "success",
-                            "engine": "local_whisper"
-                        }
+                        detected_lang = result.get("language", language or "en")
                     else:
                         # faster-whisper model
                         segments, info = self.model.transcribe(
@@ -91,13 +124,20 @@ class LocalWhisperTranscriber:
                             condition_on_previous_text=False,
                             initial_prompt="Civic grievance report regarding fire rescue, water supply, electricity power outage, road damage, garbage sanitation, police, ambulance emergency."
                         )
-                        text = " ".join([segment.text for segment in segments]).strip()
-                        return {
-                            "transcript": text,
-                            "language": info.language if hasattr(info, 'language') else (language or "en"),
-                            "status": "success",
-                            "engine": "local_faster_whisper"
-                        }
+                        transcript_text = " ".join([segment.text for segment in segments]).strip()
+                        detected_lang = info.language if hasattr(info, 'language') else (language or "en")
+
+                    is_silent = len(transcript_text) == 0
+                    return {
+                        "transcript": transcript_text,
+                        "transcriptCleaned": clean_transcript(transcript_text),
+                        "language": detected_lang,
+                        "durationSeconds": duration_seconds,
+                        "duration": f"{duration_seconds // 60:02d}:{duration_seconds % 60:02d}",
+                        "status": "needs_manual_review" if is_silent else "success",
+                        "needsManualReview": is_silent,
+                        "engine": "local_whisper"
+                    }
                 finally:
                     if hasattr(file_storage_or_path, 'read') and os.path.exists(tmp_path):
                         try:
@@ -108,10 +148,15 @@ class LocalWhisperTranscriber:
                 print(f"[LocalWhisper Error] Local transcription failed: {e}")
 
         # Default fallback
+        fallback_text = "Emergency grievance call recorded from citizen."
         return {
-            "transcript": "Urgent civic emergency report recorded from citizen voice intake.",
+            "transcript": fallback_text,
+            "transcriptCleaned": clean_transcript(fallback_text),
             "language": language or "en",
+            "durationSeconds": duration_seconds,
+            "duration": f"{duration_seconds // 60:02d}:{duration_seconds % 60:02d}",
             "status": "local_processed",
+            "needsManualReview": False,
             "engine": "local_audio_processor"
         }
 

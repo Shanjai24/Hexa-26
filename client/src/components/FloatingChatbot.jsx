@@ -47,10 +47,23 @@ export default function FloatingChatbot() {
       const cmpMatch = queryText.match(/CMP-\d+/i);
       if (cmpMatch) {
         const ticketNum = cmpMatch[0].toUpperCase();
-        const trackRes = await api.trackComplaintByNumber(ticketNum);
-        if (trackRes.success && trackRes.data) {
-          const d = trackRes.data;
-          botResponseText = `🎫 **Ticket Details for ${d.complaintNumber}**\n\n• **Department**: ${d.department}\n• **Category**: ${d.category} (${d.subcategory})\n• **Status**: **${d.status}**\n• **Priority / Urgency**: ${d.priority} (${d.slaRemaining})\n• **Assigned Officer**: ${d.assignedOfficer} (📞 ${d.officerPhone})\n• **Location**: ${d.location} (${d.zone})\n\nNeed anything else regarding this ticket?`;
+        // Use the unified status endpoint which returns full history timeline
+        const trackRes = await api.getComplaintStatus(ticketNum);
+        if (trackRes.success) {
+          const dept = trackRes.department?.name || 'Municipal Department';
+          const status = trackRes.currentStatus || 'NEW';
+          const officer = trackRes.assignedOfficer
+            ? `${trackRes.assignedOfficer.name} (📞 ${trackRes.assignedOfficer.contact || 'N/A'})`
+            : 'Not yet assigned';
+          const timelineText = (trackRes.timeline || [])
+            .slice(-4) // Show last 4 history entries for brevity
+            .map((h) => {
+              const time = h.changedAt ? new Date(h.changedAt).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) : '';
+              return `  • **${h.status}** (${time}) — ${h.notes || 'Status updated'} *[${h.changedBy || 'System'}]*`;
+            })
+            .join('\n');
+
+          botResponseText = `🎫 **Ticket ${ticketNum} — Current Status: ${status}**\n\n• **Department**: ${dept}\n• **Assigned Officer**: ${officer}\n\n📜 **Recent Status Timeline:**\n${timelineText || '  (No history recorded yet)'}\n\nType the ticket number again anytime for live updates.`;
         } else {
           const chatRes = await api.sendChatbotMessage(queryText);
           botResponseText = chatRes.data?.message || `⚠️ Could not find ticket **${ticketNum}**. Please verify the number or submit a new grievance.`;
