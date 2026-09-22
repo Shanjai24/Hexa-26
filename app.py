@@ -27,24 +27,12 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)  # Enable Cross-Origin Resource Sharing for React frontend & Node backend
 
-# Initialize local services
+# Initialize lightweight local services (fast startup, low RAM)
 try:
     classifier = get_classifier()
 except Exception as e:
     print(f"[App Init Warning] Classifier startup: {e}")
     classifier = None
-
-try:
-    duplicate_detector = get_duplicate_detector()
-except Exception as e:
-    print(f"[App Init Warning] DuplicateDetector startup: {e}")
-    duplicate_detector = None
-
-try:
-    transcriber = get_local_whisper()
-except Exception as e:
-    print(f"[App Init Warning] LocalWhisper startup: {e}")
-    transcriber = None
 
 try:
     summarizer = get_local_summarizer()
@@ -59,27 +47,56 @@ except Exception as e:
     geo_clusterer = None
 
 try:
-    spam_detector = get_spam_detector()
-except Exception as e:
-    print(f"[App Init Warning] SpamDetector startup: {e}")
-    spam_detector = None
-
-try:
-    rag_assist = get_rag_resolution_assist()
-except Exception as e:
-    print(f"[App Init Warning] RAGResolutionAssist startup: {e}")
-    rag_assist = None
-
-try:
     breach_model = get_breach_model()  # Feature 12
 except Exception as e:
     print(f"[App Init Warning] BreachPredictor startup: {e}")
     breach_model = None
 
-try:
-    get_photo_verifier()  # Feature 14 — pre-warm MobileNetV2
-except Exception as e:
-    print(f"[App Init Warning] PhotoVerifier startup: {e}")
+# Heavy models are lazy-loaded on-demand to stay within 512MB memory limit
+duplicate_detector = None
+transcriber = None
+spam_detector = None
+rag_assist = None
+
+
+def get_transcriber_safe():
+    global transcriber
+    if transcriber is None:
+        try:
+            transcriber = get_local_whisper()
+        except Exception as e:
+            print(f"[Lazy Load Error] LocalWhisper: {e}")
+    return transcriber
+
+
+def get_spam_detector_safe():
+    global spam_detector
+    if spam_detector is None:
+        try:
+            spam_detector = get_spam_detector()
+        except Exception as e:
+            print(f"[Lazy Load Error] SpamDetector: {e}")
+    return spam_detector
+
+
+def get_rag_assist_safe():
+    global rag_assist
+    if rag_assist is None:
+        try:
+            rag_assist = get_rag_resolution_assist()
+        except Exception as e:
+            print(f"[Lazy Load Error] RAGResolutionAssist: {e}")
+    return rag_assist
+
+
+def get_duplicate_detector_safe():
+    global duplicate_detector
+    if duplicate_detector is None:
+        try:
+            duplicate_detector = get_duplicate_detector()
+        except Exception as e:
+            print(f"[Lazy Load Error] DuplicateDetector: {e}")
+    return duplicate_detector
 
 
 @app.route("/health", methods=["GET"])
@@ -90,9 +107,9 @@ def health_check():
         "service": "Citizen Call Intelligence Platform AI/ML Microservice (100% Local)",
         "version": "2.0.0",
         "components": {
-            "classifier_trained": classifier is not None and classifier.vectorizer is not None,
-            "duplicate_detector": duplicate_detector is not None,
-            "local_whisper": transcriber is not None,
+            "classifier_trained": classifier is not None and getattr(classifier, "vectorizer", None) is not None,
+            "duplicate_detector": duplicate_detector is not None or "lazy_ready",
+            "local_whisper": transcriber is not None or "lazy_ready",
             "local_summarizer": summarizer is not None,
             "geo_clusterer": geo_clusterer is not None
         }
@@ -123,20 +140,27 @@ def transcribe_audio():
       - JSON: { transcript } (direct text pass-through)
     """
     try:
+        t_inst = get_transcriber_safe()
         if 'audio' in request.files:
             file_obj = request.files['audio']
-            result = transcriber.transcribe(file_obj)
+            if not t_inst:
+                return jsonify({"error": "Transcriber service currently unavailable"}), 503
+            result = t_inst.transcribe(file_obj)
             return jsonify(result), 200
         elif 'file' in request.files:
             file_obj = request.files['file']
-            result = transcriber.transcribe(file_obj)
+            if not t_inst:
+                return jsonify({"error": "Transcriber service currently unavailable"}), 503
+            result = t_inst.transcribe(file_obj)
             return jsonify(result), 200
         
         data = request.get_json(silent=True) or {}
         if "audioFilePath" in data and data["audioFilePath"]:
             path = data["audioFilePath"]
             if os.path.exists(path):
-                result = transcriber.transcribe(path)
+                if not t_inst:
+                    return jsonify({"error": "Transcriber service currently unavailable"}), 503
+                result = t_inst.transcribe(path)
                 return jsonify(result), 200
             else:
                 return jsonify({"error": f"Audio file path '{path}' not found on server."}), 404
@@ -173,10 +197,11 @@ def check_spam():
         call_record_id = data.get("callRecordId")
         total_calls_24h = int(data.get("totalCalls24h", 1))
 
-        if not spam_detector:
+        sd = get_spam_detector_safe()
+        if not sd:
             return jsonify({"isFlaggedSpam": False, "spamScore": 0.0, "reason": "Spam detector unavailable"}), 200
 
-        result = spam_detector.check_spam(phone_number, transcript, call_record_id, total_calls_24h)
+        result = sd.check_spam(phone_number, transcript, call_record_id, total_calls_24h)
         return jsonify(result), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -215,10 +240,11 @@ def similar_resolved():
         category = data.get("category")
         top_k = int(data.get("topK", 3))
 
-        if not rag_assist:
+        ra = get_rag_assist_safe()
+        if not ra:
             return jsonify({"matches": []}), 200
 
-        matches = rag_assist.get_similar_resolved(transcript, top_k=top_k, category=category)
+        matches = ra.get_similar_resolved(transcript, top_k=top_k, category=category)
         return jsonify({"matches": matches}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -241,10 +267,11 @@ def sync_resolved():
         officer_role = data.get("officerRole", "Field Engineer")
         category = data.get("category", "General")
 
-        if not rag_assist:
+        ra = get_rag_assist_safe()
+        if not ra:
             return jsonify({"status": "error", "message": "RAG assist unavailable"}), 500
 
-        res = rag_assist.sync_resolved_case(
+        res = ra.sync_resolved_case(
             complaint_id, transcript, resolution_notes, time_to_resolve_hours, officer_role, category
         )
         return jsonify(res), 200
@@ -547,7 +574,15 @@ def check_duplicate_complaint():
         category = data.get("category", "Other")
         urgency = data.get("urgency", "Medium")
 
-        result = duplicate_detector.check_and_store(transcript, category, urgency)
+        dd = get_duplicate_detector_safe()
+        if not dd:
+            return jsonify({
+                "isDuplicate": False,
+                "similarityScore": 0.0,
+                "matchingComplaint": None
+            }), 200
+
+        result = dd.check_and_store(transcript, category, urgency)
         return jsonify(result), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500

@@ -7,7 +7,7 @@ os.environ["USE_TF"] = "0"
 os.environ["USE_TORCH"] = "1"
 
 import chromadb
-from sentence_transformers import SentenceTransformer
+from services.shared_encoder import get_shared_encoder
 
 
 class SpamDetector:
@@ -17,8 +17,7 @@ class SpamDetector:
         print(f"[SpamDetector] Initializing ChromaDB PersistentClient at '{db_path}'...")
         self.chroma_client = chromadb.PersistentClient(path=db_path)
 
-        print(f"[SpamDetector] Loading SentenceTransformer model '{model_name}'...")
-        self.encoder = SentenceTransformer(model_name)
+        self.encoder = get_shared_encoder(model_name)
 
         # Dedicated ChromaDB collection for caller history separate from complaint dedup
         self.collection = self.chroma_client.get_or_create_collection(
