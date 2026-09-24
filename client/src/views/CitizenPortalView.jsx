@@ -937,6 +937,7 @@ export default function CitizenPortalView({ onNavigate, onRegisterComplaint, cur
                   <RefreshCw className="w-6 h-6 text-blue-600 animate-spin mx-auto" />
                   <h3 className="text-sm font-bold text-blue-900">Running Whisper STT Speech-to-Text & Scikit-Learn Model Classification...</h3>
                   <p className="text-xs text-blue-700">Transcribing audio and automatically determining target government department...</p>
+                  <p className="text-[11px] text-blue-600/90 font-medium">⏳ If the AI service was asleep (Render free tier), this first request takes ~30–45s to wake up.</p>
                 </div>
               )}
 

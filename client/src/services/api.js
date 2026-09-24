@@ -1,5 +1,14 @@
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000/api';
 
+// AI/call endpoints need longer timeouts — Python service cold-starts can take 45+ seconds
+const AI_ENDPOINTS = ['/calls/intake', '/calls/transcribe', '/ai/', '/chat/'];
+const DEFAULT_TIMEOUT_MS = 15000;
+const AI_TIMEOUT_MS = 60000;
+
+function getTimeoutMs(endpoint) {
+  return AI_ENDPOINTS.some(p => endpoint.startsWith(p)) ? AI_TIMEOUT_MS : DEFAULT_TIMEOUT_MS;
+}
+
 export async function fetchApi(endpoint, options = {}) {
   const token = localStorage.getItem('civicsense_token');
   const isFormData = options.body instanceof FormData;
@@ -10,15 +19,28 @@ export async function fetchApi(endpoint, options = {}) {
     ...options.headers
   };
 
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), getTimeoutMs(endpoint));
+
   try {
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
       ...options,
-      headers
+      headers,
+      signal: controller.signal
     });
+    clearTimeout(timeoutId);
     const data = await response.json();
+    if (!response.ok) {
+      return { success: false, error: data?.error || data?.message || `HTTP ${response.status}`, status: response.status, ...data };
+    }
     return data;
   } catch (err) {
-    console.warn(`[API Sync Fallback] ${endpoint}:`, err);
+    clearTimeout(timeoutId);
+    if (err.name === 'AbortError') {
+      console.warn(`[API Timeout] ${endpoint} timed out`);
+      return { success: false, error: 'The AI service is waking up from sleep mode. Please try again in 30 seconds.', timeout: true };
+    }
+    console.warn(`[API Error] ${endpoint}:`, err.message);
     return { success: false, error: err.message };
   }
 }

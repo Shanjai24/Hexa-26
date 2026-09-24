@@ -4,6 +4,12 @@ import bcrypt from 'bcryptjs';
 const prisma = new PrismaClient();
 
 async function main() {
+  const userCount = await prisma.user.count();
+  if (userCount > 0 && process.env.FORCE_SEED !== 'true') {
+    console.log(`⚡ [Prisma Seed] Database already contains ${userCount} users. Skipping destructive re-seed to preserve user data.`);
+    return;
+  }
+
   console.log('🌱 Seeding CivicSense AI database with multi-department hierarchy...');
 
   // Clear existing

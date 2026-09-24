@@ -70,8 +70,12 @@ export default function FloatingChatbot() {
         }
       } else {
         const chatRes = await api.sendChatbotMessage(queryText);
-        if (chatRes.success && chatRes.data?.message) {
+        if (chatRes.timeout) {
+          botResponseText = '⏳ **The AI service is waking up from standby (~30s on Render).** Please wait a moment and send your question again!';
+        } else if (chatRes.success && chatRes.data?.message) {
           botResponseText = chatRes.data.message;
+        } else if (!chatRes.success && chatRes.error) {
+          botResponseText = `⚠️ Service notice: ${chatRes.error}. Please retry in a few moments.`;
         } else {
           botResponseText = "I'm having trouble connecting to the AI service. Please try again shortly.";
         }

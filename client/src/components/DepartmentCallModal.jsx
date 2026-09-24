@@ -149,19 +149,22 @@ export default function DepartmentCallModal({ isOpen, onClose, currentUser = nul
       formData.append('phoneNumber', phoneNumber.trim());
 
       const response = await api.intakeCall(formData);
+      if (response?.timeout) {
+        throw new Error('The AI telephony service is spinning up from sleep mode (~30s on Render). Please wait a few seconds and tap Connect again.');
+      }
       if (response && response.success && response.ticketId) {
         setCallResult(response);
         setCallingState('success');
 
         if (response.confirmationAudioUrl) {
-          const PYTHON_ML_URL = 'http://localhost:5000';
+          const PYTHON_ML_URL = import.meta.env.VITE_ML_URL || import.meta.env.VITE_API_URL?.replace('/api', '') || '';
           const url = response.confirmationAudioUrl.startsWith('http')
             ? response.confirmationAudioUrl
             : `${PYTHON_ML_URL}${response.confirmationAudioUrl}`;
           setConfirmationAudioUrl(url);
         }
       } else {
-        throw new Error(response?.error?.message || 'Call processing failed.');
+        throw new Error(response?.error?.message || response?.error || 'Call processing failed.');
       }
     } catch (err) {
       console.error('Call intake error:', err);

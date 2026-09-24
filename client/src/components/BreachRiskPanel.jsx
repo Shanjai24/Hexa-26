@@ -18,7 +18,7 @@ export default function BreachRiskPanel({ complaints = [], onSelectComplaint }) 
   const [expandedFactors, setExpandedFactors] = useState({});
   const [lastRefreshed, setLastRefreshed] = useState(null);
 
-  const PYTHON_ML_URL = 'http://localhost:5000';
+  // Breach risk is routed through the Node backend (api.getBreachRiskBatch → /api/ai/breach-risk-batch)
 
   const fetchBreachRisk = useCallback(async () => {
     if (!complaints || complaints.length === 0) return;
@@ -49,17 +49,9 @@ export default function BreachRiskPanel({ complaints = [], onSelectComplaint }) 
         department: c.department
       }));
 
-      // Call via Python ML directly for speed (avoids Node hop)
-      const res = await fetch(`${PYTHON_ML_URL}/api/ai/breach-risk-batch`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ complaints: payload })
-      });
+      const data = await api.getBreachRiskBatch(payload);
 
-      if (!res.ok) throw new Error(`ML service responded ${res.status}`);
-      const data = await res.json();
-
-      if (data.atRisk && Array.isArray(data.atRisk)) {
+      if (data && data.atRisk && Array.isArray(data.atRisk)) {
         // Enrich with complaint details
         const enriched = data.atRisk.map(r => {
           const cmp = active.find(c => (c.dbId || c.id) === r.complaintId || c.id === r.ticketId);

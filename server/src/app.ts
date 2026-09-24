@@ -8,8 +8,13 @@ import { config } from './config/index.js';
 const app = express();
 
 app.use(helmet({ contentSecurityPolicy: false, crossOriginResourcePolicy: false }));
-const allowedOrigin = (!config.corsOrigin || config.corsOrigin === '*') ? true : config.corsOrigin;
-app.use(cors({ origin: allowedOrigin, credentials: true }));
+// CORS_ORIGIN can be a comma-separated list of origins, or '*' to allow all
+const corsOrigins = (config.corsOrigin || '*').split(',').map(o => o.trim()).filter(Boolean);
+const corsOriginFn = corsOrigins.includes('*') ? true : (origin: string | undefined, cb: (e: Error | null, allow?: boolean) => void) => {
+  if (!origin || corsOrigins.includes(origin)) return cb(null, true);
+  cb(new Error(`CORS: origin ${origin} not allowed`));
+};
+app.use(cors({ origin: corsOriginFn, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

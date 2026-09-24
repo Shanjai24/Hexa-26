@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { 
   Bot, User, Send, Sparkles, RefreshCw, CheckCircle2, ShieldCheck, 
   HelpCircle, ArrowRight, Zap, PhoneCall, Clock, FileText, AlertTriangle,
-  MessageSquareText, FilePlus2, CheckCircle
+  MessageSquareText, FilePlus2, CheckCircle, RotateCcw
 } from 'lucide-react';
 import { api } from '../services/api.js';
 
@@ -10,28 +10,69 @@ export default function CitizenChatbotView({ onNavigate, currentUser = null }) {
   // Mode: 'qa' (Knowledge Base Q&A) or 'report' (Feature 9: Chat-to-Report state machine)
   const [chatMode, setChatMode] = useState('qa');
   
-  // Q&A State
-  const [messages, setMessages] = useState([
-    { 
-      id: 1, 
-      sender: 'bot', 
-      text: '🏛️ **Welcome to CivicSense 24/7 Citizen AI Assistant!**\n\nI am equipped to answer **any question** about municipal services, emergency assistance, and live complaint tracking.\n\n**You can ask me anything, such as:**\n• 🚰 *"How to apply for a new drinking water connection?"*\n• ⚡ *"What to do during a power outage or sparking transformer?"*\n• ⏱️ *"What are the priority SLA resolution deadlines?"*\n• 📞 *"Official 24/7 Emergency & Helpline numbers in Tamil Nadu"*\n• 🎫 *"Track ticket CMP-10516"* or *"What is the status of my latest complaint?"*\n• 🧹 *"Garbage collection schedules & sewage clearance"*\n\n💡 *Tip: Switch to **"File Civic Report"** mode above to register a live complaint directly through this chat!*' 
-    }
-  ]);
+  // Q&A State with sessionStorage persistence
+  const [messages, setMessages] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem('civicsense_chat_messages');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {}
+    return [
+      { 
+        id: 1, 
+        sender: 'bot', 
+        text: '🏛️ **Welcome to CivicSense 24/7 Citizen AI Assistant!**\n\nI am equipped to answer **any question** about municipal services, emergency assistance, and live complaint tracking.\n\n**You can ask me anything, such as:**\n• 🚰 *"How to apply for a new drinking water connection?"*\n• ⚡ *"What to do during a power outage or sparking transformer?"*\n• ⏱️ *"What are the priority SLA resolution deadlines?"*\n• 📞 *"Official 24/7 Emergency & Helpline numbers in Tamil Nadu"*\n• 🎫 *"Track ticket CMP-10516"* or *"What is the status of my latest complaint?"*\n• 🧹 *"Garbage collection schedules & sewage clearance"*\n\n💡 *Tip: Switch to **"File Civic Report"** mode above to register a live complaint directly through this chat!*' 
+      }
+    ];
+  });
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Chat-to-Report State (Feature 9)
-  const [reportSessionId, setReportSessionId] = useState(null);
+  // Chat-to-Report State (Feature 9) with sessionStorage persistence
+  const [reportSessionId, setReportSessionId] = useState(() => {
+    try {
+      return sessionStorage.getItem('civicsense_report_session_id') || null;
+    } catch {
+      return null;
+    }
+  });
   const [reportPhone, setReportPhone] = useState(currentUser?.phone || '');
   const [awaitingConfirmation, setAwaitingConfirmation] = useState(false);
-  const [reportMessages, setReportMessages] = useState([
-    {
-      id: 1,
-      sender: 'bot',
-      text: '📝 **Civic Issue Direct Reporting Assistant**\n\nTell me about the problem in your area in plain English or Tamil. For example:\n• *"A huge water pipe burst on 4th Main Road Anna Nagar and water is flooding the street"*\n• *"Street lights have not been working in Karumathampatti for 3 days"*\n• *"Garbage heap dumped near Ambattur bus terminus not cleared"*\n\nOur local AI classifiers will extract the department, landmark, and priority, and file an official complaint ticket immediately.'
-    }
-  ]);
+  const [reportMessages, setReportMessages] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem('civicsense_report_messages');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {}
+    return [
+      {
+        id: 1,
+        sender: 'bot',
+        text: '📝 **Civic Issue Direct Reporting Assistant**\n\nTell me about the problem in your area in plain English or Tamil. For example:\n• *"A huge water pipe burst on 4th Main Road Anna Nagar and water is flooding the street"*\n• *"Street lights have not been working in Karumathampatti for 3 days"*\n• *"Garbage heap dumped near Ambattur bus terminus not cleared"*\n\nOur local AI classifiers will extract the department, landmark, and priority, and file an official complaint ticket immediately.'
+      }
+    ];
+  });
+
+  // Sync state to sessionStorage
+  useEffect(() => {
+    try {
+      sessionStorage.setItem('civicsense_chat_messages', JSON.stringify(messages));
+    } catch (e) {}
+  }, [messages]);
+
+  useEffect(() => {
+    try {
+      sessionStorage.setItem('civicsense_report_messages', JSON.stringify(reportMessages));
+    } catch (e) {}
+  }, [reportMessages]);
+
+  useEffect(() => {
+    try {
+      if (reportSessionId) {
+        sessionStorage.setItem('civicsense_report_session_id', reportSessionId);
+      } else {
+        sessionStorage.removeItem('civicsense_report_session_id');
+      }
+    } catch (e) {}
+  }, [reportSessionId]);
 
   const messagesEndRef = useRef(null);
 
@@ -79,16 +120,26 @@ export default function CitizenChatbotView({ onNavigate, currentUser = null }) {
           botText = `🎫 **Ticket Details for ${d.complaintNumber}**\n\n• **Department**: ${d.department}\n• **Problem**: ${d.category} — ${d.subcategory}\n• **Current Status**: **${d.status}**\n• **Priority / Urgency**: ${d.priority} (${d.slaRemaining})\n• **Assigned Field Officer**: ${d.assignedOfficer} (📞 ${d.officerPhone})\n• **Location**: ${d.location} (${d.zone})\n• **Resolution Target**: ${d.slaRemaining}`;
         } else {
           const res = await api.sendChatbotMessage(textToSend);
-          botText = res.data?.message || `⚠️ Could not find ticket **${ticketNum}**. Please verify the number.`;
+          if (res.timeout) {
+            botText = '⏳ **The AI service is waking up from sleep mode.** Please wait 30 seconds and try again.';
+          } else {
+            botText = res.data?.message || `⚠️ Could not find ticket **${ticketNum}**. Please verify the number.`;
+          }
         }
       } else {
         const res = await api.sendChatbotMessage(textToSend);
-        botText = res.data?.message || "Checking civic knowledge base...";
+        if (res.timeout) {
+          botText = '⏳ **The AI service is warming up.** Please try again in 30 seconds — it will be ready shortly!';
+        } else if (!res.success && res.error) {
+          botText = `⚠️ Connection issue: ${res.error}. Please retry.`;
+        } else {
+          botText = res.data?.message || 'I am here to help! Could you rephrase your question?';
+        }
       }
 
       setMessages(prev => [...prev, { id: Date.now() + 1, sender: 'bot', text: botText }]);
     } catch (e) {
-      setMessages(prev => [...prev, { id: Date.now() + 1, sender: 'bot', text: 'An error occurred while connecting to the CivicSense AI Helpline service.' }]);
+      setMessages(prev => [...prev, { id: Date.now() + 1, sender: 'bot', text: `⚠️ Connection error: ${e.message}. Please check your network and retry.` }]);
     } finally {
       setLoading(false);
     }
@@ -104,8 +155,22 @@ export default function CitizenChatbotView({ onNavigate, currentUser = null }) {
     try {
       const res = await api.chatReport(textToSend, reportSessionId, reportPhone);
       
+      if (res.timeout) {
+        setReportMessages(prev => [
+          ...prev, 
+          { 
+            id: Date.now() + 1, 
+            sender: 'bot', 
+            text: '⏳ **The AI intake service is warming up from standby mode.** Please wait ~30 seconds and send your message again!' 
+          }
+        ]);
+        return;
+      }
+
       if (res.success) {
-        if (res.sessionId) {
+        if (res.status === 'FILED' || res.status === 'CANCELLED') {
+          setReportSessionId(null);
+        } else if (res.sessionId) {
           setReportSessionId(res.sessionId);
         }
 
@@ -153,6 +218,35 @@ export default function CitizenChatbotView({ onNavigate, currentUser = null }) {
       ]);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleResetChat = () => {
+    if (chatMode === 'qa') {
+      const defaultQA = [
+        { 
+          id: 1, 
+          sender: 'bot', 
+          text: '🏛️ **Welcome to CivicSense 24/7 Citizen AI Assistant!**\n\nI am equipped to answer **any question** about municipal services, emergency assistance, and live complaint tracking.\n\n**You can ask me anything, such as:**\n• 🚰 *"How to apply for a new drinking water connection?"*\n• ⚡ *"What to do during a power outage or sparking transformer?"*\n• ⏱️ *"What are the priority SLA resolution deadlines?"*\n• 📞 *"Official 24/7 Emergency & Helpline numbers in Tamil Nadu"*\n• 🎫 *"Track ticket CMP-10516"* or *"What is the status of my latest complaint?"*\n• 🧹 *"Garbage collection schedules & sewage clearance"*\n\n💡 *Tip: Switch to **"File Civic Report"** mode above to register a live complaint directly through this chat!*' 
+        }
+      ];
+      setMessages(defaultQA);
+      try { sessionStorage.setItem('civicsense_chat_messages', JSON.stringify(defaultQA)); } catch (e) {}
+    } else {
+      const defaultReport = [
+        {
+          id: 1,
+          sender: 'bot',
+          text: '📝 **Civic Issue Direct Reporting Assistant**\n\nTell me about the problem in your area in plain English or Tamil. For example:\n• *"A huge water pipe burst on 4th Main Road Anna Nagar and water is flooding the street"*\n• *"Street lights have not been working in Karumathampatti for 3 days"*\n• *"Garbage heap dumped near Ambattur bus terminus not cleared"*\n\nOur local AI classifiers will extract the department, landmark, and priority, and file an official complaint ticket immediately.'
+        }
+      ];
+      setReportMessages(defaultReport);
+      setReportSessionId(null);
+      setAwaitingConfirmation(false);
+      try { 
+        sessionStorage.setItem('civicsense_report_messages', JSON.stringify(defaultReport));
+        sessionStorage.removeItem('civicsense_report_session_id');
+      } catch (e) {}
     }
   };
 
@@ -211,29 +305,40 @@ export default function CitizenChatbotView({ onNavigate, currentUser = null }) {
           </div>
         </div>
 
-        {/* Mode Switcher Tabs */}
-        <div className="flex items-center bg-slate-800/90 p-1.5 rounded-2xl border border-slate-700/80 shrink-0">
+        {/* Mode Switcher Tabs & Reset */}
+        <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex items-center bg-slate-800/90 p-1.5 rounded-2xl border border-slate-700/80 shrink-0">
+            <button
+              onClick={() => setChatMode('qa')}
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                chatMode === 'qa' 
+                  ? 'bg-blue-600 text-white shadow-md' 
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <MessageSquareText className="w-3.5 h-3.5" />
+              <span>Q&A / FAQs</span>
+            </button>
+            <button
+              onClick={() => setChatMode('report')}
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                chatMode === 'report' 
+                  ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md' 
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <FilePlus2 className="w-3.5 h-3.5" />
+              <span>File Report via Chat</span>
+            </button>
+          </div>
+
           <button
-            onClick={() => setChatMode('qa')}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-              chatMode === 'qa' 
-                ? 'bg-blue-600 text-white shadow-md' 
-                : 'text-slate-400 hover:text-white'
-            }`}
+            onClick={handleResetChat}
+            title="Reset Conversation"
+            className="p-2.5 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl border border-slate-700 transition-all cursor-pointer flex items-center gap-1 text-xs font-medium"
           >
-            <MessageSquareText className="w-3.5 h-3.5" />
-            <span>Q&A / FAQs</span>
-          </button>
-          <button
-            onClick={() => setChatMode('report')}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-              chatMode === 'report' 
-                ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md' 
-                : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            <FilePlus2 className="w-3.5 h-3.5" />
-            <span>File Report via Chat</span>
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Reset</span>
           </button>
         </div>
       </div>

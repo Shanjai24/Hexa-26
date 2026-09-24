@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://civicsense-frontend-6ace.onrender.com/sitemap.xml
